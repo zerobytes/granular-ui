@@ -38,6 +38,7 @@ export { SimpleGrid } from './components/SimpleGrid.js';
 export { List } from './components/List.js';
 export { Anchor } from './components/Anchor.js';
 export { Image } from './components/Image.js';
+export { Icon } from './components/Icon.js';
 export { Progress } from './components/Progress.js';
 export { Slider } from './components/Slider.js';
 export { Skeleton } from './components/Skeleton.js';
