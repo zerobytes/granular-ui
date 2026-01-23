@@ -1,0 +1,29 @@
+{
+  "name": "@granular/ui",
+  "version": "0.1.0",
+  "description": "Granular UI components",
+  "type": "module",
+  "main": "./dist/granular-ui.min.js",
+  "module": "./dist/granular-ui.min.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/granular-ui.min.js",
+      "default": "./dist/granular-ui.min.js"
+    }
+  },
+  "files": [
+    "dist",
+    "types",
+    "src"
+  ],
+  "scripts": {
+    "build:minify": "mkdir -p ./dist/fonts && cp -R src/theme/fonts/* ./dist/fonts/ && npx -y esbuild src/index.js --bundle --minify --sourcemap --format=esm --external:granular --outfile=./dist/granular-ui.min.js && npx -y -p typescript@latest tsc -p tsconfig.json",
+    "build:debug": "mkdir -p ./dist/fonts && cp -R src/theme/fonts/* ./dist/fonts/ && npx -y esbuild src/index.js --bundle --sourcemap --format=esm --external:granular --outfile=./dist/granular-ui.js && npx -y -p typescript@latest tsc -p tsconfig.json",
+    "build:watch": "npx -y esbuild src/index.js --bundle --minify --sourcemap --format=esm --external:granular --outfile=./dist/granular-ui.min.js --watch"
+  },
+  "peerDependencies": {
+    "granular": ">=0.1.0"
+  }
+}
