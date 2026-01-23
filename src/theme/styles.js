@@ -82,10 +82,7 @@ body {
   color: var(--g-ui-text);
   font-family: var(--g-ui-font);
 }
-html, body, #app {
-  height: 100%;
-  min-height: 100%;
-}
+
 .g-ui-reset {
   font-family: var(--g-ui-font);
   color: var(--g-ui-text);
@@ -93,7 +90,6 @@ html, body, #app {
 
 .g-ui-text {
   font-family: var(--g-ui-font);
-  color: var(--g-ui-text);
 }
 .g-ui-text-size-xs { font-size: 12px; }
 .g-ui-text-size-sm { font-size: 13px; }
@@ -1423,6 +1419,7 @@ html, body, #app {
   background: var(--g-ui-surface);
   border-bottom: 1px solid var(--g-ui-border);
   z-index: 100;
+  position:relative;
 }
 .g-ui-appbar-static { position: static; }
 .g-ui-appbar-sticky { position: sticky; top: 0; }
@@ -1431,14 +1428,11 @@ html, body, #app {
 .g-ui-sidebar {
   width: 260px;
   min-width: 260px;
-  height: 100%;
-  min-height: 100vh;
-  background: var(--g-ui-surface);
+  background: var(--g-ui-bg);
   border-right: 1px solid var(--g-ui-border);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px;
+  box-sizing: border-box;
 }
 .g-ui-sidebar-position-right { border-right: 0; border-left: 1px solid var(--g-ui-border); }
 .g-ui-sidebar-size-sm { width: 220px; min-width: 220px; }
@@ -1454,6 +1448,7 @@ html, body, #app {
   width: 45px; 
   min-width: 45px; 
   max-width: 45px;
+  height: 100%;
   transition: 
     width .22s cubic-bezier(.2,.8,.2,1),
     min-width .22s cubic-bezier(.2,.8,.2,1),
@@ -1477,6 +1472,8 @@ html, body, #app {
   transition: transform .22s cubic-bezier(.2,.8,.2,1), opacity .22s ease;
   opacity: 0;
   transform: translateX(-100%);
+  height: 100%;
+  min-height: 100vh;
 }
 .g-ui-sidebar-drawer-left.g-ui-sidebar-drawer-open,
 .g-ui-sidebar-drawer-right.g-ui-sidebar-drawer-open {

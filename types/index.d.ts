@@ -1,3 +1,4 @@
+export { cx } from "./utils.js";
 export { Button } from "./components/Button.js";
 export { Text } from "./components/Text.js";
 export { Title } from "./components/Title.js";
@@ -77,5 +78,12 @@ export { NavLink } from "./components/NavLink.js";
 export { Indicator } from "./components/Indicator.js";
 export { Burger } from "./components/Burger.js";
 export { LoadingOverlay } from "./components/LoadingOverlay.js";
+export { Grid } from "./components/Grid.js";
+export { Col } from "./components/Col.js";
+export { ScrollArea } from "./components/ScrollArea.js";
+export { PinInput } from "./components/PinInput.js";
+export { CheckboxGroup } from "./components/CheckboxGroup.js";
+export { AvatarGroup } from "./components/AvatarGroup.js";
+export { BadgeGroup } from "./components/BadgeGroup.js";
 export { useDisclosure } from "./hooks/useDisclosure.js";
 export { setThemeVars, setThemeMode } from "./theme/theme.js";
