@@ -1,18 +1,22 @@
 import { Span } from 'granular';
-import { cx, splitPropsChildren } from '../utils.js';
+import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function Rating(...args) {
-  const { props, rawProps } = splitPropsChildren(args, { value: 0, max: 5 });
-  const { value = 0, max = 5, onChange, className, ...rest } = rawProps;
-  const current = value?.get ? value.get() : value;
+  const { props } = splitPropsChildren(args, { value: 0, max: 5, size: 'md' });
+  const { value = 0, max = 5, size = 'md', onChange, className, ...rest } = props;
+  const current = value?.get ? value.get() : resolveValue(value);
   const setValue = (next) => {
     if (value?.set) value.set(next);
     onChange?.(next);
   };
   const items = [];
-  for (let i = 1; i <= max; i += 1) items.push(i);
+  const maxValue = Number(resolveValue(max)) || 0;
+  for (let i = 1; i <= maxValue; i += 1) items.push(i);
   return Span(
-    { ...rest, className: cx('g-ui-rating', props.className ?? className) },
+    {
+      ...rest,
+      className: cx('g-ui-rating', classVar('g-ui-rating-size-', size, 'md'), props.className ?? className),
+    },
     items.map((i) =>
       Span(
         {

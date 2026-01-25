@@ -1,8 +1,13 @@
-import { Input } from 'granular';
-import { cx, splitPropsChildren } from '../utils.js';
+import { Div, Input } from 'granular';
+import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function DateInput(...args) {
-  const { props } = splitPropsChildren(args);
-  const { className, ...rest } = props;
-  return Input({ type: 'date', ...rest, className: cx('g-ui-input', className) });
+  const { props } = splitPropsChildren(args, { size: 'md' });
+  const { size = 'md', leftSection, rightSection, className, ...rest } = props;
+  return Div(
+    { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md'), className) },
+    leftSection ? Div({ className: 'g-ui-input-section' }, leftSection) : null,
+    Input({ type: 'date', ...rest, className: 'g-ui-input' }),
+    rightSection ? Div({ className: 'g-ui-input-section' }, rightSection) : null
+  );
 }

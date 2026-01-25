@@ -2,16 +2,16 @@ import { Div } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Paper(...args) {
-  const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'md' });
-  const { padding = 'md', radius = 'md', shadow = 'md', className, ...rest } = props;
+  const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'none' });
+  const { padding = 'md', radius = 'md', shadow = 'none', className, ...rest } = props;
   return Div(
     {
       ...rest,
       className: cx(
         'g-ui-paper',
-        `g-ui-card-padding-${padding}`,
-        `g-ui-card-radius-${radius}`,
-        `g-ui-card-shadow-${shadow}`,
+        [padding, (value) => `g-ui-card-padding-${value}`],
+        [radius, (value) => `g-ui-card-radius-${value}`],
+        [shadow, (value) => `g-ui-card-shadow-${value}`],
         className
       ),
     },

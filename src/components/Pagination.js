@@ -1,20 +1,25 @@
 import { Button, Div, state, after } from 'granular';
-import { cx, splitPropsChildren } from '../utils.js';
+import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function Pagination(...args) {
-  const { props, rawProps } = splitPropsChildren(args, { total: 1 });
-  const { page, total = 1, onChange, className, ...rest } = rawProps;
-  const currentState = page?.get ? page : state(page ?? 1);
+  const { props } = splitPropsChildren(args, { total: 1, size: 'md' });
+  const { page, total = 1, size = 'md', onChange, className, ...rest } = props;
+  const currentState = page?.get ? page : state(resolveValue(page ?? 1));
   const setPage = (next) => {
-    const clamped = Math.max(1, Math.min(total, next));
+    const totalValue = Number(resolveValue(total)) || 1;
+    const clamped = Math.max(1, Math.min(totalValue, next));
     if (page?.set) page.set(clamped);
     else currentState.set(clamped);
     onChange?.(clamped);
   };
   const items = [];
-  for (let i = 1; i <= total; i += 1) items.push(i);
+  const totalValue = Number(resolveValue(total)) || 1;
+  for (let i = 1; i <= totalValue; i += 1) items.push(i);
   return Div(
-    { ...rest, className: cx('g-ui-pagination', props.className ?? className) },
+    {
+      ...rest,
+      className: cx('g-ui-pagination', classVar('g-ui-pagination-size-', size, 'md'), props.className ?? className),
+    },
     Button(
       {
         className: 'g-ui-pagination-item',

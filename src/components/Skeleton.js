@@ -8,8 +8,8 @@ export function Skeleton(...args) {
     ...rest,
     className: cx(
       'g-ui-skeleton',
-      `g-ui-skeleton-h-${height}`,
-      `g-ui-skeleton-w-${width}`,
+      [height, (value) => `g-ui-skeleton-h-${value}`],
+      [width, (value) => `g-ui-skeleton-w-${value}`],
       className
     ),
   });

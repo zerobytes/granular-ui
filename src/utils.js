@@ -1,19 +1,11 @@
-import { Renderer, isSignal, isState, isStatePath, isComputed, resolve, computed, after } from 'granular';
+import { Renderer, isSignal, isState, isStatePath, isComputed, resolve, computed, after, concat } from 'granular';
 
 function isReactive(value) {
   return isSignal(value) || isState(value) || isStatePath(value) || isComputed(value);
 }
 
 export function cx(...values) {
-  const list = values.flat();
-  const targets = list.filter(isReactive);
-  const build = () =>
-    list
-      .map((v) => (typeof v === 'function' ? v() : resolve(v)))
-      .filter(Boolean)
-      .join(' ');
-  if (!targets.length) return build();
-  return after(targets).compute(build);
+  return concat(...values, { separator: ' ', filterFalsy: true });
 }
 
 export function toPx(value) {

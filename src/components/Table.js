@@ -1,13 +1,30 @@
 import { Table as HtmlTable, Thead, Tbody, Tr, Th, Td } from 'granular';
-import { cx, splitPropsChildren } from '../utils.js';
+import { cx, splitPropsChildren, classFlag } from '../utils.js';
 
 export function Table(...args) {
   const { props } = splitPropsChildren(args, { headers: [], rows: [] });
-  const { headers = [], rows = [], striped, highlightOnHover, className, style, ...rest } = props;
+  const {
+    headers = [],
+    rows = [],
+    striped,
+    highlightOnHover,
+    withBorder,
+    withColumnBorders,
+    className,
+    style,
+    ...rest
+  } = props;
   return HtmlTable(
     {
       ...rest,
-      className: cx('g-ui-table', striped && 'g-ui-table-striped', highlightOnHover && 'g-ui-table-hover', className),
+      className: cx(
+        'g-ui-table',
+        classFlag('g-ui-table-striped', striped),
+        classFlag('g-ui-table-hover', highlightOnHover),
+        classFlag('g-ui-table-with-border', withBorder),
+        classFlag('g-ui-table-column-borders', withColumnBorders),
+        className
+      ),
     },
     headers.length
       ? Thead(Tr(headers.map((header) => Th(header))))

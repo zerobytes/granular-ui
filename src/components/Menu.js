@@ -1,12 +1,12 @@
 import { Div, when } from 'granular';
 import { state } from 'granular';
-import { cx, splitPropsChildren } from '../utils.js';
+import { cx, splitPropsChildren, resolveValue } from '../utils.js';
 
 export function Menu(...args) {
-  const { props, rawProps, children } = splitPropsChildren(args, { items: [] });
-  const { opened, onChange, items = [], className, style } = rawProps;
+  const { props, children } = splitPropsChildren(args, { items: [] });
+  const { opened, onChange, items = [], className, style } = props;
   const internal = state(false);
-  const current = opened?.get ? opened.get() : opened ?? internal.get();
+  const current = opened?.get ? opened.get() : resolveValue(opened) ?? internal.get();
 
   const setOpen = (next) => {
     if (opened?.set) opened.set(next);
@@ -20,7 +20,7 @@ export function Menu(...args) {
     when(current, () =>
       Div(
         { className: 'g-ui-menu-dropdown' },
-        items.map((item) =>
+        resolveValue(items).map((item) =>
           Div(
             {
               className: 'g-ui-menu-item',

@@ -2,8 +2,8 @@ import { Div } from 'granular';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function Card(...args) {
-  const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'md' });
-  const { padding = 'md', radius = 'md', shadow = 'md', className, style, ...rest } = props;
+  const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'none' });
+  const { padding = 'md', radius = 'md', shadow = 'none', className, style, ...rest } = props;
   return Div(
     {
       ...rest,

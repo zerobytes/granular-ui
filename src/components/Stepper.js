@@ -8,7 +8,7 @@ export function Stepper(...args) {
     { ...rest, className: cx('g-ui-stepper', className) },
     items.map((item, idx) =>
       Div(
-        { className: cx('g-ui-stepper-item', idx === active && 'g-ui-stepper-active') },
+        { className: cx('g-ui-stepper-item', [active, (value) => (idx === value ? 'g-ui-stepper-active' : '')]) },
         Div({ className: 'g-ui-stepper-index' }, String(idx + 1)),
         Div({ className: 'g-ui-stepper-label' }, item.label)
       )

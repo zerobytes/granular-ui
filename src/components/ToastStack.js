@@ -8,7 +8,7 @@ export function ToastStack(...args) {
     { ...rest, className: cx('g-ui-toast-stack', className) },
     items.map((item) =>
       Div(
-        { className: cx('g-ui-toast', timeout && 'g-ui-toast-auto') },
+        { className: cx('g-ui-toast', [timeout, 'g-ui-toast-auto']) },
         Div(
           { className: 'g-ui-toast-row' },
           item.title ? Div({ className: 'g-ui-toast-title' }, item.title) : null,

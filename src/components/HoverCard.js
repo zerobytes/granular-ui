@@ -7,6 +7,12 @@ export function HoverCard(...args) {
   return Div(
     { ...rest, className: cx('g-ui-hover-card', className) },
     children,
-    Div({ className: cx('g-ui-hover-card-dropdown', position === 'right' && 'g-ui-hover-card-right', position === 'center' && 'g-ui-hover-card-center') }, content)
+    Div({
+      className: cx(
+        'g-ui-hover-card-dropdown',
+        [position, (value) => (value === 'right' ? 'g-ui-hover-card-right' : '')],
+        [position, (value) => (value === 'center' ? 'g-ui-hover-card-center' : '')]
+      ),
+    }, content)
   );
 }

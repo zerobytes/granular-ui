@@ -9,11 +9,11 @@ export function Flex(...args) {
       ...rest,
       className: cx(
         'g-ui-flex',
-        direction === 'column' ? 'g-ui-flex-column' : 'g-ui-flex-row',
-        wrap && 'g-ui-flex-wrap',
-        align && `g-ui-align-${align}`,
-        justify && `g-ui-justify-${justify}`,
-        gap && `g-ui-gap-${gap}`,
+        [direction, (value) => (value === 'column' ? 'g-ui-flex-column' : 'g-ui-flex-row')],
+        [wrap, 'g-ui-flex-wrap'],
+        [align, (value) => value && `g-ui-align-${value}`],
+        [justify, (value) => value && `g-ui-justify-${value}`],
+        [gap, (value) => value && `g-ui-gap-${value}`],
         className
       ),
     },
