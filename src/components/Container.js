@@ -2,7 +2,7 @@ import { Div } from 'granular';
 import { cx, splitPropsChildren, classVar, classFlag } from '../utils.js';
 
 export function Container(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, { size: 'md' });
   const { size = 'md', fluid, className, style, ...rest } = props;
   return Div(
     {

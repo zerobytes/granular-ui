@@ -2,7 +2,7 @@ import { Div, Button as HtmlButton, portal, when } from 'granular';
 import { cx, splitPropsChildren, classVar, classMap } from '../utils.js';
 
 export function Modal(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, { size: 'md', centered: true, overlay: 'normal' });
   const {
     opened,
     onClose,

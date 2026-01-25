@@ -2,7 +2,7 @@ import { Div } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Stepper(...args) {
-  const { props } = splitPropsChildren(args);
+  const { props } = splitPropsChildren(args, { active: 0, items: [] });
   const { active = 0, items = [], className, ...rest } = props;
   return Div(
     { ...rest, className: cx('g-ui-stepper', className) },

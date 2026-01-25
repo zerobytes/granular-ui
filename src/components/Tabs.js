@@ -2,8 +2,8 @@ import { Button, Div, state, after } from 'granular';
 import { cx, splitPropsChildren, classMap } from '../utils.js';
 
 export function Tabs(...args) {
-  const { props } = splitPropsChildren(args);
-  const { value, onChange, tabs = [], orientation = 'horizontal', className, style } = props;
+  const { props, rawProps } = splitPropsChildren(args, { tabs: [], orientation: 'horizontal' });
+  const { value, onChange, tabs = [], orientation = 'horizontal', className, style } = rawProps;
   const currentState = value?.get ? value : state(value ?? tabs[0]?.value);
   const setValue = (next) => {
     if (value?.set) value.set(next);
@@ -12,7 +12,7 @@ export function Tabs(...args) {
   };
 
   return Div(
-    { className: cx('g-ui-tabs', classMap(orientation, { vertical: 'g-ui-tabs-vertical' }), className) },
+    { className: cx('g-ui-tabs', classMap(orientation, { vertical: 'g-ui-tabs-vertical' }), props.className ?? className) },
     Div(
       { className: 'g-ui-tabs-list' },
       tabs.map((tab) =>

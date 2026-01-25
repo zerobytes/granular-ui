@@ -2,8 +2,8 @@ import { Input, Div, Span } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function RangeSlider(...args) {
-  const { props } = splitPropsChildren(args);
-  const { value, onChange, min = 0, max = 100, className, ...rest } = props;
+  const { props, rawProps } = splitPropsChildren(args, { min: 0, max: 100 });
+  const { value, onChange, min = 0, max = 100, className, ...rest } = rawProps;
   const current = value?.get ? value.get() : value ?? [min, max];
   const setValue = (next) => {
     if (value?.set) value.set(next);
@@ -11,7 +11,7 @@ export function RangeSlider(...args) {
   };
 
   return Div(
-    { ...rest, className: cx('g-ui-range', className) },
+    { ...rest, className: cx('g-ui-range', props.className ?? className) },
     Input({
       type: 'range',
       min,

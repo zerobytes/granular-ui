@@ -2,8 +2,8 @@ import { Button, Div, state, after } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Pagination(...args) {
-  const { props } = splitPropsChildren(args);
-  const { page, total = 1, onChange, className, ...rest } = props;
+  const { props, rawProps } = splitPropsChildren(args, { total: 1 });
+  const { page, total = 1, onChange, className, ...rest } = rawProps;
   const currentState = page?.get ? page : state(page ?? 1);
   const setPage = (next) => {
     const clamped = Math.max(1, Math.min(total, next));
@@ -14,7 +14,7 @@ export function Pagination(...args) {
   const items = [];
   for (let i = 1; i <= total; i += 1) items.push(i);
   return Div(
-    { ...rest, className: cx('g-ui-pagination', className) },
+    { ...rest, className: cx('g-ui-pagination', props.className ?? className) },
     Button(
       {
         className: 'g-ui-pagination-item',

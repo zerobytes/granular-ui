@@ -3,7 +3,7 @@ import { cx, splitPropsChildren } from '../utils.js';
 import { state } from 'granular';
 
 export function SelectSearch(...args) {
-  const { props } = splitPropsChildren(args);
+  const { props } = splitPropsChildren(args, { data: [] });
   const { data = [], onChange, className, ...rest } = props;
   const query = state('');
 

@@ -2,7 +2,7 @@ import { Table as HtmlTable, Thead, Tbody, Tr, Th, Td } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Table(...args) {
-  const { props } = splitPropsChildren(args);
+  const { props } = splitPropsChildren(args, { headers: [], rows: [] });
   const { headers = [], rows = [], striped, highlightOnHover, className, style, ...rest } = props;
   return HtmlTable(
     {

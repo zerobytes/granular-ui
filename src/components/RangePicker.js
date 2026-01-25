@@ -2,8 +2,8 @@ import { Div, Input } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function RangePicker(...args) {
-  const { props } = splitPropsChildren(args);
-  const { value, onChange, className, ...rest } = props;
+  const { props, rawProps } = splitPropsChildren(args);
+  const { value, onChange, className, ...rest } = rawProps;
   const current = value?.get ? value.get() : value ?? ['', ''];
 
   const setValue = (next) => {
@@ -12,7 +12,7 @@ export function RangePicker(...args) {
   };
 
   return Div(
-    { ...rest, className: cx('g-ui-range-picker', className) },
+    { ...rest, className: cx('g-ui-range-picker', props.className ?? className) },
     Input({
       type: 'date',
       className: 'g-ui-input',

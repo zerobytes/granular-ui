@@ -2,8 +2,8 @@ import { Div, Span } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function MultiSelect(...args) {
-  const { props } = splitPropsChildren(args);
-  const { value, data = [], onChange, className, ...rest } = props;
+  const { props, rawProps } = splitPropsChildren(args, { data: [] });
+  const { value, data = [], onChange, className, ...rest } = rawProps;
   const selected = value?.get ? value.get() : value ?? [];
 
   const toggle = (val) => {
@@ -15,7 +15,7 @@ export function MultiSelect(...args) {
   };
 
   return Div(
-    { ...rest, className: cx('g-ui-select-multi', className) },
+    { ...rest, className: cx('g-ui-select-multi', props.className ?? className) },
     data.map((item) =>
       Span(
         {

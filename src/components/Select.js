@@ -2,7 +2,7 @@ import { Select as HtmlSelect, Option } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Select(...args) {
-  const { props } = splitPropsChildren(args);
+  const { props } = splitPropsChildren(args, { data: [] });
   const { data = [], placeholder, className, style, ...rest } = props;
   return HtmlSelect(
     {

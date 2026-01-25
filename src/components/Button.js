@@ -2,7 +2,7 @@ import { Button as HtmlButton, Span } from 'granular';
 import { cx, splitPropsChildren, resolveBool, classVar, classFlag } from '../utils.js';
 
 export function Button(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, { variant: 'filled', size: 'md' });
   const {
     variant = 'filled',
     size = 'md',

@@ -2,7 +2,13 @@ import { Div, portal, after, isSignal, isState, isStatePath, state, when } from 
 import { cx, splitPropsChildren, resolveValue, resolveBool } from '../utils.js';
 
 export function Sidebar(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, {
+    position: 'left',
+    size: 'md',
+    blur: true,
+    fixed: false,
+    minWidth: 'button',
+  });
   
   return when(props.fixed,
     () => FixedSidebar(props, children), 

@@ -2,7 +2,7 @@ import { Div } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Flex(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, { direction: 'row' });
   const { direction = 'row', wrap, align, justify, gap, className, ...rest } = props;
   return Div(
     {

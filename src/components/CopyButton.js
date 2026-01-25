@@ -3,7 +3,7 @@ import { cx, splitPropsChildren } from '../utils.js';
 import { state } from 'granular';
 
 export function CopyButton(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, { value: '', timeout: 1500 });
   const { value = '', timeout = 1500, className, ...rest } = props;
   const copied = state(false);
   const buttonClass = after(copied).compute((next) =>

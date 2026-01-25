@@ -2,7 +2,7 @@ import { Span } from 'granular';
 import { cx, splitPropsChildren, classVar, classFlag, classMap } from '../utils.js';
 
 export function Text(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, { size: 'md' });
   const { size = 'md', weight, color, dimmed, align, className, style, ...rest } = props;
   const weightClass = classMap(weight, {
     bold: 'g-ui-text-weight-700',

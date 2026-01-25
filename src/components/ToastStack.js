@@ -2,7 +2,7 @@ import { Div } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function ToastStack(...args) {
-  const { props } = splitPropsChildren(args);
+  const { props } = splitPropsChildren(args, { items: [] });
   const { items = [], className, onClose, timeout, ...rest } = props;
   return Div(
     { ...rest, className: cx('g-ui-toast-stack', className) },

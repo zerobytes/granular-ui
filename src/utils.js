@@ -21,7 +21,7 @@ export function toPx(value) {
   return typeof value === 'number' ? `${value}px` : value;
 }
 
-export function splitPropsChildren(args) {
+export function splitPropsChildren(args, defaults) {
   const props = {};
   const children = [];
   const isPropsObject = (value) =>
@@ -39,7 +39,12 @@ export function splitPropsChildren(args) {
     if (isPropsObject(arg)) Object.assign(props, arg);
     else children.push(arg);
   }
-  return { props: computed(props), children };
+  if (defaults && typeof defaults === 'object') {
+    for (const key of Object.keys(defaults)) {
+      if (props[key] === undefined) props[key] = defaults[key];
+    }
+  }
+  return { props: computed(props), rawProps: props, children };
 }
 
 export function resolveValue(value) {

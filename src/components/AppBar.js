@@ -2,7 +2,7 @@ import { Div } from 'granular';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function AppBar(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, { position: 'sticky' });
   const { position = 'sticky', className, ...rest } = props;
   return Div(
     {

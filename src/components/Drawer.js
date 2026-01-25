@@ -2,7 +2,12 @@ import { Div, portal, when } from 'granular';
 import { cx, splitPropsChildren, classVar, classMap } from '../utils.js';
 
 export function Drawer(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, {
+    position: 'right',
+    size: 'md',
+    overlay: 'normal',
+    shadowed: true,
+  });
   const { opened, onClose, position = 'right', size = 'md', overlay = 'normal', shadowed = true, className, style } = props;
   return when(opened, () =>
     portal(

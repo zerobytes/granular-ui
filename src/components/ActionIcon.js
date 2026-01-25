@@ -2,7 +2,7 @@ import { Button } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function ActionIcon(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, { size: 'md', variant: 'subtle' });
   const { size = 'md', variant = 'subtle', className, ...rest } = props;
   return Button(
     {

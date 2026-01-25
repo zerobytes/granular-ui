@@ -2,7 +2,7 @@ import { Div } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Notification(...args) {
-  const { props, children } = splitPropsChildren(args);
+  const { props, children } = splitPropsChildren(args, { color: 'primary' });
   const { title, color = 'primary', className, style } = props;
   return Div(
     { className: cx('g-ui-notification', `g-ui-notification-${color}`, className) },

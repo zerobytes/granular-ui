@@ -3,7 +3,7 @@ import { cx, splitPropsChildren } from '../utils.js';
 import { state } from 'granular';
 
 export function PinInput(...args) {
-  const { props } = splitPropsChildren(args);
+  const { props } = splitPropsChildren(args, { length: 4 });
   const { length = 4, value, onChange, className, ...rest } = props;
   const internal = state(Array.from({ length }, () => ''));
   const current = value?.get ? value.get() : value ?? internal.get();

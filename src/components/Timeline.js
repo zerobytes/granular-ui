@@ -2,7 +2,7 @@ import { Div } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Timeline(...args) {
-  const { props } = splitPropsChildren(args);
+  const { props } = splitPropsChildren(args, { items: [] });
   const { items = [], className, ...rest } = props;
   return Div(
     { ...rest, className: cx('g-ui-timeline', className) },
