@@ -3,7 +3,7 @@ import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function AppBar(...args) {
   const { props, children } = splitPropsChildren(args, { position: 'sticky' });
-  const { position = 'sticky', className, ...rest } = props;
+  const { position, className, ...rest } = props;
   return Div(
     {
       ...rest,

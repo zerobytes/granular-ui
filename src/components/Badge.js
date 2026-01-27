@@ -3,7 +3,7 @@ import { cx, splitPropsChildren, classVar, classFlag, classMap } from '../utils.
 
 export function Badge(...args) {
   const { props, children } = splitPropsChildren(args, { variant: 'filled', size: 'md' });
-  const { variant = 'filled', size = 'md', className, dot, style, ...rest } = props;
+  const { variant, size, className, dot, style, ...rest } = props;
   const dotClass = classMap(variant, { dot: 'g-ui-badge-dot' });
   return Span(
     {

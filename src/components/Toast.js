@@ -1,4 +1,4 @@
-import { Div, Button } from 'granular';
+import { Div, Button, when } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Toast(...args) {
@@ -8,8 +8,8 @@ export function Toast(...args) {
     { ...rest, className: cx('g-ui-toast', className) },
     Div(
       { className: 'g-ui-toast-row' },
-      title ? Div({ className: 'g-ui-toast-title' }, title) : null,
-      onClose ? Button({ className: 'g-ui-toast-close', onClick: onClose }, '×') : null
+      when(title, () => Div({ className: 'g-ui-toast-title' }, title)),
+      when(onClose, () => Button({ className: 'g-ui-toast-close', onClick: onClose }, '×'))
     ),
     children
   );

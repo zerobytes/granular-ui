@@ -3,7 +3,7 @@ import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function RangePicker(...args) {
   const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
-  const { value, size = 'md', className, ...rest } = props;
+  const { value, size, className, ...rest } = props;
   const { onChange } = rawProps;
   const currentState = state(resolveValue(value) ?? ['', '']);
 
@@ -14,7 +14,6 @@ export function RangePicker(...args) {
   });
 
   const setValue = (next) => {
-    if (value?.set) value.set(next);
     currentState.set(next);
     onChange?.(next);
   };

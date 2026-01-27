@@ -3,12 +3,15 @@ import { cx, splitPropsChildren } from '../utils.js';
 
 export function Breadcrumbs(...args) {
   const { props, children } = splitPropsChildren(args, { separator: '/' });
-  const { separator = '/', className, ...rest } = props;
-  const items = Array.isArray(children) ? children.filter(Boolean) : [children].filter(Boolean);
+  const { separator, className, ...rest } = props;
+  const items = [];
+  if (Array.isArray(children)) items.push(...children);
+  else items.push(children);
+  const filtered = items.filter(Boolean);
   const nodes = [];
-  items.forEach((item, idx) => {
+  filtered.forEach((item, idx) => {
     nodes.push(item);
-    if (idx < items.length - 1) {
+    if (idx < filtered.length - 1) {
       nodes.push(Span({ className: 'g-ui-breadcrumbs-separator' }, separator));
     }
   });

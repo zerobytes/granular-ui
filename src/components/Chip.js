@@ -1,12 +1,17 @@
-import { Button } from 'granular';
+import { Button, after, state } from 'granular';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function Chip(...args) {
-  const { props, children } = splitPropsChildren(args, { size: 'md', variant: 'filled' });
-  const { checked, onChange, size = 'md', variant = 'filled', className, ...rest } = props;
-  const current = checked?.get ? checked.get() : !!checked;
+  const { props, rawProps, children } = splitPropsChildren(args, { size: 'md', variant: 'filled' });
+  const { checked, size, variant, className, ...rest } = props;
+  const { onChange } = rawProps;
+  const currentState = state(!!checked);
+  after(checked).change((next) => {
+    if (next == null) return;
+    currentState.set(!!next);
+  });
   const setChecked = (next) => {
-    if (checked?.set) checked.set(next);
+    currentState.set(next);
     onChange?.(next);
   };
   return Button(
@@ -17,10 +22,13 @@ export function Chip(...args) {
         'g-ui-chip',
         classVar('g-ui-chip-size-', size, 'md'),
         classVar('g-ui-chip-variant-', variant, 'filled'),
-        current && 'g-ui-chip-active',
+        after(currentState).compute((current) => {
+          if (current) return 'g-ui-chip-active';
+          return '';
+        }),
         className
       ),
-      onClick: () => setChecked(!current),
+      onClick: () => setChecked(!currentState.get()),
     },
     children
   );

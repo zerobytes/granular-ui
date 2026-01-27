@@ -1,9 +1,9 @@
-import { Div } from 'granular';
+import { Div, when } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Timeline(...args) {
   const { props } = splitPropsChildren(args, { items: [] });
-  const { items = [], className, ...rest } = props;
+  const { items, className, ...rest } = props;
   return Div(
     { ...rest, className: cx('g-ui-timeline', className) },
     items.map((item) =>
@@ -12,8 +12,8 @@ export function Timeline(...args) {
         Div({ className: 'g-ui-timeline-dot' }),
         Div(
           { className: 'g-ui-timeline-content' },
-          item.title ? Div({ className: 'g-ui-timeline-title' }, item.title) : null,
-          item.description ? Div({ className: 'g-ui-timeline-desc' }, item.description) : null,
+          when(item.title, () => Div({ className: 'g-ui-timeline-title' }, item.title)),
+          when(item.description, () => Div({ className: 'g-ui-timeline-desc' }, item.description)),
           item.content
         )
       )

@@ -1,9 +1,9 @@
-import { Div, Textarea as HtmlTextarea } from 'granular';
+import { Div, Textarea as HtmlTextarea, when } from 'granular';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function Textarea(...args) {
   const { props } = splitPropsChildren(args, { size: 'md' });
-  const { size = 'md', leftSection, rightSection, className, ...rest } = props;
+  const { size, leftSection, rightSection, className, ...rest } = props;
   return Div(
     {
       className: cx(
@@ -13,11 +13,11 @@ export function Textarea(...args) {
         className
       ),
     },
-    leftSection ? Div({ className: 'g-ui-input-section' }, leftSection) : null,
+    when(leftSection, () => Div({ className: 'g-ui-input-section' }, leftSection)),
     HtmlTextarea({
       ...rest,
       className: cx('g-ui-input g-ui-textarea'),
     }),
-    rightSection ? Div({ className: 'g-ui-input-section' }, rightSection) : null
+    when(rightSection, () => Div({ className: 'g-ui-input-section' }, rightSection))
   );
 }

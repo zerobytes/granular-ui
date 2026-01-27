@@ -3,7 +3,7 @@ import { cx, splitPropsChildren } from '../utils.js';
 
 export function Skeleton(...args) {
   const { props } = splitPropsChildren(args, { height: 'md', width: 'full' });
-  const { height = 'md', width = 'full', className, ...rest } = props;
+  const { height, width, className, ...rest } = props;
   return Div({
     ...rest,
     className: cx(

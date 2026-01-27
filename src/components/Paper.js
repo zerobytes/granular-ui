@@ -3,7 +3,7 @@ import { cx, splitPropsChildren } from '../utils.js';
 
 export function Paper(...args) {
   const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'none' });
-  const { padding = 'md', radius = 'md', shadow = 'none', className, ...rest } = props;
+  const { padding, radius, shadow, className, ...rest } = props;
   return Div(
     {
       ...rest,

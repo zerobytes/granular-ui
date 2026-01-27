@@ -8,7 +8,7 @@ export function Drawer(...args) {
     overlay: 'normal',
     shadowed: true,
   });
-  const { opened, onClose, position = 'right', size = 'md', overlay = 'normal', shadowed = true, className, style } = props;
+  const { opened, onClose, position, size, overlay, shadowed, className, style } = props;
   return when(opened, () =>
     portal(
       Div(

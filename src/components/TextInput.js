@@ -2,20 +2,20 @@ import { Div, Input, Label, Span, when } from 'granular';
 import { cx, splitPropsChildren, classFlag, classVar } from '../utils.js';
 
 export function TextInput(...args) {
-  const { props } = splitPropsChildren(args, { size: 'md' });
+  const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
   const {
     label,
     description,
     error,
-    size = 'md',
+    size,
     leftSection,
     rightSection,
     className,
     style,
     inputProps,
-    onChange,
     ...rest
   } = props;
+  const { onChange } = rawProps;
   const input = Input({
     ...rest,
     className: cx('g-ui-input', inputProps?.className),
@@ -27,8 +27,8 @@ export function TextInput(...args) {
 
   return Div(
     { className: cx('g-ui-text-input', className) },
-    label ? Label({ className: 'g-ui-text-input-label' }, label) : null,
-    description ? Span({ className: 'g-ui-text-input-description' }, description) : null,
+    when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
+    when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
     Div(
       {
         className: cx(
@@ -37,9 +37,9 @@ export function TextInput(...args) {
           classFlag('g-ui-input-error', error)
         ),
       },
-      leftSection ? Span({ className: 'g-ui-input-section' }, leftSection) : null,
+      when(leftSection, () => Span({ className: 'g-ui-input-section' }, leftSection)),
       input,
-      rightSection ? Span({ className: 'g-ui-input-section' }, rightSection) : null
+      when(rightSection, () => Span({ className: 'g-ui-input-section' }, rightSection))
     ),
     when(error, () => Span({ className: 'g-ui-text-input-error-text' }, error))
   );

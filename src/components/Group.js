@@ -3,7 +3,7 @@ import { cx, splitPropsChildren, classVar, classMap, classFlag } from '../utils.
 
 export function Group(...args) {
   const { props, children } = splitPropsChildren(args, { gap: 'md', align: 'center' });
-  const { gap = 'md', align = 'center', position, wrap, className, style, ...rest } = props;
+  const { gap, align, position, wrap, className, style, ...rest } = props;
   const positionClass = classMap(position, {
     apart: 'g-ui-justify-between',
     center: 'g-ui-justify-center',

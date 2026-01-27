@@ -1,15 +1,17 @@
-import { Div, Input } from 'granular';
+import { Div, Input, after, state } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
-import { state } from 'granular';
 
 export function PinInput(...args) {
-  const { props } = splitPropsChildren(args, { length: 4 });
-  const { length = 4, value, onChange, className, ...rest } = props;
-  const internal = state(Array.from({ length }, () => ''));
-  const current = value?.get ? value.get() : value ?? internal.get();
+  const { props, rawProps } = splitPropsChildren(args, { length: 4 });
+  const { length, value, className, ...rest } = props;
+  const { onChange } = rawProps;
+  const currentState = state(Array.from({ length }, () => ''));
+  after(value).change((next) => {
+    if (next == null) return;
+    currentState.set(next);
+  });
   const setValue = (next) => {
-    if (value?.set) value.set(next);
-    else internal.set(next);
+    currentState.set(next);
     onChange?.(next);
   };
 
@@ -21,8 +23,9 @@ export function PinInput(...args) {
         type: 'text',
         inputMode: 'numeric',
         maxLength: 1,
-        value: current[idx] || '',
+        value: (currentState.get()?.[idx] || ''),
         onInput: (ev) => {
+          const current = currentState.get() ?? [];
           const next = current.slice();
           next[idx] = ev.target.value;
           setValue(next);

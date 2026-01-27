@@ -12,10 +12,10 @@ export function Slider(...args) {
   const {
     value,
     marks,
-    size = 'md',
-    min = 0,
-    max = 100,
-    step = 1,
+    size,
+    min,
+    max,
+    step,
     disabled,
     className,
     ...rest
@@ -113,7 +113,8 @@ export const SliderMark = ({ mark, getBounds }) => {
   const label = mark.label ?? String(mark.value) ?? value;
 
   const markValue = Number(value);
-  const pct = range > 0 ? ((markValue - minValue) / range) * 100 : 0;
+  let pct = 0;
+  if (range > 0) pct = ((markValue - minValue) / range) * 100;
   return Div(
     {
       className: 'g-ui-slider-mark',

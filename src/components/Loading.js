@@ -3,7 +3,7 @@ import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function Loading(...args) {
   const { props } = splitPropsChildren(args, { variant: 'spinner', size: 'md' });
-  const { variant = 'spinner', size = 'md', className, style } = props;
+  const { variant, size, className, style } = props;
   if (variant === 'dots') {
     return Div({ className: cx('g-ui-loading g-ui-dots', classVar('g-ui-loading-size-', size, 'md'), className) });
   }

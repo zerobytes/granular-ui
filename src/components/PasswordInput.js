@@ -4,7 +4,7 @@ import { state } from 'granular';
 
 export function PasswordInput(...args) {
   const { props } = splitPropsChildren(args, { size: 'md' });
-  const { size = 'md', className, ...rest } = props;
+  const { size, className, ...rest } = props;
   const visible = state(false);
   const inputType = after(visible).compute((next) => (next ? 'text' : 'password'));
   return Div(

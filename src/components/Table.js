@@ -4,8 +4,8 @@ import { cx, splitPropsChildren, classFlag } from '../utils.js';
 export function Table(...args) {
   const { props } = splitPropsChildren(args, { headers: [], rows: [] });
   const {
-    headers = [],
-    rows = [],
+    headers,
+    rows,
     striped,
     highlightOnHover,
     withBorder,

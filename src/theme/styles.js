@@ -651,9 +651,9 @@ body {
 
 .g-ui-card {
   background: var(--g-ui-surface);
-  border: 0;
   border-radius: var(--g-ui-radius);
   box-shadow: none;
+  border: 1px solid var(--g-ui-border);
 }
 .g-ui-card-padding-xs { padding: 10px; }
 .g-ui-card-padding-sm { padding: 14px; }
@@ -666,6 +666,35 @@ body {
 .g-ui-card-shadow-sm { box-shadow: var(--g-ui-shadow-sm); }
 .g-ui-card-shadow-md { box-shadow: var(--g-ui-shadow-md); }
 .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
+.g-ui-card-title {
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--g-ui-text);
+}
+.g-ui-card-content {
+  color: var(--g-ui-muted);
+  margin-bottom: 10px;
+}
+.g-ui-card-actions {
+  position:relative;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  border-top: 1px solid var(--g-ui-border);
+  box-sizing: border-box;
+}
+
+.g-ui-card-padding-xs .g-ui-card-title, .g-ui-card-padding-xs .g-ui-card-content { margin-bottom: 10px; }
+.g-ui-card-padding-sm .g-ui-card-title, .g-ui-card-padding-sm .g-ui-card-content { margin-bottom: 14px; }
+.g-ui-card-padding-md .g-ui-card-title, .g-ui-card-padding-md .g-ui-card-content { margin-bottom: 18px; }
+.g-ui-card-padding-lg .g-ui-card-title, .g-ui-card-padding-lg .g-ui-card-content { margin-bottom: 24px; }
+
+.g-ui-card-padding-xs .g-ui-card-actions { left: -10px; width: calc(100% + 20px); padding: 10px 10px 0 10px; }
+.g-ui-card-padding-sm .g-ui-card-actions { left: -14px; width: calc(100% + 28px); padding: 14px 14px 0 14px; }
+.g-ui-card-padding-md .g-ui-card-actions { left: -18px; width: calc(100% + 36px); padding: 18px 18px 0 18px; }
+.g-ui-card-padding-lg .g-ui-card-actions { left: -24px; width: calc(100% + 48px); padding: 24px 24px 0 24px; }
 
 .g-ui-badge {
   display: inline-flex;
@@ -721,6 +750,9 @@ body {
   font-weight: 600;
   transition: transform .08s ease, background .12s ease, border .12s ease, color .12s ease;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .g-ui-button:active { transform: translateY(1px); }
 .g-ui-button:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -1801,7 +1833,8 @@ body {
 .g-ui-calendar-cell-muted {
   color: var(--g-ui-muted);
 }
-.g-ui-calendar-cell-active {
+.g-ui-calendar-cell-active,
+.g-ui-calendar-cell-active:hover {
   background: var(--g-ui-primary);
   color: #fff;
 }

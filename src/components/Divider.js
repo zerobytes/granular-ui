@@ -1,10 +1,10 @@
-import { Div } from 'granular';
+import { Div, when } from 'granular';
 import { cx, splitPropsChildren, classFlag, classVar } from '../utils.js';
 import { Text } from './Text.js';
 
 export function Divider(...args) {
   const { props } = splitPropsChildren(args, { labelPosition: 'center' });
-  const { label, labelPosition = 'center', className, ...rest } = props;
+  const { label, labelPosition, className, ...rest } = props;
 
   return Div(
     {
@@ -16,6 +16,6 @@ export function Divider(...args) {
         className
       ),
     },
-    label ? Text({ className: 'g-ui-divider-label-text', size: 'sm' }, label) : null
+    when(label, () => Text({ className: 'g-ui-divider-label-text', size: 'sm' }, label))
   );
 }

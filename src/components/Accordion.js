@@ -4,7 +4,7 @@ import { cx, splitPropsChildren, resolveBool } from '../utils.js';
 
 export function Accordion(...args) {
   const { props, children } = splitPropsChildren(args, { opened: false });
-  const { opened = false, className, ...rest } = props;
+  const { opened, className, ...rest } = props;
   const openedState = state(resolveBool(opened));
 
   after(opened).change((next) => {

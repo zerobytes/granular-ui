@@ -2,17 +2,17 @@ import { Div, Button as HtmlButton, portal, when } from 'granular';
 import { cx, splitPropsChildren, classVar, classMap } from '../utils.js';
 
 export function Modal(...args) {
-  const { props, children } = splitPropsChildren(args, { size: 'md', centered: true, overlay: 'normal' });
+  const { props, rawProps, children } = splitPropsChildren(args, { size: 'md', centered: true, overlay: 'normal' });
   const {
     opened,
-    onClose,
     title,
-    size = 'md',
-    centered = true,
-    overlay = 'normal',
+    size,
+    centered,
+    overlay,
     className,
     style,
   } = props;
+  const { onClose } = rawProps;
 
   return when(opened, () =>
     portal(
@@ -33,8 +33,10 @@ export function Modal(...args) {
           },
           Div(
             { className: 'g-ui-modal-header' },
-            title ? Div({ className: 'g-ui-modal-title' }, title) : null,
-            onClose ? HtmlButton({ className: 'g-ui-button g-ui-button-variant-subtle g-ui-button-size-xs', onClick: onClose }, 'Close') : null
+            when(title, () => Div({ className: 'g-ui-modal-title' }, title)),
+            when(onClose, () =>
+              HtmlButton({ className: 'g-ui-button g-ui-button-variant-subtle g-ui-button-size-xs', onClick: onClose }, 'Close')
+            )
           ),
           children
         )

@@ -3,7 +3,7 @@ import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function ActionIcon(...args) {
   const { props, children } = splitPropsChildren(args, { size: 'md', variant: 'filled' });
-  const { size = 'md', variant = 'filled', className, ...rest } = props;
+  const { size, variant, className, ...rest } = props;
   return Button(
     {
       ...rest,

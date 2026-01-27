@@ -1,16 +1,23 @@
-import { Div, Span } from 'granular';
+import { Div, Span, after, state } from 'granular';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function MultiSelect(...args) {
-  const { props } = splitPropsChildren(args, { data: [], size: 'md' });
-  const { value, data = [], size = 'md', onChange, className, ...rest } = props;
-  const selected = value?.get ? value.get() : resolveValue(value) ?? [];
+  const { props, rawProps } = splitPropsChildren(args, { data: [], size: 'md' });
+  const { value, data, size, className, ...rest } = props;
+  const { onChange } = rawProps;
+  const currentState = state(resolveValue(value) ?? []);
+  after(value).change((next) => {
+    const resolved = resolveValue(next);
+    if (resolved == null) return;
+    currentState.set(resolved);
+  });
+  const selected = currentState.get() ?? [];
 
   const toggle = (val) => {
     const next = selected.includes(val)
       ? selected.filter((v) => v !== val)
       : selected.concat(val);
-    if (value?.set) value.set(next);
+    currentState.set(next);
     onChange?.(next);
   };
 

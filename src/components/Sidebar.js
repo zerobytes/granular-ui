@@ -20,11 +20,11 @@ const DrawerSidebar = (props, children)=>{
   const {
     open,
     onClose,
-    position = 'left',
-    size = 'md',
-    blur = true,
-    fixed = false,
-    minWidth = 'button',
+    position,
+    size,
+    blur,
+    fixed,
+    minWidth,
     className,
     ...rest
   } = props;
@@ -66,11 +66,14 @@ const DrawerSidebar = (props, children)=>{
     className
   ).compute((values) => {
     const [size, position, open, className] = values;
+    const positionClass = position === 'right'
+      ? 'g-ui-sidebar-drawer-right g-ui-sidebar-position-right'
+      : 'g-ui-sidebar-drawer-left';
     return cx(
       'g-ui-sidebar',
       'g-ui-sidebar-drawer',
       `g-ui-sidebar-size-${size}`,
-      position === 'right' ? 'g-ui-sidebar-drawer-right g-ui-sidebar-position-right' : 'g-ui-sidebar-drawer-left',
+      positionClass,
       open && 'g-ui-sidebar-drawer-open',
       resolveValue(className)
     )
@@ -90,9 +93,9 @@ const DrawerSidebar = (props, children)=>{
 const FixedSidebar = (props, children)=>{
   const {
     open,
-    position = 'left',
-    size = 'md',
-    minWidth = 'button',
+    position,
+    size,
+    minWidth,
     className,
     ...rest
   } = props;
@@ -107,12 +110,11 @@ const FixedSidebar = (props, children)=>{
     const [size, position, open, minWidth, className] = values;
     
     const minWidthValue = minWidth || 'button';
-    const minWidthClass =
-      minWidthValue === 'button' ? 'g-ui-sidebar-min-button' :
-      minWidthValue === 'xs' ? 'g-ui-sidebar-min-xs' :
-      minWidthValue === 'sm' ? 'g-ui-sidebar-min-sm' :
-      minWidthValue === 'md' ? 'g-ui-sidebar-min-md' :
-      null;
+    let minWidthClass = null;
+    if (minWidthValue === 'button') minWidthClass = 'g-ui-sidebar-min-button';
+    else if (minWidthValue === 'xs') minWidthClass = 'g-ui-sidebar-min-xs';
+    else if (minWidthValue === 'sm') minWidthClass = 'g-ui-sidebar-min-sm';
+    else if (minWidthValue === 'md') minWidthClass = 'g-ui-sidebar-min-md';
 
     const classNameString = cx(
       'g-ui-sidebar g-ui-sidebar-fixed',

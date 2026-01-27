@@ -4,7 +4,7 @@ import { state } from 'granular';
 
 export function CopyButton(...args) {
   const { props, children } = splitPropsChildren(args, { value: '', timeout: 1500 });
-  const { value = '', timeout = 1500, className, ...rest } = props;
+  const { value, timeout, className, ...rest } = props;
   const copied = state(false);
   const buttonClass = after(copied).compute((next) =>
     cx('g-ui-copy-button', next && 'g-ui-copy-button-done', className)
@@ -25,6 +25,6 @@ export function CopyButton(...args) {
       onClick: copy,
       type: 'button',
     },
-    children?.length ? children : when(copied, () => 'Copied', () => 'Copy')
+    when(children?.length, () => children, () => when(copied, () => 'Copied', () => 'Copy'))
   );
 }

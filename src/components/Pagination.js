@@ -2,14 +2,19 @@ import { Button, Div, state, after } from 'granular';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function Pagination(...args) {
-  const { props } = splitPropsChildren(args, { total: 1, size: 'md' });
-  const { page, total = 1, size = 'md', onChange, className, ...rest } = props;
-  const currentState = page?.get ? page : state(resolveValue(page ?? 1));
+  const { props, rawProps } = splitPropsChildren(args, { total: 1, size: 'md' });
+  const { page, total, size, className, ...rest } = props;
+  const { onChange } = rawProps;
+  const currentState = state(resolveValue(page ?? 1));
+  after(page).change((next) => {
+    const resolved = resolveValue(next);
+    if (resolved == null) return;
+    currentState.set(resolved);
+  });
   const setPage = (next) => {
     const totalValue = Number(resolveValue(total)) || 1;
     const clamped = Math.max(1, Math.min(totalValue, next));
-    if (page?.set) page.set(clamped);
-    else currentState.set(clamped);
+    currentState.set(clamped);
     onChange?.(clamped);
   };
   const items = [];

@@ -1,12 +1,18 @@
-import { Div } from 'granular';
+import { Div, after, state } from 'granular';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function SegmentedControl(...args) {
-  const { props } = splitPropsChildren(args, { data: [], size: 'sm' });
-  const { value, onChange, data = [], size = 'sm', scroll, className, ...rest } = props;
-  const current = value?.get ? value.get() : resolveValue(value);
+  const { props, rawProps } = splitPropsChildren(args, { data: [], size: 'sm' });
+  const { value, data, size, scroll, className, ...rest } = props;
+  const { onChange } = rawProps;
+  const currentState = state(resolveValue(value));
+  after(value).change((next) => {
+    const resolved = resolveValue(next);
+    if (resolved == null) return;
+    currentState.set(resolved);
+  });
   const setValue = (next) => {
-    if (value?.set) value.set(next);
+    currentState.set(next);
     onChange?.(next);
   };
   return Div(
@@ -16,7 +22,13 @@ export function SegmentedControl(...args) {
       data.map((item) =>
         Div(
           {
-            className: cx('g-ui-segmented-item', item.value === current && 'g-ui-segmented-active'),
+            className: cx(
+              'g-ui-segmented-item',
+            after(currentState).compute((current) => {
+              if (item.value === current) return 'g-ui-segmented-active';
+              return '';
+            })
+            ),
             onClick: () => setValue(item.value),
           },
           item.label

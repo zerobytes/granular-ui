@@ -4,7 +4,7 @@ import { SliderMark } from './Slider.js';
 
 export function RangeSlider(...args) {
   const { props, rawProps } = splitPropsChildren(args, { min: 0, max: 100, step: 1, size: 'md' });
-  const { value, marks, min = 0, max = 100, step = 1, size = 'md', disabled, className, ...rest } = props;
+  const { value, marks, min, max, step, size, disabled, className, ...rest } = props;
   const { onChange } = rawProps;
   const currentState = state(resolveValue(value ?? [min, max]));
   const getBounds = () => {
@@ -64,7 +64,8 @@ export function RangeSlider(...args) {
     const { minValue, maxValue } = getBounds();
     const nextValue = minValue + ratio * (maxValue - minValue);
     const [low, high] = normalize(currentState.get ? currentState.get() : currentState);
-    setValue(thumb === 'low' ? [nextValue, high] : [low, nextValue]);
+    if (thumb === 'low') setValue([nextValue, high]);
+    else setValue([low, nextValue]);
   };
   const startDrag = (ev, forcedThumb, trackEl) => {
     if (resolveBool(disabled)) return;
@@ -74,9 +75,11 @@ export function RangeSlider(...args) {
     const rect = getRect();
     const { lowPct, highPct } = percent.get ? percent.get() : percent;
     const clickPct = ((ev.clientX - rect.left) / rect.width) * 100;
-    const thumb =
-      forcedThumb ||
-      (Math.abs(clickPct - lowPct) <= Math.abs(clickPct - highPct) ? 'low' : 'high');
+    let thumb = forcedThumb;
+    if (!thumb) {
+      const isLow = Math.abs(clickPct - lowPct) <= Math.abs(clickPct - highPct);
+      thumb = isLow ? 'low' : 'high';
+    }
     track.setPointerCapture?.(ev.pointerId);
     updateFromEvent(ev, getRect, thumb);
     const handleMove = (moveEv) => updateFromEvent(moveEv, getRect, thumb);

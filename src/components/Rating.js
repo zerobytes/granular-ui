@@ -1,12 +1,18 @@
-import { Span } from 'granular';
+import { Span, after, state } from 'granular';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function Rating(...args) {
-  const { props } = splitPropsChildren(args, { value: 0, max: 5, size: 'md' });
-  const { value = 0, max = 5, size = 'md', onChange, className, ...rest } = props;
-  const current = value?.get ? value.get() : resolveValue(value);
+  const { props, rawProps } = splitPropsChildren(args, { value: 0, max: 5, size: 'md' });
+  const { value, max, size, className, ...rest } = props;
+  const { onChange } = rawProps;
+  const currentState = state(resolveValue(value));
+  after(value).change((next) => {
+    const resolved = resolveValue(next);
+    if (resolved == null) return;
+    currentState.set(resolved);
+  });
   const setValue = (next) => {
-    if (value?.set) value.set(next);
+    currentState.set(next);
     onChange?.(next);
   };
   const items = [];
@@ -20,7 +26,13 @@ export function Rating(...args) {
     items.map((i) =>
       Span(
         {
-          className: cx('g-ui-rating-item', i <= current && 'g-ui-rating-item-active'),
+          className: cx(
+            'g-ui-rating-item',
+            after(currentState).compute((current) => {
+              if (i <= current) return 'g-ui-rating-item-active';
+              return '';
+            })
+          ),
           onClick: () => setValue(i),
         },
         '★'

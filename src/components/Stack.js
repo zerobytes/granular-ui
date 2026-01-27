@@ -3,7 +3,7 @@ import { cx, splitPropsChildren, classVar, classMap } from '../utils.js';
 
 export function Stack(...args) {
   const { props, children } = splitPropsChildren(args, { gap: 'md' });
-  const { gap = 'md', align, justify, className, style, ...rest } = props;
+  const { gap, align, justify, className, style, ...rest } = props;
   const justifyClass = classMap(justify, {
     between: 'g-ui-justify-between',
     center: 'g-ui-justify-center',
