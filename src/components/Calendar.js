@@ -1,5 +1,5 @@
 import { Button, Div, state, after } from 'granular';
-import { cx, splitPropsChildren, resolveValue } from '../utils.js';
+import { cx, splitPropsChildren, resolveValue, classVar } from '../utils.js';
 import { forwardSvg, backwardSvg } from '../theme/icons.js';
 import { ActionIcon } from './ActionIcon.js';
 import { Icon } from './Icon.js';
@@ -7,8 +7,8 @@ import { Icon } from './Icon.js';
 const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 export function Calendar(...args) {
-  const { props, rawProps } = splitPropsChildren(args, {});
-  const { value, className, ...rest } = props;
+  const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
+  const { value, className, size, ...rest } = props;
   const { onChange } = rawProps;
   const resolveDate = (next) => {
     const resolved = resolveValue(next);
@@ -87,7 +87,7 @@ export function Calendar(...args) {
   });
 
   return Div(
-    { ...rest, className: cx('g-ui-calendar', className) },
+    { ...rest, className: cx('g-ui-calendar', className, classVar('g-ui-calendar-size-', size, 'md')) },
     Div(
       { className: 'g-ui-calendar-header' },
       ActionIcon(
