@@ -1,16 +1,25 @@
-import { Div, Input, Label, Span, when } from 'granular';
+import { Div, Input, Label, Span, when, state, after } from 'granular';
 import { cx, splitPropsChildren, classVar, resolveBool } from '../utils.js';
-
-const checkSymbolSVG = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>';
+import { checkedSvg, indeterminateSvg } from '../theme/icons.js';
 
 export function Checkbox(...args) {
-  const { props } = splitPropsChildren(args, { size: 'md' });
-  const { label, description, size, indeterminate, className, style, inputProps, ...rest } = props;
+  const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
+  const { checked, label, description, size, indeterminate, className, style, inputProps, ...rest } = props;
+  const { onChange } = rawProps;
+  const currentState = state(resolveBool(checked));
+
+  after(checked).change((next) => {
+    if (next == null) return;
+    currentState.set(!!next);
+    onChange?.(next);
+  });
+
   const control = Label(
     { className: 'g-ui-checkbox-control' },
     Input({
       type: 'checkbox',
-      indeterminate: resolveBool(indeterminate),
+      indeterminate: indeterminate,
+      checked: currentState,
       className: cx(
         'g-ui-checkbox-input',
         classVar('g-ui-checkbox-size-', size, 'md'),
@@ -18,6 +27,14 @@ export function Checkbox(...args) {
       ),
       ...rest,
     }),
+    when(currentState,
+      () => Div({ className: 'g-ui-checkbox-checked', innerHTML: checkedSvg }),
+      () => {
+        if (!currentState.get() && indeterminate.get()) {
+          return Div({ className: 'g-ui-checkbox-indeterminate', innerHTML: indeterminateSvg });
+        }
+      }
+    ),
     when(label, () => Span({ className: 'g-ui-checkbox-label' }, label))
   );
 

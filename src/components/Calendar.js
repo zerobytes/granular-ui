@@ -1,5 +1,8 @@
-import { Button, Div, Span, state, after } from 'granular';
+import { Button, Div, state, after } from 'granular';
 import { cx, splitPropsChildren, resolveValue } from '../utils.js';
+import { forwardSvg, backwardSvg } from '../theme/icons.js';
+import { ActionIcon } from './ActionIcon.js';
+import { Icon } from './Icon.js';
 
 const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
@@ -16,25 +19,43 @@ export function Calendar(...args) {
     return parsed;
   };
   const currentState = state(resolveDate(value) ?? new Date());
+  const viewState = state(new Date(currentState.get()));
 
   after(value).change((next) => {
     const resolved = resolveDate(next);
     if (resolved == null) return;
     currentState.set(resolved);
+    viewState.set(new Date(resolved));
   });
 
+  const createDate = (year, month, day) => {
+    const maxDay = new Date(year, month + 1, 0).getDate();
+    return new Date(year, month, Math.min(day, maxDay));
+  };
+
   const setDate = (day) => {
-    const current = currentState.get();
-    const next = new Date(current.getFullYear(), current.getMonth(), day);
+    const current = viewState.get();
+    const next = createDate(current.getFullYear(), current.getMonth(), day);
     currentState.set(next);
+    viewState.set(next);
     onChange?.(next);
   };
 
-  const title = after(currentState).compute((current) => {
-    const month = current.toLocaleString('default', { month: 'long' });
-    return `${month} ${current.getFullYear()}`;
-  });
-  const gridCells = after(currentState).compute((current) => {
+  const shiftMonth = (delta) => {
+    const current = viewState.get();
+    const next = createDate(current.getFullYear(), current.getMonth() + delta, current.getDate());
+    viewState.set(next);
+  };
+
+  const shiftYear = (delta) => {
+    const current = viewState.get();
+    const next = createDate(current.getFullYear() + delta, current.getMonth(), current.getDate());
+    viewState.set(next);
+  };
+
+  const monthLabel = after(viewState).compute((current) => current.toLocaleString('default', { month: 'long' }));
+  const yearLabel = after(viewState).compute((current) => String(current.getFullYear()));
+  const gridCells = after(viewState, currentState).compute(([current, selected]) => {
     const year = current.getFullYear();
     const month = current.getMonth();
     const first = new Date(year, month, 1);
@@ -51,7 +72,11 @@ export function Calendar(...args) {
             className: cx(
               'g-ui-calendar-cell',
               c.muted && 'g-ui-calendar-cell-muted',
-              c.label && c.label === current.getDate() && 'g-ui-calendar-cell-active'
+              c.label &&
+                selected.getFullYear() === year &&
+                selected.getMonth() === month &&
+                c.label === selected.getDate() &&
+                'g-ui-calendar-cell-active'
             ),
             onClick: () => c.label && setDate(c.label),
           },
@@ -65,8 +90,19 @@ export function Calendar(...args) {
     { ...rest, className: cx('g-ui-calendar', className) },
     Div(
       { className: 'g-ui-calendar-header' },
-      Span({ className: 'g-ui-calendar-title' }, title),
-      Button({ className: 'g-ui-button g-ui-button-size-xs g-ui-button-variant-subtle' }, '...')
+      ActionIcon(
+        { size: 'xs', variant: 'subtle', className: 'g-ui-calendar-nav', onClick: () => shiftMonth(-1) },
+        Icon({ size: 'sm', className: 'g-ui-calendar-nav-icon', innerHTML: backwardSvg })
+      ),
+      Div(
+        { className: 'g-ui-calendar-title-group' },
+        Button({ type: 'button', className: 'g-ui-calendar-title-button', onClick: () => shiftMonth(1) }, monthLabel),
+        Button({ type: 'button', className: 'g-ui-calendar-title-button', onClick: () => shiftYear(1) }, yearLabel)
+      ),
+      ActionIcon(
+        { size: 'xs', variant: 'subtle', className: 'g-ui-calendar-nav', onClick: () => shiftMonth(1) },
+        Icon({ size: 'sm', className: 'g-ui-calendar-nav-icon', innerHTML: forwardSvg })
+      )
     ),
     Div({ className: 'g-ui-calendar-grid' }, gridCells)
   );

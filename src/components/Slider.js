@@ -35,7 +35,8 @@ export function Slider(...args) {
   };
   const getStep = () => {
     const stepValue = Number(resolveValue(step));
-    return Number.isFinite(stepValue) && stepValue > 0 ? stepValue : 1;
+    if (Number.isFinite(stepValue) && stepValue > 0) return stepValue;
+    return 1;
   };
   const setValue = (next) => {
     const { minValue, maxValue } = getBounds();

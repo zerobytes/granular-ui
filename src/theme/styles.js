@@ -366,6 +366,7 @@ const css = `
   --g-ui-primary-subtle: rgba(55, 148, 255, 0.1);
   --g-ui-primary-muted: rgba(55, 148, 255, 0.2);
   --g-ui-primary-emphasized: rgba(55, 148, 255, 0.3);
+  --g-ui-primary-fg: var(--g-ui-white);
   
   /* Aliases for common usage */
   --g-ui-success: var(--g-ui-green-500);
@@ -443,10 +444,10 @@ const css = `
   --g-ui-text: var(--g-ui-fg);
   --g-ui-muted: var(--g-ui-fg-muted);
   
-  --g-ui-border: var(--g-ui-gray-200);
+  --g-ui-border: var(--g-ui-gray-300);
   --g-ui-border-subtle: var(--g-ui-gray-50);
   --g-ui-border-muted: var(--g-ui-gray-100);
-  --g-ui-border-emphasized: var(--g-ui-gray-300);
+  --g-ui-border-emphasized: var(--g-ui-gray-400);
   --g-ui-border-inverted: var(--g-ui-gray-800);
   --g-ui-border-error: var(--g-ui-red-500);
   --g-ui-border-warning: var(--g-ui-orange-500);
@@ -712,7 +713,7 @@ body {
 .g-ui-badge-size-xl { font-size: 16px; height: 32px; padding: 0 16px; }
 .g-ui-badge-variant-filled {
   background: var(--g-ui-primary);
-  color: #fff;
+  color: var(--g-ui-primary-fg);
   border: 1px solid transparent;
 }
 .g-ui-badge-variant-light {
@@ -760,7 +761,7 @@ body {
 .g-ui-button-loading { opacity: 0.8; }
 .g-ui-button-section-left { margin-right: 8px; display: inline-flex; }
 .g-ui-button-section-right { margin-left: 8px; display: inline-flex; }
-.g-ui-button-variant-filled { background: var(--g-ui-primary); color: #fff; border: 1px solid transparent; }
+.g-ui-button-variant-filled { background: var(--g-ui-primary); color: var(--g-ui-primary-fg); border: 1px solid transparent; }
 .g-ui-button-variant-light { background: var(--g-ui-primary-subtle); color: var(--g-ui-primary); border: 1px solid var(--g-ui-primary-muted); }
 .g-ui-button-variant-outline { background: transparent; color: var(--g-ui-primary); border: 1px solid var(--g-ui-primary); }
 .g-ui-button-variant-subtle { background: transparent; color: var(--g-ui-text); border: 1px solid var(--g-ui-border); }
@@ -881,12 +882,24 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  box-sizing: border-box;
 }
 .g-ui-checkbox-control {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
+}
+.g-ui-checkbox-indeterminate,
+.g-ui-checkbox-checked {
+  position:absolute;
+  color: var(--g-ui-primary-fg);
+  fill: var(--g-ui-primary-fg);
+}
+.g-ui-checkbox-indeterminate svg,
+.g-ui-checkbox-checked svg {
+  fill: var(--g-ui-primary-fg);
 }
 .g-ui-checkbox-input {
   appearance: none;
@@ -906,28 +919,11 @@ body {
   background: var(--g-ui-primary);
   border-color: var(--g-ui-primary);
 }
-.g-ui-checkbox-input:checked::after {
-  content: '';
-  position: absolute;
-  inset: var(--g-ui-control-inner-offset, 3px);
-  border-radius: 2px;
-  background: #fff;
-}
 .g-ui-checkbox-input:indeterminate {
   background: var(--g-ui-primary);
   border-color: var(--g-ui-primary);
 }
-.g-ui-checkbox-input:indeterminate::after {
-  content: '';
-  position: absolute;
-  height: 2px;
-  left: var(--g-ui-control-inner-offset, 3px);
-  right: var(--g-ui-control-inner-offset, 3px);
-  top: 50%;
-  transform: translateY(-50%);
-  background: #fff;
-  border-radius: 2px;
-}
+
 .g-ui-checkbox-label { font-size: 14px; }
 .g-ui-checkbox-description { font-size: 12px; color: var(--g-ui-muted); }
 .g-ui-checkbox-size-xs { --g-ui-control-size: 16px; --g-ui-control-inner-offset: 4px; }
@@ -935,6 +931,28 @@ body {
 .g-ui-checkbox-size-md { --g-ui-control-size: 24px; --g-ui-control-inner-offset: 6px; }
 .g-ui-checkbox-size-lg { --g-ui-control-size: 30px; --g-ui-control-inner-offset: 7px; }
 .g-ui-checkbox-size-xl { --g-ui-control-size: 36px; --g-ui-control-inner-offset: 8px; }
+
+.g-ui-checkbox-size-xs .g-ui-checkbox-indeterminate { top: 2px;left:4px; }
+.g-ui-checkbox-size-xs .g-ui-checkbox-indeterminate svg { width: 16px; height: 16px; }
+.g-ui-checkbox-size-sm .g-ui-checkbox-indeterminate { top:3px; left:4px;  }
+.g-ui-checkbox-size-sm .g-ui-checkbox-indeterminate svg { width: 20px; height:20px;  }
+.g-ui-checkbox-size-md .g-ui-checkbox-indeterminate { top:3px; left:4px; }
+.g-ui-checkbox-size-md .g-ui-checkbox-indeterminate svg { width: 24px; height: 24px; }
+.g-ui-checkbox-size-lg .g-ui-checkbox-indeterminate { top:4px; left:5px; }
+.g-ui-checkbox-size-lg .g-ui-checkbox-indeterminate svg { width: 28px; height: 28px; }
+.g-ui-checkbox-size-xl .g-ui-checkbox-indeterminate { top:5px; left:6px; }
+.g-ui-checkbox-size-xl .g-ui-checkbox-indeterminate svg { width: 32px; height: 32px; }
+
+.g-ui-checkbox-size-xs .g-ui-checkbox-checked { top: 2px;left:4px; }
+.g-ui-checkbox-size-xs .g-ui-checkbox-checked svg { width: 16px; height: 16px; }
+.g-ui-checkbox-size-sm .g-ui-checkbox-checked { top:3px; left:4px;  }
+.g-ui-checkbox-size-sm .g-ui-checkbox-checked svg { width: 20px; height:20px;  }
+.g-ui-checkbox-size-md .g-ui-checkbox-checked { top:3px; left:4px; }
+.g-ui-checkbox-size-md .g-ui-checkbox-checked svg { width: 24px; height: 24px; }
+.g-ui-checkbox-size-lg .g-ui-checkbox-checked { top:4px; left:5px; }
+.g-ui-checkbox-size-lg .g-ui-checkbox-checked svg { width: 28px; height: 28px; }
+.g-ui-checkbox-size-xl .g-ui-checkbox-checked { top:5px; left:6px; }
+.g-ui-checkbox-size-xl .g-ui-checkbox-checked svg { width: 32px; height: 32px; }
 
 .g-ui-switch {
   display: inline-flex;
@@ -1094,7 +1112,7 @@ body {
 }
 .g-ui-tabs-variant-pills .g-ui-tabs-tab-active {
   background: var(--g-ui-primary);
-  color: #fff;
+  color: var(--g-ui-primary-fg);
 }
 
 .g-ui-table {
@@ -1268,7 +1286,7 @@ body {
   height: 28px;
   border-radius: 999px;
   background: var(--g-ui-primary);
-  color: #fff;
+  color: var(--g-ui-primary-fg);
 }
 .g-ui-notification-loader { margin-right: 8px; }
 .g-ui-notification-close {
@@ -1442,11 +1460,11 @@ body {
 }
 
 .g-ui-blockquote {
-  border-left: 3px solid var(--g-ui-primary);
+  border-left: 5px solid var(--g-ui-primary);
   padding: 24px 38px;
   background: var(--g-ui-bg-muted);
   color: var(--g-ui-text);
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .g-ui-grid {
@@ -1619,7 +1637,7 @@ body {
 .g-ui-chip-active {
   background: var(--g-ui-primary);
   border-color: transparent;
-  color: #fff;
+  color: var(--g-ui-primary-fg);
 }
 .g-ui-chip-size-xs { font-size: 12px; height: 23px; padding: 0 16px; }
 .g-ui-chip-size-sm { font-size: 13px; height: 28px; padding: 0 20px; }
@@ -1634,7 +1652,7 @@ body {
 .g-ui-chip-variant-outline.g-ui-chip-active {
   background: var(--g-ui-primary);
   border-color: transparent;
-  color: #fff;
+  color: var(--g-ui-primary-fg);
 }
 
 .g-ui-segmented {
@@ -1679,7 +1697,7 @@ body {
 .g-ui-pagination-item-active {
   background: var(--g-ui-primary);
   border-color: var(--g-ui-primary);
-  color: #fff;
+  color: var(--g-ui-primary-fg);
 }
 .g-ui-pagination-item:hover {
   background: var(--g-ui-bg-subtle);
@@ -1809,9 +1827,32 @@ body {
   justify-content: space-between;
   margin-bottom: 10px;
 }
+.g-ui-calendar-title-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.g-ui-calendar-title-button {
+  border: 0;
+  background: transparent;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--g-ui-text);
+  cursor: pointer;
+}
+.g-ui-calendar-title-button:hover {
+  background: var(--g-ui-bg-subtle);
+}
 .g-ui-calendar-title {
   font-weight: 500;
   font-size: 14px;
+}
+.g-ui-calendar-nav-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
 }
 .g-ui-calendar-grid {
   display: grid;
@@ -1836,7 +1877,7 @@ body {
 .g-ui-calendar-cell-active,
 .g-ui-calendar-cell-active:hover {
   background: var(--g-ui-primary);
-  color: #fff;
+  color: var(--g-ui-primary-fg);
 }
 
 .g-ui-select-multi {
@@ -2296,7 +2337,7 @@ body {
 .g-ui-action-icon-filled {
   background: var(--g-ui-primary);
   border-color: transparent;
-  color: #fff;
+  color: var(--g-ui-primary-fg);
 }
 .g-ui-action-icon-subtle {
   background: transparent;

@@ -17,14 +17,16 @@ export function RangeSlider(...args) {
   };
   const getStep = () => {
     const stepValue = Number(resolveValue(step));
-    return Number.isFinite(stepValue) && stepValue > 0 ? stepValue : 1;
+    if (Number.isFinite(stepValue) && stepValue > 0) return stepValue;
+    return 1;
   };
   const normalize = (vals) => {
     const { minValue, maxValue } = getBounds();
     const stepValue = getStep();
-    const raw = Array.isArray(vals) ? vals : [minValue, maxValue];
-    const first = Math.max(minValue, Math.min(maxValue, Number(raw[0])));
-    const second = Math.max(minValue, Math.min(maxValue, Number(raw[1])));
+    let list = [minValue, maxValue];
+    if (Array.isArray(vals)) list = vals;
+    const first = Math.max(minValue, Math.min(maxValue, Number(list[0])));
+    const second = Math.max(minValue, Math.min(maxValue, Number(list[1])));
     const low = Math.round(Math.min(first, second) / stepValue) * stepValue;
     const high = Math.round(Math.max(first, second) / stepValue) * stepValue;
     return [low, high];
@@ -63,7 +65,9 @@ export function RangeSlider(...args) {
     const ratio = x / rect.width;
     const { minValue, maxValue } = getBounds();
     const nextValue = minValue + ratio * (maxValue - minValue);
-    const [low, high] = normalize(currentState.get ? currentState.get() : currentState);
+    let current = currentState;
+    if (typeof currentState.get === 'function') current = currentState.get();
+    const [low, high] = normalize(current);
     if (thumb === 'low') setValue([nextValue, high]);
     else setValue([low, nextValue]);
   };
@@ -73,12 +77,15 @@ export function RangeSlider(...args) {
     const track = trackEl || ev.currentTarget;
     const getRect = () => track.getBoundingClientRect();
     const rect = getRect();
-    const { lowPct, highPct } = percent.get ? percent.get() : percent;
+    let percentValue = percent;
+    if (typeof percent.get === 'function') percentValue = percent.get();
+    const { lowPct, highPct } = percentValue;
     const clickPct = ((ev.clientX - rect.left) / rect.width) * 100;
     let thumb = forcedThumb;
     if (!thumb) {
       const isLow = Math.abs(clickPct - lowPct) <= Math.abs(clickPct - highPct);
-      thumb = isLow ? 'low' : 'high';
+      thumb = 'high';
+      if (isLow) thumb = 'low';
     }
     track.setPointerCapture?.(ev.pointerId);
     updateFromEvent(ev, getRect, thumb);
