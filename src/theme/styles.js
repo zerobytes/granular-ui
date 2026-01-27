@@ -868,6 +868,10 @@ body {
   font-size: 12px;
   color: var(--g-ui-danger);
 }
+.g-ui-date-input-popover .g-ui-popover-dropdown {
+  padding: 0;
+  border-width:0;
+}
 
 .g-ui-modal-overlay {
   position: fixed;

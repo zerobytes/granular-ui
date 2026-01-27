@@ -4,10 +4,11 @@ import { Calendar } from './Calendar.js';
 import { Popover } from './Popover.js';
 
 export function DateInput(...args) {
-  const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
+  const { props, rawProps } = splitPropsChildren(args, { size: 'md', format: { pattern: 'dddd-dd-dd' } });
   const {
     value,
     size,
+    calendarSize,
     leftSection,
     rightSection,
     className,
@@ -98,15 +99,16 @@ export function DateInput(...args) {
     {
       opened,
       onChange: (next) => opened.set(!!next),
-      content: Calendar({ value: currentDate, onChange: setDate }),
+      content: Calendar({ size: classVar('', calendarSize, 'xs'), value: currentDate, onChange: setDate }),
+      className: 'g-ui-date-input-popover',
     },
     Div(
-      { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md'), className) },
+      { className: cx('g-ui-dateinput', 'g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md'), className) },
       when(leftSection, () => Span({ className: 'g-ui-input-section' }, leftSection)),
       Input({
         type: 'text',
         inputMode: 'numeric',
-        format: format ?? { pattern: 'dddd-dd-dd' },
+        format: format,
         value: textValue,
         ...rest,
         className: cx('g-ui-input', inputProps?.className),
