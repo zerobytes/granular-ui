@@ -18,6 +18,8 @@ export function PinInput(...args) {
     Array.from({ length }).map((_, idx) =>
       Input({
         className: 'g-ui-pin-input',
+        type: 'text',
+        inputMode: 'numeric',
         maxLength: 1,
         value: current[idx] || '',
         onInput: (ev) => {

@@ -1,13 +1,21 @@
-import { Div, Input } from 'granular';
+import { Div, Input, state, after } from 'granular';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function RangePicker(...args) {
-  const { props } = splitPropsChildren(args, { size: 'md' });
-  const { value, onChange, size = 'md', className, ...rest } = props;
-  const current = value?.get ? value.get() : resolveValue(value) ?? ['', ''];
+  const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
+  const { value, size = 'md', className, ...rest } = props;
+  const { onChange } = rawProps;
+  const currentState = state(resolveValue(value) ?? ['', '']);
+
+  after(value).change((next) => {
+    const resolved = resolveValue(next);
+    if (resolved == null) return;
+    currentState.set(resolved);
+  });
 
   const setValue = (next) => {
     if (value?.set) value.set(next);
+    currentState.set(next);
     onChange?.(next);
   };
 
@@ -16,19 +24,27 @@ export function RangePicker(...args) {
     Div(
       { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md')) },
       Input({
-        type: 'date',
+        type: 'text',
+        inputMode: 'numeric',
         className: 'g-ui-input',
-        value: current[0],
-        onInput: (ev) => setValue([ev.target.value, current[1]]),
+        value: after(currentState).compute((current) => current?.[0] ?? ''),
+        onInput: (ev) => {
+          const current = currentState.get() ?? ['', ''];
+          setValue([ev.target.value, current[1]]);
+        },
       })
     ),
     Div(
       { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md')) },
       Input({
-        type: 'date',
+        type: 'text',
+        inputMode: 'numeric',
         className: 'g-ui-input',
-        value: current[1],
-        onInput: (ev) => setValue([current[0], ev.target.value]),
+        value: after(currentState).compute((current) => current?.[1] ?? ''),
+        onInput: (ev) => {
+          const current = currentState.get() ?? ['', ''];
+          setValue([current[0], ev.target.value]);
+        },
       })
     )
   );

@@ -7,7 +7,7 @@ export function NumberInput(...args) {
   return Div(
     { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md'), className) },
     leftSection ? Div({ className: 'g-ui-input-section' }, leftSection) : null,
-    Input({ type: 'number', ...rest, className: 'g-ui-input' }),
+    Input({ type: 'text', inputMode: 'decimal', ...rest, className: 'g-ui-input' }),
     rightSection ? Div({ className: 'g-ui-input-section' }, rightSection) : null
   );
 }

@@ -7,6 +7,6 @@ export function SearchInput(...args) {
   return Div(
     { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md'), className) },
     Div({ className: 'g-ui-input-section' }, '🔎'),
-    Input({ type: 'search', ...rest, className: 'g-ui-input' })
+    Input({ type: 'text', inputMode: 'search', ...rest, className: 'g-ui-input' })
   );
 }
