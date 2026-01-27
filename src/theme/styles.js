@@ -643,6 +643,7 @@ body {
   flex-direction: column;
   gap: var(--g-ui-stack-gap, 0);
 }
+.g-ui-gap-none { gap: 0; }
 .g-ui-gap-xs { gap: var(--g-ui-space-4); }
 .g-ui-gap-sm { gap: var(--g-ui-space-6); }
 .g-ui-gap-md { gap: var(--g-ui-space-8); }
@@ -1339,6 +1340,7 @@ body {
 .g-ui-divider {
   width: 100%;
   border: 0;
+  height: 1px;
   background: var(--g-ui-border);
   margin-top: var(--g-ui-space-9);
   margin-bottom: var(--g-ui-space-9);
@@ -1354,6 +1356,7 @@ body {
   gap: var(--g-ui-space-10);
   color: var(--g-ui-muted);
   font-size: 12px;
+  background: transparent;
 }
 .g-ui-divider.label::before,
 .g-ui-divider.label::after {
@@ -1362,12 +1365,11 @@ body {
   flex: 1;
   background: var(--g-ui-border);
 }
-.g-ui-divider-label-left::before { flex: 0 0 12px; }
-.g-ui-divider-label-right::after { flex: 0 0 12px; }
+.g-ui-divider-label-left.label::before { flex: 0 0 12px; }
+.g-ui-divider-label-right.label::after { flex: 0 0 12px; }
 .g-ui-divider-label-text {
   color: var(--g-ui-muted);
   font-size: 12px;
-  background: var(--g-ui-bg);
   padding: 0 var(--g-ui-space-10);
   position: relative;
   z-index: 1;
@@ -1499,7 +1501,6 @@ body {
 
 .g-ui-grid {
   display: grid;
-  gap: var(--g-ui-space-16);
 }
 .g-ui-grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
 .g-ui-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2219,7 +2220,6 @@ body {
 .g-ui-grid-system {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--g-ui-space-16);
 }
 .g-ui-col-span-1 { grid-column: span 1; }
 .g-ui-col-span-2 { grid-column: span 2; }
