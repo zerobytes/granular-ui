@@ -13,12 +13,16 @@ export function List(...args) {
   const isListNode = (value) =>
     value && typeof value === 'object' && typeof value.tagName === 'string' &&
     (value.tagName.toLowerCase() === 'ul' || value.tagName.toLowerCase() === 'ol');
+  const isListItemNode = (value) =>
+    value && typeof value === 'object' && typeof value.tagName === 'string' &&
+    value.tagName.toLowerCase() === 'li';
   const wrapChild = (child) => {
     const wrapValue = (value) => {
       if (value == null || value === false) return null;
       if (Array.isArray(value)) return value.map((item) => wrapValue(item));
+      if (isListItemNode(value)) return value;
       if (isListNode(value)) return Li({ className: 'g-ui-list-nested-item' }, value);
-      return Li(value);
+      return Li(Span({ className: 'g-ui-list-item-shell' }, value));
     };
     if (isSignal(child) || isState(child) || isStatePath(child) || isComputed(child)) {
       return after(child).compute((next) => wrapValue(next));
@@ -52,18 +56,21 @@ export function ListItem(...args) {
       ...rest,
       className: cx('g-ui-list-item', classFlag('g-ui-list-item-border', withBorder), className),
     },
-    when(leftSection, () => Span({ className: 'g-ui-list-item-section g-ui-list-item-section-left' }, leftSection)),
-    when(
-      hasStructured,
-      () =>
-        Div(
-          { className: 'g-ui-list-item-content' },
-          when(title, () => Div({ className: 'g-ui-list-item-title' }, title)),
-          when(body, () => Div({ className: 'g-ui-list-item-body' }, body))
-        ),
-      () => children
-    ),
-    when(rightSection, () => Span({ className: 'g-ui-list-item-section g-ui-list-item-section-right' }, rightSection))
+    Div(
+      { className: 'g-ui-list-item-shell' },
+      when(leftSection, () => Span({ className: 'g-ui-list-item-section g-ui-list-item-section-left' }, leftSection)),
+      when(
+        hasStructured,
+        () =>
+          Div(
+            { className: 'g-ui-list-item-content' },
+            when(title, () => Div({ className: 'g-ui-list-item-title' }, title)),
+            when(body, () => Div({ className: 'g-ui-list-item-body' }, body))
+          ),
+        () => children
+      ),
+      when(rightSection, () => Span({ className: 'g-ui-list-item-section g-ui-list-item-section-right' }, rightSection))
+    )
   );
 }
 
