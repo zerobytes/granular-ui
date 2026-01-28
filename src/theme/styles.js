@@ -2194,6 +2194,12 @@ body {
   gap: var(--g-ui-space-10);
   z-index: 1001;
 }
+.g-ui-notifications-position-top-left { top: var(--g-ui-space-20); left: var(--g-ui-space-20); right: auto; }
+.g-ui-notifications-position-top-center { top: var(--g-ui-space-20); left: 50%; right: auto; transform: translateX(-50%); }
+.g-ui-notifications-position-top-right { top: var(--g-ui-space-20); right: var(--g-ui-space-20); left: auto; }
+.g-ui-notifications-position-bottom-left { bottom: var(--g-ui-space-20); left: var(--g-ui-space-20); right: auto; top: auto; flex-direction: column-reverse; }
+.g-ui-notifications-position-bottom-center { bottom: var(--g-ui-space-20); left: 50%; right: auto; top: auto; transform: translateX(-50%); flex-direction: column-reverse; }
+.g-ui-notifications-position-bottom-right { bottom: var(--g-ui-space-20); right: var(--g-ui-space-20); left: auto; top: auto; flex-direction: column-reverse; }
 
 .g-ui-range {
   display: grid;
