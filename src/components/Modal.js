@@ -1,5 +1,8 @@
-import { Div, Button as HtmlButton, portal, when } from 'granular';
-import { cx, splitPropsChildren, classVar, classMap } from '../utils.js';
+import { Div, Button as HtmlButton, portal, when, after } from 'granular';
+import { cx, splitPropsChildren, classVar } from '../utils.js';
+import { closeSvg } from '../theme/icons.js';
+
+
 
 export function Modal(...args) {
   const { props, rawProps, children } = splitPropsChildren(args, { size: 'md', centered: true, overlay: 'normal' });
@@ -9,10 +12,15 @@ export function Modal(...args) {
     size,
     centered,
     overlay,
+    position,
     className,
     style,
   } = props;
   const { onClose } = rawProps;
+  const positionClass = after(position, centered).compute(([pos, isCentered]) => {
+    const value = pos ?? (isCentered === false ? 'top-center' : 'center');
+    return `g-ui-modal-position-${value}`;
+  });
 
   return when(opened, () =>
     portal(
@@ -21,7 +29,7 @@ export function Modal(...args) {
           className: cx(
             'g-ui-modal-overlay',
             classVar('g-ui-modal-overlay-', overlay, 'normal'),
-            classMap(centered, { true: 'g-ui-modal-centered', false: 'g-ui-modal-top' }, true)
+            positionClass
           ),
           onClick: (ev) => {
             if (ev.target === ev.currentTarget) onClose?.();
@@ -35,7 +43,14 @@ export function Modal(...args) {
             { className: 'g-ui-modal-header' },
             when(title, () => Div({ className: 'g-ui-modal-title' }, title)),
             when(onClose, () =>
-              HtmlButton({ className: 'g-ui-button g-ui-button-variant-subtle g-ui-button-size-xs', onClick: onClose }, 'Close')
+              HtmlButton(
+                {
+                  type: 'button',
+                  className: 'g-ui-button g-ui-button-variant-subtle g-ui-button-size-xs g-ui-modal-close',
+                  onClick: onClose,
+                  innerHTML: closeSvg,
+                }
+              )
             )
           ),
           children

@@ -7,7 +7,6 @@ export function Avatar(...args) {
   return Div(
     { ...rest, className: cx('g-ui-avatar', [size, (value) => `g-ui-avatar-size-${value}`], className) },
     when(src, () => Img({ className: 'g-ui-avatar-img', src, alt }), () => {
-      console.log('children', children);
       return children;
     })
   );

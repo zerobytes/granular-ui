@@ -1,10 +1,11 @@
-import { Div, list, when } from 'granular';
+import { Div, list, when, after } from 'granular';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 import { Button } from './Button.js';
 
 export function Card(...args) {
   const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'none' });
   const { title, content, actions, padding, radius, shadow, className, style, ...rest } = props;
+
   return Div(
     when(title, () => Div({ className: 'g-ui-card-title' }, title)),
     when(content, () => Div({ className: 'g-ui-card-content' }, content)),
