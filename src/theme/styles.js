@@ -1457,6 +1457,33 @@ body {
   padding: var(--g-ui-space-8) 0;
   height: auto;
 }
+.g-ui-number-field {
+  width: 100%;
+}
+.g-ui-number-field-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-ui-space-2);
+  margin-left: auto;
+}
+.g-ui-number-field-control {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--g-ui-border);
+  background: var(--g-ui-bg);
+  color: var(--g-ui-text);
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  line-height: 1;
+}
+.g-ui-number-field-control:hover {
+  background: var(--g-ui-bg-subtle);
+}
 
 .g-ui-alert {
   border-radius: var(--g-ui-radius);

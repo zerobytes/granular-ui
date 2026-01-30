@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>NumberField Tests</title>
+    <style>
+      body {
+        margin: 24px;
+        font-family: system-ui, sans-serif;
+      }
+      .test-header {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-header">NumberField Component Tests</div>
+    <div id="results"></div>
+    <div id="results-json" style="margin-top:16px;"></div>
+    <script type="importmap">
+      {
+        "imports": {
+          "granular": "/granular/src/index.js",
+          "granular-ui": "/granular-ui/src/index.js"
+        }
+      }
+    </script>
+    <script type="module">
+      const results = document.getElementById('results');
+      const resultsJson = document.getElementById('results-json');
+      if (location.protocol === 'file:') {
+        results.textContent = 'Open this file via a local server (http://) to run module tests. Example: run "python3 -m http.server" in the repo root and open http://localhost:8000/granular-ui/tests/NumberField.test.html';
+      } else {
+        const { runTests } = await import('./components/NumberField.test.js');
+        const data = await runTests(results);
+        const pre = document.createElement('pre');
+        pre.textContent = JSON.stringify(data, null, 2);
+        pre.style.whiteSpace = 'pre-wrap';
+        pre.style.fontFamily = 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+        resultsJson.appendChild(pre);
+      }
+    </script>
+  </body>
+</html>
