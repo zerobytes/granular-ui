@@ -10,6 +10,7 @@ export function NumberField(...args) {
     clampBehavior: 'blur',
     hideControls: false,
     decimalSeparator: '.',
+    thousandSeparator: '',
     format: null,
     prefix: '',
     suffix: '',
@@ -23,6 +24,7 @@ export function NumberField(...args) {
     allowDecimal,
     allowNegative,
     decimalSeparator,
+    thousandSeparator,
     decimalScale,
     clampBehavior,
     hideControls,
@@ -60,28 +62,39 @@ export function NumberField(...args) {
   };
 
   const parseNumber = (raw) => {
-    const sep = resolveValue(decimalSeparator) ?? '.';
-    const rawValue = String(raw ?? '');
-    if (!rawValue || rawValue === '-' || rawValue === sep || rawValue.endsWith(sep)) return null;
-    const normalized = rawValue.replace(sep, '.');
+    const decSep = resolveValue(decimalSeparator) ?? '.';
+    const thousSep = resolveValue(thousandSeparator) ?? '';
+    let rawValue = String(raw ?? '');
+    if (thousSep) {
+      rawValue = rawValue.split(thousSep).join('');
+    }
+    if (!rawValue || rawValue === '-' || rawValue === decSep || rawValue.endsWith(decSep)) return null;
+    const normalized = rawValue.replace(decSep, '.');
     const num = Number(normalized);
     if (!Number.isFinite(num)) return null;
     return num;
   };
 
+  const addThousandSeparators = (intPart) => {
+    const thousSep = resolveValue(thousandSeparator) ?? '';
+    if (!thousSep) return intPart;
+    return intPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousSep);
+  };
+
   const formatNumber = (num) => {
-    const sep = resolveValue(decimalSeparator) ?? '.';
+    const decSep = resolveValue(decimalSeparator) ?? '.';
     const scale = getScale();
     const numeric = Number(num);
     if (!Number.isFinite(numeric)) return '';
     const sign = numeric < 0 ? '-' : '';
     const abs = Math.abs(numeric);
     let [int, dec = ''] = String(abs).split('.');
+    const formattedInt = addThousandSeparators(int);
     if (scale > 0) {
       const trimmed = dec.slice(0, scale).padEnd(scale, '0');
-      return `${sign}${int}${sep}${trimmed}`;
+      return `${sign}${formattedInt}${decSep}${trimmed}`;
     }
-    return `${sign}${int}`;
+    return `${sign}${formattedInt}`;
   };
 
   const formatWithIntl = (num, kind) => {
@@ -241,6 +254,7 @@ export function NumberField(...args) {
     allowDecimal,
     allowNegative,
     decimalSeparator,
+    thousandSeparator,
     decimalScale,
     clampBehavior,
     min,
