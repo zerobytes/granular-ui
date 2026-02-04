@@ -1,7 +1,7 @@
 {
-  "name": "@granular/ui",
+  "name": "@granularjs/ui",
   "version": "0.1.0",
-  "description": "Granular UI components",
+  "description": "UI component library for Granular",
   "type": "module",
   "main": "./dist/granular-ui.min.js",
   "module": "./dist/granular-ui.min.js",

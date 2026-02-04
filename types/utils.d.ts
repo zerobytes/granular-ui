@@ -1,7 +1,8 @@
 export function cx(...values: any[]): any;
 export function toPx(value: any): any;
-export function splitPropsChildren(args: any): {
+export function splitPropsChildren(args: any, defaults: any): {
     props: any;
+    rawProps: {};
     children: any[];
 };
 export function resolveValue(value: any): any;

@@ -1898,6 +1898,11 @@ body {
   border-color: var(--g-ui-primary);
   color: var(--g-ui-primary-fg);
 }
+.g-ui-pagination-item.g-ui-pagination-item-active:hover{
+  background: var(--g-ui-primary-hover);
+  border-color: var(--g-ui-primary-hover);
+  color: var(--g-ui-primary-fg);
+}
 .g-ui-pagination-item:hover {
   background: var(--g-ui-bg-subtle);
 }
@@ -2531,19 +2536,54 @@ body {
 .g-ui-scroll-area-md { max-height: 200px; }
 .g-ui-scroll-area-lg { max-height: 320px; }
 
-.g-ui-pin-inputs {
+.g-ui-pin-input {
+  display: inline-flex;
+  align-items: center;
+  cursor: text;
+}
+.g-ui-pin-input-wrapper {
   display: flex;
   gap: var(--g-ui-space-8);
 }
-.g-ui-pin-input {
-  width: 36px;
+.g-ui-pin-input-field {
+  width: 40px;
   height: 40px;
+  padding: 0;
   text-align: center;
+  font-size: var(--g-ui-font-md);
+  font-weight: 500;
   border: 1px solid var(--g-ui-border-muted);
   border-radius: var(--g-ui-radius);
   background: var(--g-ui-bg);
   color: var(--g-ui-text);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
+.g-ui-pin-input-field::placeholder {
+  color: var(--g-ui-muted);
+  opacity: 0.5;
+}
+.g-ui-pin-input-field:focus {
+  border-color: var(--g-ui-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--g-ui-primary) 20%, transparent);
+}
+.g-ui-pin-input-field:disabled {
+  background: var(--g-ui-bg-subtle);
+  color: var(--g-ui-muted);
+  cursor: not-allowed;
+}
+.g-ui-pin-input-error {
+  border-color: var(--g-ui-danger);
+}
+.g-ui-pin-input-error:focus {
+  border-color: var(--g-ui-danger);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--g-ui-danger) 20%, transparent);
+}
+.g-ui-pin-input.g-ui-input-size-xs .g-ui-pin-input-field { width: 28px; height: 28px; font-size: var(--g-ui-font-xs); }
+.g-ui-pin-input.g-ui-input-size-sm .g-ui-pin-input-field { width: 34px; height: 34px; font-size: var(--g-ui-font-sm); }
+.g-ui-pin-input.g-ui-input-size-md .g-ui-pin-input-field { width: 40px; height: 40px; font-size: var(--g-ui-font-md); }
+.g-ui-pin-input.g-ui-input-size-lg .g-ui-pin-input-field { width: 48px; height: 48px; font-size: var(--g-ui-font-lg); }
+.g-ui-pin-input.g-ui-input-size-xl .g-ui-pin-input-field { width: 56px; height: 56px; font-size: var(--g-ui-font-xl); }
 
 .g-ui-checkbox-group {
   display: flex;
