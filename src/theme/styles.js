@@ -814,6 +814,7 @@ body {
   align-items: center;
   gap: var(--g-ui-space-8);
   padding: 0 var(--g-ui-space-12);
+  box-sizing: border-box;
 }
 .g-ui-input-wrapper:focus-within {
   border-color: var(--g-ui-primary);
@@ -2545,6 +2546,7 @@ body {
 .g-ui-pin-input-wrapper {
   display: flex;
   gap: var(--g-ui-space-8);
+  box-sizing: border-box;
 }
 .g-ui-pin-input-field {
   width: 40px;
