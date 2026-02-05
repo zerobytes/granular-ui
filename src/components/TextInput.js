@@ -19,10 +19,6 @@ export function TextInput(...args) {
   const input = Input({
     ...rest,
     className: cx('g-ui-input', inputProps?.className),
-    onInput: (ev) => {
-      onChange?.(ev?.target?.value, ev);
-      inputProps?.onInput?.(ev);
-    },
   });
 
   return Div(
