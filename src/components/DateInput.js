@@ -111,12 +111,9 @@ export function DateInput(...args) {
         format: format,
         value: textValue,
         ...rest,
-        className: cx('g-ui-input', inputProps?.className),
-        onInput: (ev) => {
-          inputProps?.onInput?.(ev);
-        },
+        className: cx('g-ui-input', className),
       }),
       when(rightSection, () => Span({ className: 'g-ui-input-section' }, rightSection))
-    )
+    ),
   );
 }
