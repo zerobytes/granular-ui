@@ -1,5 +1,5 @@
 {
-  "name": "@granularjs/ui",
+  "name": "@granular/ui",
   "version": "0.1.0",
   "description": "UI component library for Granular",
   "type": "module",

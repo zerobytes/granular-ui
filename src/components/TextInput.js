@@ -1,5 +1,5 @@
-import { Div, Input, Label, Span, when } from 'granular';
-import { cx, splitPropsChildren, classFlag, classVar } from '../utils.js';
+import { Div, Input, Label, Span, when, state } from 'granular';
+import { cx, splitPropsChildren, classFlag, classVar, resolveValue } from '../utils.js';
 
 export function TextInput(...args) {
   const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
@@ -13,11 +13,24 @@ export function TextInput(...args) {
     className,
     style,
     inputProps,
+    value,
     ...rest
   } = props;
   const { onChange } = rawProps;
+
+  const _value = state(resolveValue(value) ?? '');
+
+  after(value).change((next) => {
+    _value.set(resolveValue(next) ?? '');
+  });
+
   const input = Input({
     ...rest,
+    value: _value,
+    onChange: (e) => { 
+      if (e.target.value === _value.get()) return;
+      onChange?.(next ?? '');
+    },
     className: cx('g-ui-input', inputProps?.className),
   });
 
