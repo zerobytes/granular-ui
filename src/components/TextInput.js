@@ -1,5 +1,5 @@
-import { Div, Input, Label, Span, when, state, after } from 'granular';
-import { cx, splitPropsChildren, classFlag, classVar, resolveValue } from '../utils.js';
+import { Div, Input, Textarea as HtmlTextarea, Label, Span, when, state, after, isState } from 'granular';
+import { cx, splitPropsChildren, classFlag, classVar, resolveValue, resolveBool } from '../utils.js';
 
 export function TextInput(...args) {
   const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
@@ -11,28 +11,46 @@ export function TextInput(...args) {
     leftSection,
     rightSection,
     className,
-    style,
-    inputProps,
-    value,
+    inputClassName,
+    multiline,
+    value: computed_value,
     ...rest
   } = props;
-  const { onChange } = rawProps;
+  const { value: raw_value, onChange, onInput, onFocus, onBlur, onKeyDown, onKeyUp, onClick } = rawProps;
 
-  const _value = state(resolveValue(value) ?? '');
+  const isValueTwoWay = isState(raw_value) && !onChange && !onInput
+  const currentState = isValueTwoWay ? raw_value : state(resolveValue(computed_value) ?? '');
 
-  after(value).change((next) => {
-    _value.set(resolveValue(next) ?? '');
+  after(computed_value).change((next) => {
+    if (isValueTwoWay) return;
+    currentState.set(resolveValue(next) ?? '');
   });
 
-  const input = Input({
+  const handleInput = (ev) => {
+    const next = ev?.target?.value ?? '';
+    if (next === computed_value.get()) return;
+    currentState.set(next);
+    onChange?.(ev);
+    onInput?.(ev);
+  };
+
+  const isMultiline = resolveBool(multiline);
+  const Control = isMultiline ? HtmlTextarea : Input;
+  const finalInputClassName = cx(inputClassName, isMultiline && 'g-ui-textarea');
+
+  const input = Control({
     ...rest,
-    value: _value,
-    onChange: (e) => { 
-      if (e.target.value === _value.get()) return;
-      onChange?.(next ?? '');
-    },
-    className: cx('g-ui-input', inputProps?.className),
+    value: currentState,
+    onInput: handleInput,
+    onChange: handleInput,
+    onFocus,
+    onBlur,
+    onKeyDown,
+    onKeyUp,
+    onClick,
+    className: cx('g-ui-input', finalInputClassName),
   });
+
 
   return Div(
     { className: cx('g-ui-text-input', className) },
@@ -42,14 +60,15 @@ export function TextInput(...args) {
       {
         className: cx(
           'g-ui-input-wrapper',
+          classFlag('g-ui-input-multiline', multiline),
           classVar('g-ui-input-size-', size, 'md'),
           classFlag('g-ui-input-error', error)
         ),
       },
-      when(leftSection, () => Span({ className: 'g-ui-input-section' }, leftSection)),
+      when(leftSection, () => Div({ className: 'g-ui-input-section' }, leftSection)),
       input,
-      when(rightSection, () => Span({ className: 'g-ui-input-section' }, rightSection))
+      when(rightSection, () => Div({ className: 'g-ui-input-section' }, rightSection))
     ),
-    when(error, () => Span({ className: 'g-ui-text-input-error-text' }, error))
+    when(error, () => Div({ className: 'g-ui-text-input-error-text' }, error))
   );
 }

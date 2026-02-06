@@ -1,6 +1,7 @@
-import { Div, Input, Span } from 'granular';
+import { Div, Span } from 'granular';
 import { cx, splitPropsChildren } from '../utils.js';
 import { state } from 'granular';
+import { TextInput } from './TextInput.js';
 
 export function SelectSearch(...args) {
   const { props, rawProps } = splitPropsChildren(args, { data: [] });
@@ -14,10 +15,11 @@ export function SelectSearch(...args) {
 
   return Div(
     { ...rest, className: cx('g-ui-select-search', className) },
-    Input({
-      className: 'g-ui-select-search-input',
+    TextInput({
+      inputClassName: 'g-ui-select-search-input',
       placeholder: 'Search...',
       value: query,
+      onInput: (ev) => query.set(ev?.target?.value ?? ''),
     }),
     Div(
       { className: 'g-ui-select-search-list' },

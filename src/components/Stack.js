@@ -13,6 +13,7 @@ export function Stack(...args) {
   return Div(
     {
       ...rest,
+      style,
       className: cx(
         'g-ui-stack',
         classVar('g-ui-gap-', gap, 'md'),

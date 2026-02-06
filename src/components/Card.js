@@ -3,8 +3,8 @@ import { cx, splitPropsChildren, classVar } from '../utils.js';
 import { Button } from './Button.js';
 
 export function Card(...args) {
-  const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'none' });
-  const { title, content, actions, padding, radius, shadow, className, style, ...rest } = props;
+  const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'none', border: 'default' });
+  const { title, content, actions, border,  padding, radius, shadow, className, style, ...rest } = props;
 
   return Div(
     when(title, () => Div({ className: 'g-ui-card-title' }, title)),
@@ -27,6 +27,7 @@ export function Card(...args) {
     {
       className: cx(
         'g-ui-card',
+        classVar('g-ui-card-border-', border, 'md'),
         classVar('g-ui-card-padding-', padding, 'md'),
         classVar('g-ui-card-radius-', radius, 'md'),
         classVar('g-ui-card-shadow-', shadow, 'md'),

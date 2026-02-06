@@ -1,4 +1,4 @@
-import { Button as HtmlButton, Span, when } from 'granular';
+import { Button as HtmlButton, Span, when, after} from 'granular';
 import { cx, splitPropsChildren, resolveBool, classVar, classFlag } from '../utils.js';
 
 export function Button(...args) {
@@ -14,12 +14,13 @@ export function Button(...args) {
     disabled,
     ...rest
   } = props;
-  const loadingValue = resolveBool(loading);
-  const disabledValue = resolveBool(disabled);
+
+  const isDisabled = after(disabled, loading).compute(([disabled, loading]) => disabled || loading);
+
   return HtmlButton(
     {
       ...rest,
-      disabled: disabledValue || loadingValue,
+      disabled: isDisabled,
       className: cx(
         'g-ui-button',
         classVar('g-ui-button-variant-', variant, 'filled'),
@@ -30,7 +31,7 @@ export function Button(...args) {
       ),
     },
     when(leftSection, () => Span({ className: 'g-ui-button-section-left' }, leftSection)),
-    when(loadingValue, () => Span('Loading...'), () => children),
+    when(loading, () => Span('Loading...'), () => children),
     when(rightSection, () => Span({ className: 'g-ui-button-section-right' }, rightSection))
   );
 }

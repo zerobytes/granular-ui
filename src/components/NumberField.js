@@ -1,5 +1,6 @@
-import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
-import { Div, Input, Span, when, after, state } from 'granular';
+import { cx, splitPropsChildren, resolveValue } from '../utils.js';
+import { Div, Span, when, after, state } from 'granular';
+import { TextInput } from './TextInput.js';
 
 export function NumberField(...args) {
   const { props, rawProps } = splitPropsChildren(args, {
@@ -37,15 +38,17 @@ export function NumberField(...args) {
     leftSection,
     rightSection,
     className,
-    inputProps,
-    onChange: _onChange,
-    onInput: _onInput,
-    onBlur: _onBlur,
-    onFocus: _onFocus,
-    onKeyDown: _onKeyDown,
+    onChange: computed_onChange,
+    onInput: computed_onInput,
     ...rest
   } = props;
-  const { onChange, onInput, onBlur, onFocus, onKeyDown } = rawProps;
+  const { onChange: _onChange, onInput: _onInput, onBlur, onFocus, onKeyDown } = rawProps;
+
+  const onChange = (e) => {
+    _onChange?.(e.target?.value ?? '');
+    _onInput?.(e.target?.value ?? '');
+  }
+  const onInput = onChange;
 
   const currentState = state('');
 
@@ -218,6 +221,7 @@ export function NumberField(...args) {
   const updateFromExternal = (next) => {
     const resolved = resolveValue(next);
     if (resolved === undefined) return;
+
     const normalized = normalizeIncoming(resolved);
     if (normalized === currentState.get()) return;
     lastExternalValue = normalized;
@@ -225,7 +229,9 @@ export function NumberField(...args) {
   };
 
   updateFromExternal(value);
-  after(value).change(updateFromExternal);
+  after(value).change((next) => {
+    updateFromExternal(next)
+  });
 
   after(currentState).change((next) => {
     if (next === lastExternalValue) {
@@ -353,34 +359,31 @@ export function NumberField(...args) {
     }
   };
 
-  return Div(
-    { ...rest, className: cx('g-ui-number-field', className) },
-    Div(
-      { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md')) },
-      when(leftSection, () => Div({ className: 'g-ui-input-section' }, leftSection)),
-      Input({
-        type: 'text',
-        inputMode: when(inputProps?.inputMode,
-          () => inputProps.get().inputMode,
-          () => inputMode
-        ),
-        ...inputProps,
-        className: cx('g-ui-input g-ui-input-number', inputProps?.className),
-        value: currentState,
-        format: inputFormat,
-        onInput: handleInput,
-        onBlur: handleBlur,
-        onFocus: handleFocus,
-        onKeyDown: handleKeyDown,
-      }),
-      when(hasRightSection, () => Div({ className: 'g-ui-input-section' }, rightSection)),
-      when(showControls, () =>
-        Div(
-          { className: 'g-ui-number-field-controls' },
-          Span({ className: 'g-ui-number-field-control', onClick: () => stepBy(1) }, '+'),
-          Span({ className: 'g-ui-number-field-control', onClick: () => stepBy(-1) }, '−')
-        )
-      )
-    )
+  const controls = Div(
+    { className: 'g-ui-number-field-controls' },
+    Span({ className: 'g-ui-number-field-control', onClick: () => stepBy(1) }, '+'),
+    Span({ className: 'g-ui-number-field-control', onClick: () => stepBy(-1) }, '−')
   );
+  const controlsWrapper = Div({ className: 'g-ui-number-field-controls-wrapper' }, controls);
+  const finalRightSection = after(showControls, rightSection).compute(([nextControls, nextRight]) => {
+    if (nextControls) return controlsWrapper;
+    return nextRight;
+  });
+
+  return TextInput({
+    ...rest,
+    size,
+    className: cx('g-ui-number-field', className),
+    leftSection,
+    rightSection: finalRightSection,
+    type: 'text',
+    inputMode,
+    inputClassName: cx('g-ui-input-number'),
+    value: currentState,
+    format: inputFormat,
+    onInput: handleInput,
+    onBlur: handleBlur,
+    onFocus: handleFocus,
+    onKeyDown: handleKeyDown,
+  });
 }

@@ -1,7 +1,8 @@
-import { Div, Input, Span, when, state, after } from 'granular';
+import { state, after } from 'granular';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 import { Calendar } from './Calendar.js';
 import { Popover } from './Popover.js';
+import { TextInput } from './TextInput.js';
 
 export function DateInput(...args) {
   const { props, rawProps } = splitPropsChildren(args, { size: 'md', format: { pattern: 'dddd-dd-dd' } });
@@ -12,7 +13,6 @@ export function DateInput(...args) {
     leftSection,
     rightSection,
     className,
-    inputProps,
     format,
     minDate,
     maxDate,
@@ -34,6 +34,7 @@ export function DateInput(...args) {
     left.getFullYear() === right.getFullYear() &&
     left.getMonth() === right.getMonth() &&
     left.getDate() === right.getDate();
+
   const formatDate = (date) => {
     if (!date) return '';
     const year = String(date.getFullYear()).padStart(4, '0');
@@ -41,6 +42,7 @@ export function DateInput(...args) {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
+
   const parseDate = (text) => {
     const digits = String(text ?? '').replace(/\D/g, '');
     if (digits.length < 8) return null;
@@ -68,6 +70,7 @@ export function DateInput(...args) {
   const opened = state(false);
 
   after(value).change((next) => {
+    if (value.get() == next) return;
     const resolved = resolveDate(next);
     if (resolved == null) {
       currentDate.set(null);
@@ -80,6 +83,8 @@ export function DateInput(...args) {
 
   after(textValue).change((next) => {
     const parsed = parseDate(next);
+    console.log('parsed', parsed);
+    console.log('currentDate', currentDate.get());
     if (!parsed) return;
     if (isSameDay(parsed, currentDate.get())) return;
     currentDate.set(parsed);
@@ -102,18 +107,17 @@ export function DateInput(...args) {
       content: Calendar({ size: classVar('', calendarSize, 'xs'), value: currentDate, onChange: setDate }),
       className: 'g-ui-date-input-popover',
     },
-    Div(
-      { className: cx('g-ui-dateinput', 'g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md'), className) },
-      when(leftSection, () => Span({ className: 'g-ui-input-section' }, leftSection)),
-      Input({
-        type: 'text',
-        inputMode: 'numeric',
-        format: format,
-        value: textValue,
-        ...rest,
-        className: cx('g-ui-input', className),
-      }),
-      when(rightSection, () => Span({ className: 'g-ui-input-section' }, rightSection))
-    ),
+    TextInput({
+      ...rest,
+      size,
+      className: cx('g-ui-dateinput', className),
+      leftSection,
+      rightSection,
+      type: 'text',
+      inputMode: 'numeric',
+      format: format,
+      value: textValue,
+      onChange: (next) => textValue.set(next),
+    })
   );
 }

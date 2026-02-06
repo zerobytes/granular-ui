@@ -15,6 +15,7 @@ export function NavLink(...args) {
     opened,
     defaultOpened,
     className,
+    padding,
     ...rest
   } = props;
   const { onClick, onChange } = rawProps;
@@ -51,7 +52,8 @@ export function NavLink(...args) {
           'g-ui-navlink',
           classVar('g-ui-navlink-variant-', variant, 'subtle'),
           classFlag('g-ui-navlink-active', active),
-          classFlag('g-ui-navlink-disabled', disabled)
+          classFlag('g-ui-navlink-disabled', disabled),
+          classVar('g-ui-navlink-padding-', padding, 'md')
         ),
         onClick: handleClick,
       },

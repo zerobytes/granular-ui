@@ -1,4 +1,4 @@
-import { Div, Input, after, state, when } from 'granular';
+import { Div, Input, after, state, when, list } from 'granular';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function PinInput(...args) {
@@ -24,7 +24,6 @@ export function PinInput(...args) {
     error,
     oneTimeCode,
     className,
-    ...rest
   } = props;
 
   const { onChange, onComplete } = rawProps;
@@ -197,13 +196,13 @@ export function PinInput(...args) {
       value: after(currentState).compute(() => currentState.get()[idx] ?? ''),
       node: inputNodes[idx],
       onInput: (ev) => handleInput(idx, ev),
+      onChange: (ev) => handleInput(idx, ev),
       onKeyDown: (ev) => handleKeyDown(idx, ev),
       onFocus: (ev) => handleFocus(idx, ev),
     });
 
   return Div(
     {
-      ...rest,
       className: cx(
         'g-ui-pin-input',
         classVar('g-ui-input-size-', size, 'md'),
@@ -213,7 +212,7 @@ export function PinInput(...args) {
     },
     Div(
       { className: 'g-ui-pin-input-wrapper' },
-      indices.map(renderInput)
+      list(indices, renderInput)
     )
   );
 }

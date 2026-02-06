@@ -662,7 +662,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
 }
-.g-ui-wrap { flex-wrap: wrap; }
+.g-ui-no-wrap { flex-wrap: nowrap; }
 
 .g-ui-container {
   width: 100%;
@@ -683,6 +683,23 @@ body {
   box-shadow: none;
   border: 1px solid var(--g-ui-border);
 }
+.g-ui-card-border-default { border: 1px solid var(--g-ui-border); }
+.g-ui-card-border-none { border: none; }
+.g-ui-card-border-light { border: 1px solid var(--g-ui-border-light); }
+.g-ui-card-border-dark { border: 1px solid var(--g-ui-border-dark); }
+.g-ui-card-border-primary { border: 1px solid var(--g-ui-primary); }
+.g-ui-card-border-success { border: 1px solid var(--g-ui-success); }
+.g-ui-card-border-danger { border: 1px solid var(--g-ui-danger); }
+.g-ui-card-border-warning { border: 1px solid var(--g-ui-warning); }
+.g-ui-card-border-info { border: 1px solid var(--g-ui-info); }
+.g-ui-card-border-subtle { border: 1px solid var(--g-ui-border-subtle); }
+.g-ui-card-border-emphasized { border: 1px solid var(--g-ui-border-emphasized); }
+.g-ui-card-border-inverted { border: 1px solid var(--g-ui-border-inverted); }
+.g-ui-card-border-error { border: 1px solid var(--g-ui-border-error); }
+.g-ui-card-border-warning { border: 1px solid var(--g-ui-border-warning); }
+.g-ui-card-border-success { border: 1px solid var(--g-ui-border-success); }
+.g-ui-card-border-info { border: 1px solid var(--g-ui-border-info); }
+
 .g-ui-card-padding-xs { padding: var(--g-ui-space-10); }
 .g-ui-card-padding-sm { padding: var(--g-ui-space-14); }
 .g-ui-card-padding-md { padding: var(--g-ui-space-18); }
@@ -732,6 +749,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.25px;
+  white-space: nowrap;
 }
 .g-ui-badge-size-xs { font-size: 9px; height: 16px; padding: 0 var(--g-ui-space-6); }
 .g-ui-badge-size-sm { font-size: 10px; height: 18px; padding: 0 var(--g-ui-space-8); }
@@ -1702,7 +1720,6 @@ body {
 .g-ui-image {
   max-width: 100%;
   border-radius: var(--g-ui-radius);
-  border: 1px solid var(--g-ui-border-muted);
 }
 
 .g-ui-progress {
@@ -2334,6 +2351,25 @@ body {
   flex-direction: column;
   gap: var(--g-ui-space-8);
 }
+.g-ui-input-size-sm .g-ui-search-input-left-section { width: 16px; height: 16px; }
+.g-ui-input-size-md .g-ui-search-input-left-section { width: 20px; height: 20px; }
+.g-ui-input-size-lg .g-ui-search-input-left-section { width: 24px; height: 24px; }
+.g-ui-input-size-xl .g-ui-search-input-left-section { width: 28px; height: 28px; }
+.g-ui-search-input-left-section {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--g-ui-muted);
+  font-size: 16px;
+}
+.g-ui-search-input-left-section svg {
+  width: 100%;
+  height: 100%;
+  fill: inherit;
+}
+
 .g-ui-select-search-input {
   width: 100%;
   border-radius: var(--g-ui-radius);
@@ -2395,7 +2431,7 @@ body {
   align-items: center;
   gap: var(--g-ui-space-8);
   padding: var(--g-ui-space-8) var(--g-ui-space-12);
-  border-radius: 8px;
+  border-radius: 0;
   color: var(--g-ui-text);
   text-decoration: none;
   cursor: pointer;
@@ -2442,6 +2478,15 @@ body {
   flex-direction: column;
   gap: var(--g-ui-space-4);
 }
+.g-ui-navlink-padding-none { padding: 0; }
+.g-ui-navlink-padding-sm { padding: var(--g-ui-space-8); }
+.g-ui-navlink-padding-md { padding: var(--g-ui-space-12); }
+.g-ui-navlink-padding-lg { padding: var(--g-ui-space-16); }
+.g-ui-navlink-padding-xl { padding: var(--g-ui-space-20); }
+.g-ui-navlink-padding-h-sm { padding: var(--g-ui-space-8) var(--g-ui-space-8) ; }
+.g-ui-navlink-padding-h-md { padding: var(--g-ui-space-8) var(--g-ui-space-12) ; }
+.g-ui-navlink-padding-h-lg { padding: var(--g-ui-space-8) var(--g-ui-space-20) ; }
+.g-ui-navlink-padding-h-xl { padding: var(--g-ui-space-8) var(--g-ui-space-24) ; }
 
 .g-ui-indicator {
   position: relative;
@@ -2536,6 +2581,7 @@ body {
 .g-ui-scroll-area-sm { max-height: 120px; }
 .g-ui-scroll-area-md { max-height: 200px; }
 .g-ui-scroll-area-lg { max-height: 320px; }
+.g-ui-scroll-area-auto { max-height: auto; }
 
 .g-ui-pin-input {
   display: inline-flex;
@@ -2826,7 +2872,7 @@ body {
   width: 260px;
   min-width: 260px;
   background: var(--g-ui-bg);
-  border-right: 1px solid var(--g-ui-border-muted);
+  border-right: 1px solid var(--g-ui-border);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;

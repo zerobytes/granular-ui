@@ -1,12 +1,17 @@
-import { Div, Input } from 'granular';
-import { cx, splitPropsChildren, classVar } from '../utils.js';
+import { Span, Div } from 'granular';
+import { splitPropsChildren } from '../utils.js';
+import { searchSvg } from '../theme/icons.js';
+import { TextInput } from './TextInput.js';
 
 export function SearchInput(...args) {
   const { props } = splitPropsChildren(args, { size: 'md' });
   const { size, className, ...rest } = props;
-  return Div(
-    { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md'), className) },
-    Div({ className: 'g-ui-input-section' }, '🔎'),
-    Input({ type: 'text', inputMode: 'search', ...rest, className: 'g-ui-input' })
-  );
+  return TextInput({
+    ...rest,
+    size,
+    className,
+    leftSection: Div({ className: 'g-ui-search-input-left-section' , innerHTML: searchSvg }),
+    type: 'text',
+    inputMode: 'search',
+  });
 }
