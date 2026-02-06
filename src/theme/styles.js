@@ -1454,6 +1454,12 @@ body {
   position: relative;
   z-index: 1;
 }
+.g-ui-divider-vertical {
+  width: 1px;
+  height: 100%;
+  background: var(--g-ui-border);
+  margin: 0 var(--g-ui-space-10);
+}
 
 .g-ui-paper {
   background: var(--g-ui-surface);

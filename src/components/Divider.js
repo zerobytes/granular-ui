@@ -4,7 +4,7 @@ import { Text } from './Text.js';
 
 export function Divider(...args) {
   const { props } = splitPropsChildren(args, { labelPosition: 'center' });
-  const { label, labelPosition, className, ...rest } = props;
+  const { label, labelPosition, vertical, className, ...rest } = props;
 
   return Div(
     {
@@ -13,6 +13,7 @@ export function Divider(...args) {
         'g-ui-divider',
         classFlag('label', label),
         classVar('g-ui-divider-label-', labelPosition, 'center'),
+        classFlag('g-ui-divider-vertical', vertical),
         className
       ),
     },
