@@ -193,12 +193,12 @@ export function PinInput(...args) {
       maxLength: 2,
       placeholder: when(isDisabled, () => '', () => placeholder),
       disabled: isDisabled,
-      value: after(currentState).compute(() => currentState.get()[idx] ?? ''),
-      node: inputNodes[idx],
-      onInput: (ev) => handleInput(idx, ev),
-      onChange: (ev) => handleInput(idx, ev),
-      onKeyDown: (ev) => handleKeyDown(idx, ev),
-      onFocus: (ev) => handleFocus(idx, ev),
+      value: after(currentState, idx).compute(([values, i]) => values[i] ?? ''),
+      node: inputNodes[idx.get()],
+      onInput: (ev) => handleInput(idx.get(), ev),
+      onChange: (ev) => handleInput(idx.get(), ev),
+      onKeyDown: (ev) => handleKeyDown(idx.get(), ev),
+      onFocus: (ev) => handleFocus(idx.get(), ev),
     });
 
   return Div(

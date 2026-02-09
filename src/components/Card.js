@@ -14,12 +14,12 @@ export function Card(...args) {
       list(actions, (action) => Button(
         {
           className: 'g-ui-card-action',
-          onClick: action.onClick,
+          onClick: (e) => action.onClick.get()?.(e),
           leftSection: action.leftSection,
           rightSection: action.rightSection,
-          size: action.size || 'sm',
-          variant: action.variant || 'outline',
-          ...action.props
+          size: after(action.size).compute(s => s || 'sm'),
+          variant: after(action.variant).compute(v => v || 'outline'),
+          ...(action.props.get() || {}),
         },
         action.label
       ))

@@ -176,10 +176,10 @@ export function Tabs(...args) {
         list(tabs, (tab) =>
           Button(
             {
-              className: after(currentState).compute((v) =>
-                cx('g-ui-tabs-tab', tab.value === v && 'g-ui-tabs-tab-active')
+              className: after(currentState, tab.value).compute(([v, tabVal]) =>
+                cx('g-ui-tabs-tab', tabVal === v && 'g-ui-tabs-tab-active')
               ),
-              onClick: () => setValue(tab.value),
+              onClick: () => setValue(tab.value.get()),
             },
             tab.label
           )

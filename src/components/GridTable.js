@@ -1,32 +1,26 @@
-import { Div, computed, state, context } from 'granular';
-import { splitPropsChildren, cx, classVar, classFlag } from '../utils.js';
-import { Text } from './Text.js';
-
+import { Div, after, context } from 'granular';
+import { splitPropsChildren, cx, classFlag } from '../utils.js';
 
 const sizeContext = context([]);
 
-
 export function GridTable(...args) {
-    const { props, children } = splitPropsChildren(args, {});
+    const { props, children } = splitPropsChildren(args, { sizes: [] });
+    const { className, sizes: sizesProp, ...rest } = props;
 
-    return sizeContext.serve(Div({ className: 'g-ui-grid-table' },
-        children
-    ));
+    const sizes = sizeContext.scope(sizesProp.get());
+    after(sizesProp).change(v => sizes.set(v));
+
+    return sizes.serve(Div({
+        className: cx('g-ui-grid-table', className),
+        ...rest,
+    }, children));
 }
-
 
 GridTable.GridRow = (...args) => {
     const { props, children } = splitPropsChildren(args, {});
     const { className, header, ...rest } = props;
 
-    // console.log('sizes', sizes.get())
-
-    // console.log('children', children)
-    children?.map?.((child) => {
-        // sizes.get().push('auto')
-        // console.log('child.$size', child.$size)
-        // console.log('child', child)
-    })
+    const sizes = sizeContext.state();
 
     return Div(
         {
@@ -35,22 +29,26 @@ GridTable.GridRow = (...args) => {
                 classFlag('g-ui-grid-table-row-header', header),
                 className
             ),
-            ...rest
+            style: {
+                gridTemplateColumns: after(sizes).compute(s =>
+                    Array.isArray(s) ? s.join(' ') : ''
+                ),
+            },
+            ...rest,
         },
         ...children
-    )
-}
+    );
+};
+
 GridTable.GridCell = function (...args) {
     const { props, children } = splitPropsChildren(args, {});
     const { className, ...rest } = props;
-    const size = state('auto')
-
 
     return Div(
         {
             className: cx('g-ui-grid-table-cell', className),
-            ...rest
+            ...rest,
         },
         children
-    )
-}
+    );
+};

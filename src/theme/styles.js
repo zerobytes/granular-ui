@@ -3521,13 +3521,12 @@ body {
   display: grid;
 }
 .g-ui-grid-table-row {
-  display: flex;
+  display: grid;
   border-bottom: 1px solid var(--g-ui-border-muted);
 }
 
 .g-ui-grid-table-cell {
   padding: var(--g-ui-space-8);
-  flex:1;
 }
 .g-ui-grid-table-row-header .g-ui-grid-table-cell {
   font-weight: 600;
