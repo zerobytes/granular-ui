@@ -86,5 +86,7 @@ export { PinInput } from "./components/PinInput.js";
 export { CheckboxGroup } from "./components/CheckboxGroup.js";
 export { AvatarGroup } from "./components/AvatarGroup.js";
 export { BadgeGroup } from "./components/BadgeGroup.js";
+export { GridTable } from "./components/GridTable.js";
+export { EventCalendar } from "./components/EventCalendar.js";
 export { useDisclosure } from "./hooks/useDisclosure.js";
 export { setThemeVars, setThemeMode } from "./theme/theme.js";

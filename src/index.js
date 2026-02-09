@@ -91,5 +91,8 @@ export { PinInput } from './components/PinInput.js';
 export { CheckboxGroup } from './components/CheckboxGroup.js';
 export { AvatarGroup } from './components/AvatarGroup.js';
 export { BadgeGroup } from './components/BadgeGroup.js';
+export { GridTable } from './components/GridTable.js';
+export { BottomBar } from './components/BottomBar.js';
+export { EventCalendar } from './components/EventCalendar.js';
 export { useDisclosure } from './hooks/useDisclosure.js';
 
