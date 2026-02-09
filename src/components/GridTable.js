@@ -60,7 +60,7 @@ GridTable.GridCell = function (...args) {
         );
 
         const handleSort = () => {
-            const current = table.sort.get();
+            const current = table.get().sort;
             let next;
             if (current?.key === sortKey) {
                 next = current.direction === 'asc'
@@ -70,7 +70,7 @@ GridTable.GridCell = function (...args) {
                 next = { key: sortKey, direction: 'asc' };
             }
             table.set().sort = next;
-            const onSort = table.get().onSort;
+            const { onSort } = table.get();
             if (onSort) onSort(next);
         };
 
