@@ -1,26 +1,38 @@
-import { Div, after, context } from 'granular';
+import { Div, Span, after, context } from 'granular';
 import { splitPropsChildren, cx, classFlag } from '../utils.js';
 
 const sizeContext = context([]);
+const tableContext = context({ sort: null, onSort: null });
 
 export function GridTable(...args) {
-    const { props, children } = splitPropsChildren(args, { sizes: [] });
-    const { className, sizes: sizesProp, ...rest } = props;
+    const { props, rawProps, children } = splitPropsChildren(args, { sizes: [], sort: null, stickyHeader: false });
+    const { className, sizes: sizesProp, sort: sortProp, stickyHeader: stickyProp, ...rest } = props;
+    const { onSort } = rawProps;
 
     const sizes = sizeContext.scope(sizesProp.get());
     after(sizesProp).change(v => sizes.set(v));
 
-    return sizes.serve(Div({
-        className: cx('g-ui-grid-table', className),
+    const table = tableContext.scope({ sort: sortProp.get(), onSort: onSort || null });
+    after(sortProp).change(v => table.set().sort = v);
+
+    return sizes.serve(table.serve(Div({
+        className: cx(
+            'g-ui-grid-table',
+            classFlag('g-ui-grid-table-sticky', stickyProp),
+            className
+        ),
+        style: {
+            gridTemplateColumns: after(sizes).compute(s =>
+                Array.isArray(s) ? s.join(' ') : ''
+            ),
+        },
         ...rest,
-    }, children));
+    }, children)));
 }
 
 GridTable.GridRow = (...args) => {
     const { props, children } = splitPropsChildren(args, {});
     const { className, header, ...rest } = props;
-
-    const sizes = sizeContext.state();
 
     return Div(
         {
@@ -29,11 +41,6 @@ GridTable.GridRow = (...args) => {
                 classFlag('g-ui-grid-table-row-header', header),
                 className
             ),
-            style: {
-                gridTemplateColumns: after(sizes).compute(s =>
-                    Array.isArray(s) ? s.join(' ') : ''
-                ),
-            },
             ...rest,
         },
         ...children
@@ -41,8 +48,46 @@ GridTable.GridRow = (...args) => {
 };
 
 GridTable.GridCell = function (...args) {
-    const { props, children } = splitPropsChildren(args, {});
-    const { className, ...rest } = props;
+    const { props, rawProps, children } = splitPropsChildren(args, {});
+    const { className, sort: _sort, ...rest } = props;
+    const sortKey = rawProps.sort;
+
+    if (sortKey) {
+        const table = tableContext.state();
+
+        const direction = after(table.sort).compute(s =>
+            s?.key === sortKey ? s.direction : null
+        );
+
+        const handleSort = () => {
+            const current = table.sort.get();
+            let next;
+            if (current?.key === sortKey) {
+                next = current.direction === 'asc'
+                    ? { key: sortKey, direction: 'desc' }
+                    : null;
+            } else {
+                next = { key: sortKey, direction: 'asc' };
+            }
+            table.set().sort = next;
+            const onSort = table.get().onSort;
+            if (onSort) onSort(next);
+        };
+
+        return Div(
+            {
+                className: cx('g-ui-grid-table-cell', 'g-ui-grid-table-cell-sortable', className),
+                onClick: handleSort,
+                ...rest,
+            },
+            children,
+            Span({ className: 'g-ui-grid-table-sort-icon' },
+                after(direction).compute(d =>
+                    d === 'asc' ? ' ↑' : d === 'desc' ? ' ↓' : ''
+                )
+            )
+        );
+    }
 
     return Div(
         {

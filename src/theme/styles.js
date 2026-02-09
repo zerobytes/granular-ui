@@ -3521,15 +3521,30 @@ body {
   display: grid;
 }
 .g-ui-grid-table-row {
-  display: grid;
-  border-bottom: 1px solid var(--g-ui-border-muted);
+  display: contents;
 }
-
 .g-ui-grid-table-cell {
   padding: var(--g-ui-space-8);
+  border-bottom: 1px solid var(--g-ui-border-muted);
 }
 .g-ui-grid-table-row-header .g-ui-grid-table-cell {
-  font-weight: 600;
+  font-weight: 200;
+}
+.g-ui-grid-table-cell-sortable {
+  cursor: pointer;
+  user-select: none;
+}
+.g-ui-grid-table-cell-sortable:hover {
+  background: var(--g-ui-bg-hover, rgba(0,0,0,0.04));
+}
+.g-ui-grid-table-sort-icon {
+  opacity: 0.5;
+}
+.g-ui-grid-table-sticky .g-ui-grid-table-row-header .g-ui-grid-table-cell {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--g-ui-bg, #fff);
 }
 
 .g-ui-bottombar {
