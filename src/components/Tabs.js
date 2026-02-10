@@ -160,8 +160,7 @@ export function Tabs(...args) {
   });
 
   return Div(
-    Div(
-      {
+    Div({
         className: cx(
           'g-ui-tabs',
           classMap(orientation, { vertical: 'g-ui-tabs-vertical' }),
@@ -171,22 +170,20 @@ export function Tabs(...args) {
       },
       Div({ node: sentinelNode }),
       Div({ style: spacerStyle }),
-      Div(
-        { node: listNode, className: 'g-ui-tabs-list', style: stickyStyle },
+      Div({ node: listNode, className: 'g-ui-tabs-list', style: stickyStyle },
         list(tabs, (tab) =>
           Button(
             {
               className: after(currentState, tab.value).compute(([v, tabVal]) =>
                 cx('g-ui-tabs-tab', tabVal === v && 'g-ui-tabs-tab-active')
               ),
-              onClick: () => setValue(tab.value.get()),
+              onClick: () => setValue(tab.get().value),
             },
             tab.label
           )
         )
       ),
-      Div(
-        { className: 'g-ui-tabs-panel' },
+      Div({ className: 'g-ui-tabs-panel' },
         when(currentState, () => tabs.get()?.find((tab) => tab.value === currentState.get())?.content ?? null)
       )
     )
