@@ -1,4 +1,4 @@
-import { Div, after, state } from 'granular';
+import { Div, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function SegmentedControl(...args) {

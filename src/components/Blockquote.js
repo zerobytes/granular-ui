@@ -1,4 +1,4 @@
-import { Blockquote as HtmlBlockquote } from 'granular';
+import { Blockquote as HtmlBlockquote } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Blockquote(...args) {

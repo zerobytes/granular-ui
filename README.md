@@ -5,7 +5,7 @@ Modern UI components for `granular`, inspired by Mantine, built for a no-build, 
 ## Quick Start
 
 ```js
-import { Container, Stack, Title, Text, Button, useDisclosure, Modal } from '@granular/ui';
+import { Container, Stack, Title, Text, Button, useDisclosure, Modal } from '@granularjs/ui';
 
 const [opened, { open, close }] = useDisclosure(false);
 

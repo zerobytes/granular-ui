@@ -1,4 +1,4 @@
-import { Div } from 'granular';
+import { Div } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, classMap, classFlag } from '../utils.js';
 
 export function Group(...args) {

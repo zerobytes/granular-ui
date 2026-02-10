@@ -1,4 +1,4 @@
-import { A, Div, Span, when, after, state } from 'granular';
+import { A, Div, Span, when, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, classFlag, resolveValue, toPx } from '../utils.js';
 
 export function NavLink(...args) {

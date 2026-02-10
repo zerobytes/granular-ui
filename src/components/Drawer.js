@@ -1,4 +1,4 @@
-import { Div, portal, when } from 'granular';
+import { Div, portal, when } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, classMap } from '../utils.js';
 
 export function Drawer(...args) {

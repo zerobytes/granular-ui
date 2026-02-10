@@ -1,4 +1,4 @@
-import { Span } from 'granular';
+import { Span } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, classFlag, classMap } from '../utils.js';
 
 export function Badge(...args) {

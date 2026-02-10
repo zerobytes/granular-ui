@@ -1,4 +1,4 @@
-import { Div, Button, when } from 'granular';
+import { Div, Button, when } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Toast(...args) {

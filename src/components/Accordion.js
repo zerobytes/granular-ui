@@ -1,5 +1,5 @@
-import { Div } from 'granular';
-import { state, when, after } from 'granular';
+import { Div } from '@granularjs/core';
+import { state, when, after } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveBool } from '../utils.js';
 
 export function Accordion(...args) {

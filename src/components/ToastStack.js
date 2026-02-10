@@ -1,4 +1,4 @@
-import { Div, when } from 'granular';
+import { Div, when } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function ToastStack(...args) {

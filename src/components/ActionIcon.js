@@ -1,4 +1,4 @@
-import { Button } from 'granular';
+import { Button } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function ActionIcon(...args) {

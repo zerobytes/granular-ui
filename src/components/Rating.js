@@ -1,4 +1,4 @@
-import { Span, after, state } from 'granular';
+import { Span, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function Rating(...args) {

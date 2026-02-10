@@ -1,4 +1,4 @@
-import { state, after } from 'granular';
+import { state, after } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 import { Calendar } from './Calendar.js';
 import { Popover } from './Popover.js';

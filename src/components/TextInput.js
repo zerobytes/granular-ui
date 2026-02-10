@@ -1,4 +1,4 @@
-import { Div, Input, Textarea as HtmlTextarea, Label, Span, when, state, after, isState } from 'granular';
+import { Div, Input, Textarea as HtmlTextarea, Label, Span, when, state, after, isState } from '@granularjs/core';
 import { cx, splitPropsChildren, classFlag, classVar, resolveValue, resolveBool } from '../utils.js';
 
 export function TextInput(...args) {

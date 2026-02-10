@@ -1,4 +1,4 @@
-import { Div, when } from 'granular';
+import { Div, when } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function Indicator(...args) {

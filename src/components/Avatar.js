@@ -1,4 +1,4 @@
-import { Div, Img, when } from 'granular';
+import { Div, Img, when } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Avatar(...args) {

@@ -1,4 +1,4 @@
-import { Span, Div } from 'granular';
+import { Span, Div } from '@granularjs/core';
 import { splitPropsChildren } from '../utils.js';
 import { searchSvg } from '../theme/icons.js';
 import { TextInput } from './TextInput.js';

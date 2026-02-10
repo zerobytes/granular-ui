@@ -1,4 +1,4 @@
-import { Div, Span, when, state, after } from 'granular';
+import { Div, Span, when, state, after } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function Select(...args) {

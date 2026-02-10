@@ -1,4 +1,4 @@
-import { state } from 'granular';
+import { state } from '@granularjs/core';
 
 export function useDisclosure(initial = false) {
   const opened = state(!!initial);

@@ -1,4 +1,4 @@
-import { Input, Label, Span, when } from 'granular';
+import { Input, Label, Span, when } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function Switch(...args) {

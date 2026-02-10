@@ -1,4 +1,4 @@
-import { Div, portal, after, isSignal, isState, isStatePath, state, when } from 'granular';
+import { Div, portal, after, isSignal, isState, isStatePath, state, when } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveValue, resolveBool } from '../utils.js';
 
 export function Sidebar(...args) {

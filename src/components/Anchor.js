@@ -1,4 +1,4 @@
-import { A } from 'granular';
+import { A } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Anchor(...args) {

@@ -1,4 +1,4 @@
-import { Table as HtmlTable, Thead, Tbody, Tr, Th, Td } from 'granular';
+import { Table as HtmlTable, Thead, Tbody, Tr, Th, Td } from '@granularjs/core';
 import { cx, splitPropsChildren, classFlag } from '../utils.js';
 
 export function Table(...args) {

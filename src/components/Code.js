@@ -1,4 +1,4 @@
-import { Code as HtmlCode } from 'granular';
+import { Code as HtmlCode } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Code(...args) {

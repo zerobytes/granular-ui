@@ -1,4 +1,4 @@
-import { Div, Span, Input, when, after, state } from 'granular';
+import { Div, Span, Input, when, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 import { checkedSvg, closeSvg } from '../theme/icons.js';
 

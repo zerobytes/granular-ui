@@ -1,4 +1,4 @@
-import { Button, Div, state, after, list, when } from 'granular';
+import { Button, Div, state, after, list, when } from '@granularjs/core';
 import { cx, splitPropsChildren, classMap, classVar, resolveValue, resolveBool } from '../utils.js';
 
 export function Tabs(...args) {

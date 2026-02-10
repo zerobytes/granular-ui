@@ -1,4 +1,4 @@
-import { Div, when } from 'granular';
+import { Div, when } from '@granularjs/core';
 import { cx, splitPropsChildren, classFlag, classVar } from '../utils.js';
 import { Text } from './Text.js';
 

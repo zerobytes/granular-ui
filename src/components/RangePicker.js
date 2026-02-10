@@ -1,4 +1,4 @@
-import { Div, state, after } from 'granular';
+import { Div, state, after } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveValue } from '../utils.js';
 import { TextInput } from './TextInput.js';
 

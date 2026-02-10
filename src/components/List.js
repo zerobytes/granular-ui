@@ -1,4 +1,4 @@
-import { Ul, Ol, Li, Div, Span, after, when, isSignal, isState, isStatePath, isComputed } from 'granular';
+import { Ul, Ol, Li, Div, Span, after, when, isSignal, isState, isStatePath, isComputed } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, classFlag, classMap } from '../utils.js';
 
 export function List(...args) {

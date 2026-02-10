@@ -1,4 +1,4 @@
-import { Div, Input, after, state, when, list } from 'granular';
+import { Div, Input, after, state, when, list } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function PinInput(...args) {

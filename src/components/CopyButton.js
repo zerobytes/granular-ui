@@ -1,6 +1,6 @@
-import { Button, after, when } from 'granular';
+import { Button, after, when } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
-import { state } from 'granular';
+import { state } from '@granularjs/core';
 
 export function CopyButton(...args) {
   const { props, children } = splitPropsChildren(args, { value: '', timeout: 1500 });

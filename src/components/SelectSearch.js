@@ -1,6 +1,6 @@
-import { Div, Span } from 'granular';
+import { Div, Span } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
-import { state } from 'granular';
+import { state } from '@granularjs/core';
 import { TextInput } from './TextInput.js';
 
 export function SelectSearch(...args) {

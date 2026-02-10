@@ -1,4 +1,4 @@
-import { Div, when, after, state } from 'granular';
+import { Div, when, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveValue } from '../utils.js';
 
 export function Popover(...args) {

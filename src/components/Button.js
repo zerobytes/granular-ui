@@ -1,4 +1,4 @@
-import { Button as HtmlButton, Span, when, after} from 'granular';
+import { Button as HtmlButton, Span, when, after} from '@granularjs/core';
 import { cx, splitPropsChildren, resolveBool, classVar, classFlag } from '../utils.js';
 
 export function Button(...args) {

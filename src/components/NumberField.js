@@ -1,5 +1,5 @@
 import { cx, splitPropsChildren, resolveValue } from '../utils.js';
-import { Div, Span, when, after, state } from 'granular';
+import { Div, Span, when, after, state } from '@granularjs/core';
 import { TextInput } from './TextInput.js';
 
 export function NumberField(...args) {

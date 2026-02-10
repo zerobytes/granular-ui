@@ -1,4 +1,4 @@
-import { Div } from 'granular';
+import { Div } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function AppBar(...args) {

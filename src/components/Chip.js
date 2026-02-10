@@ -1,4 +1,4 @@
-import { Button, after, state } from 'granular';
+import { Button, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function Chip(...args) {

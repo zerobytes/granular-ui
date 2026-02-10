@@ -1,4 +1,4 @@
-import { Div, Button as HtmlButton, portal, when, after } from 'granular';
+import { Div, Button as HtmlButton, portal, when, after } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 import { closeSvg } from '../theme/icons.js';
 

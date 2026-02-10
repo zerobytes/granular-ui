@@ -1,4 +1,4 @@
-import { Button, Div, Span, when, after } from 'granular';
+import { Button, Div, Span, when, after } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveBool } from '../utils.js';
 import { Loading } from './Loading.js';
 import { closeSvg } from '../theme/icons.js';

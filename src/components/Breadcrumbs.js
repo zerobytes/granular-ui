@@ -1,4 +1,4 @@
-import { Nav, Span } from 'granular';
+import { Nav, Span } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Breadcrumbs(...args) {

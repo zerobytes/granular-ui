@@ -8,7 +8,7 @@ import {
   Input,
   Label,
   Span,
-} from 'granular';
+} from '@granularjs/core';
 import { cx, splitPropsChildren, resolveValue, classVar } from '../utils.js';
 import { Modal } from './Modal.js';
 import { ActionIcon } from './ActionIcon.js';

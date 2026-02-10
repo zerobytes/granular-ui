@@ -1,4 +1,4 @@
-import { Renderer, isSignal, isState, isStatePath, isComputed, resolve, computed, after, concat } from 'granular';
+import { Renderer, isSignal, isState, isStatePath, isComputed, resolve, computed, after, concat } from '@granularjs/core';
 
 function isReactive(value) {
   return isSignal(value) || isState(value) || isStatePath(value) || isComputed(value);

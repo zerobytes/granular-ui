@@ -1,4 +1,4 @@
-import { Button, Div, state, after } from 'granular';
+import { Button, Div, state, after } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function Pagination(...args) {

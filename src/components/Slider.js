@@ -1,4 +1,4 @@
-import { Div, after, state, when } from 'granular';
+import { Div, after, state, when } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, classFlag, resolveBool, resolveValue } from '../utils.js';
 
 export function Slider(...args) {

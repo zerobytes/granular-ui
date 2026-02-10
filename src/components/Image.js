@@ -1,4 +1,4 @@
-import { Img } from 'granular';
+import { Img } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Image(...args) {

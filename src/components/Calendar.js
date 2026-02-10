@@ -1,4 +1,4 @@
-import { Button, Div, state, after } from 'granular';
+import { Button, Div, state, after } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveValue, classVar } from '../utils.js';
 import { forwardSvg, backwardSvg } from '../theme/icons.js';
 import { ActionIcon } from './ActionIcon.js';

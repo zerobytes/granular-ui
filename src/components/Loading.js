@@ -1,4 +1,4 @@
-import { Div, Span, after, when } from 'granular';
+import { Div, Span, after, when } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function Loading(...args) {

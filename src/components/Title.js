@@ -1,4 +1,4 @@
-import { H1, H2, H3, H4, H5, H6 } from 'granular';
+import { H1, H2, H3, H4, H5, H6 } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveValue, classVar } from '../utils.js';
 
 const map = { 1: H1, 2: H2, 3: H3, 4: H4, 5: H5, 6: H6 };

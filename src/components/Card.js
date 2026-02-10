@@ -1,4 +1,4 @@
-import { Div, list, when, after } from 'granular';
+import { Div, list, when, after } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 import { Button } from './Button.js';
 

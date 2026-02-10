@@ -1,4 +1,4 @@
-import { Div, when } from 'granular';
+import { Div, when } from '@granularjs/core';
 import { splitPropsChildren } from '../utils.js';
 import { Loading } from './Loading.js';
 

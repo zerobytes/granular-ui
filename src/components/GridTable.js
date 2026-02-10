@@ -1,4 +1,4 @@
-import { Div, Span, after, context } from 'granular';
+import { Div, Span, after, context } from '@granularjs/core';
 import { splitPropsChildren, cx, classFlag } from '../utils.js';
 
 const sizeContext = context([]);

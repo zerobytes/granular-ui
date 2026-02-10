@@ -1,4 +1,4 @@
-import { Div, when, after, state, portal } from 'granular';
+import { Div, when, after, state, portal } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveValue } from '../utils.js';
 
 export const menuControlStore = state({ currentOpenState: null })

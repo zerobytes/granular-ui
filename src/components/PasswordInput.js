@@ -1,4 +1,4 @@
-import { Button, after, when, state } from 'granular';
+import { Button, after, when, state } from '@granularjs/core';
 import { splitPropsChildren } from '../utils.js';
 import { TextInput } from './TextInput.js';
 

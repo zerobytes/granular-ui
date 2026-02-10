@@ -1,4 +1,4 @@
-import { Span } from 'granular';
+import { Span } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Tooltip(...args) {

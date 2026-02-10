@@ -1,4 +1,4 @@
-import { Button, Div, Span, after, when } from 'granular';
+import { Button, Div, Span, after, when } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveBool } from '../utils.js';
 
 export function Alert(...args) {
