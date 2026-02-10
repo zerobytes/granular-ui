@@ -819,7 +819,6 @@ body {
   line-height: 1;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
 }
 .g-ui-button:active { transform: translateY(1px); }
 .g-ui-button:disabled { opacity: 0.6; cursor: not-allowed; }

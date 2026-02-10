@@ -2,7 +2,7 @@ import { Button as HtmlButton, Span, when, after} from '@granularjs/core';
 import { cx, splitPropsChildren, resolveBool, classVar, classFlag } from '../utils.js';
 
 export function Button(...args) {
-  const { props, children } = splitPropsChildren(args, { variant: 'filled', size: 'md' });
+  const { props, children } = splitPropsChildren(args, { variant: 'filled', size: 'md', justify: 'center' });
   const {
     variant,
     size,
@@ -12,6 +12,7 @@ export function Button(...args) {
     rightSection,
     className,
     disabled,
+    justify,
     ...rest
   } = props;
 
@@ -24,6 +25,7 @@ export function Button(...args) {
       className: cx(
         'g-ui-button',
         classVar('g-ui-button-variant-', variant, 'filled'),
+        classVar('g-ui-justify-', justify, 'center'),
         classVar('g-ui-button-size-', size, 'md'),
         classFlag('g-ui-button-full', fullWidth),
         classFlag('g-ui-button-loading', loading),
