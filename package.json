@@ -1,7 +1,7 @@
 {
   "name": "@granularjs/ui",
   "version": "0.1.0",
-  "description": "UI component library for Granular",
+  "description": "90+ production-ready UI components for Granular. Dark/light themes, CSS variables, accessible, zero dependencies beyond @granularjs/core.",
   "type": "module",
   "main": "./dist/granular-ui.min.js",
   "module": "./dist/granular-ui.min.js",
@@ -21,9 +21,35 @@
   "scripts": {
     "build:minify": "mkdir -p ./dist/fonts && cp -R src/theme/fonts/* ./dist/fonts/ && npx -y esbuild src/index.js --bundle --minify --sourcemap --format=esm --external:@granularjs/core --outfile=./dist/granular-ui.min.js && npx -y -p typescript@latest tsc -p tsconfig.json",
     "build:debug": "mkdir -p ./dist/fonts && cp -R src/theme/fonts/* ./dist/fonts/ && npx -y esbuild src/index.js --bundle --sourcemap --format=esm --external:@granularjs/core --outfile=./dist/granular-ui.js && npx -y -p typescript@latest tsc -p tsconfig.json",
-    "build:watch": "npx -y esbuild src/index.js --bundle --minify --sourcemap --format=esm --external:@granularjs/core --outfile=./dist/granular-ui.min.js --watch"
+    "build:watch": "npx -y esbuild src/index.js --bundle --minify --sourcemap --format=esm --external:@granularjs/core --outfile=./dist/granular-ui.min.js --watch",
+    "version": "npm run build:minify && git add -A",
+    "postversion": "git push && git push --tags"
   },
   "peerDependencies": {
-    "@granularjs/core": ">=0.1.0"
-  }
+    "@granularjs/core": "^1.0.0"
+  },
+  "author": "Guilherme Ferreira",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zerobytes/granular-ui.git"
+  },
+  "homepage": "https://granular.web.app",
+  "bugs": {
+    "url": "https://github.com/zerobytes/granular-ui/issues"
+  },
+  "keywords": [
+    "granular",
+    "granularjs",
+    "ui",
+    "components",
+    "component-library",
+    "design-system",
+    "theme",
+    "dark-mode",
+    "reactive",
+    "frontend",
+    "javascript",
+    "no-vdom"
+  ]
 }
