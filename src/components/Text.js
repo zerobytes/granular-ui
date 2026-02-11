@@ -3,7 +3,7 @@ import { cx, splitPropsChildren, classVar, classFlag, classMap } from '../utils.
 
 export function Text(...args) {
   const { props, children } = splitPropsChildren(args, { size: 'md' });
-  const { size, weight, color, dimmed, align, className, style, ...rest } = props;
+  const { size, weight, color, dimmed, align, ellipsis, className, style, ...rest } = props;
   const weightClass = classMap(weight, {
     bold: 'g-ui-text-weight-700',
     semibold: 'g-ui-text-weight-600',
@@ -27,10 +27,12 @@ export function Text(...args) {
   return Span(
     {
       ...rest,
+      style,
       className: cx(
         'g-ui-text',
         classVar('g-ui-text-size-', size, 'md'),
         classFlag('g-ui-text-dimmed', dimmed),
+        classFlag('g-ui-text-ellipsis', ellipsis),
         weightClass,
         colorClass,
         alignClass,

@@ -895,6 +895,11 @@ body {
   flex-direction: column;
   gap: var(--g-ui-space-6);
 }
+.g-ui-text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .g-ui-text-input-label {
   font-size: 13px;
   font-weight: 500;
