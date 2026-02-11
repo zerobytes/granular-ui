@@ -1007,6 +1007,7 @@ body {
   background: var(--g-ui-bg);
   position: relative;
   transition: background-color .12s ease, border-color .12s ease;
+  cursor: pointer;
 }
 .g-ui-checkbox-input:focus-visible {
   outline: 2px solid var(--g-ui-primary);
@@ -1087,14 +1088,14 @@ body {
   border-color: var(--g-ui-primary);
 }
 .g-ui-switch-input:checked::after {
-  transform: translateX(calc(var(--g-ui-switch-width, 36px) - var(--g-ui-switch-thumb, 14px) - (var(--g-ui-switch-offset, 2px) * 2)));
+  transform: translateX(calc(var(--g-ui-switch-width, 36px) - var(--g-ui-switch-thumb, 14px) - (var(--g-ui-switch-offset, 2px) * 2) - 2px));
 }
 .g-ui-switch-label { font-size: 14px; }
-.g-ui-switch-size-xs { --g-ui-switch-width: 32px; --g-ui-switch-height: 16px; --g-ui-switch-thumb: 12px; --g-ui-switch-offset: 2px; }
-.g-ui-switch-size-sm { --g-ui-switch-width: 38px; --g-ui-switch-height: 20px; --g-ui-switch-thumb: 14px; --g-ui-switch-offset: 3px; }
-.g-ui-switch-size-md { --g-ui-switch-width: 46px; --g-ui-switch-height: 24px; --g-ui-switch-thumb: 18px; --g-ui-switch-offset: 3px; }
-.g-ui-switch-size-lg { --g-ui-switch-width: 56px; --g-ui-switch-height: 30px; --g-ui-switch-thumb: 22px; --g-ui-switch-offset: 4px; }
-.g-ui-switch-size-xl { --g-ui-switch-width: 72px; --g-ui-switch-height: 36px; --g-ui-switch-thumb: 28px; --g-ui-switch-offset: 4px; }
+.g-ui-switch-size-xs { --g-ui-switch-width: 32px; --g-ui-switch-height: 16px; --g-ui-switch-thumb: 12px; --g-ui-switch-offset: 1px; }
+.g-ui-switch-size-sm { --g-ui-switch-width: 38px; --g-ui-switch-height: 20px; --g-ui-switch-thumb: 14px; --g-ui-switch-offset: 2px; }
+.g-ui-switch-size-md { --g-ui-switch-width: 46px; --g-ui-switch-height: 24px; --g-ui-switch-thumb: 18px; --g-ui-switch-offset: 2px; }
+.g-ui-switch-size-lg { --g-ui-switch-width: 56px; --g-ui-switch-height: 30px; --g-ui-switch-thumb: 22px; --g-ui-switch-offset: 3px; }
+.g-ui-switch-size-xl { --g-ui-switch-width: 72px; --g-ui-switch-height: 36px; --g-ui-switch-thumb: 28px; --g-ui-switch-offset: 3px; }
 
 .g-ui-select-root {
   position: relative;
