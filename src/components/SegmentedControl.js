@@ -1,4 +1,4 @@
-import { Div, after, state } from '@granularjs/core';
+import { Div, after, state, list } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 
 export function SegmentedControl(...args) {
@@ -18,22 +18,22 @@ export function SegmentedControl(...args) {
   return Div(
     { ...rest, className: cx(scroll && 'g-ui-segmented-scroll') },
     Div(
-      { className: cx('g-ui-segmented', classVar('g-ui-segmented-size-', size, 'sm'), props.className ?? className) },
-      data.map((item) =>
+      { className: cx('g-ui-segmented', classVar('g-ui-segmented-size-', size, 'sm'), className) },
+      list(data, ((item) =>
         Div(
           {
             className: cx(
               'g-ui-segmented-item',
-            after(currentState).compute((current) => {
-              if (item.value === current) return 'g-ui-segmented-active';
-              return '';
-            })
+              after(currentState).compute((current) => {
+                if (item.get().value === current) return 'g-ui-segmented-active';
+                return '';
+              })
             ),
-            onClick: () => setValue(item.value),
+            onClick: () => setValue(item.get().value),
           },
           item.label
         )
-      )
+      ))
     )
   );
 }
