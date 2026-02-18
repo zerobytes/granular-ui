@@ -7,6 +7,7 @@ export function Container(...args) {
   return Div(
     {
       ...rest,
+      style,
       className: cx(
         'g-ui-container',
         classFlag('g-ui-container-fluid', fluid),

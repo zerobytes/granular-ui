@@ -17,7 +17,13 @@ export function List(...args) {
     value && typeof value === 'object' && typeof value.tagName === 'string' &&
     value.tagName.toLowerCase() === 'li';
   const wrapChild = (child) => {
+    console.log('INFO ABOUT ITEM', child,
+      typeof child,
+      typeof child?.tagName,
+      child?.tagName?.toLowerCase()
+    );
     const wrapValue = (value) => {
+      if (value?.nodeType === 'granular-list-node') return value;
       if (value == null || value === false) return null;
       if (Array.isArray(value)) return value.map((item) => wrapValue(item));
       if (isListItemNode(value)) return value;
@@ -29,7 +35,7 @@ export function List(...args) {
     }
     return wrapValue(child);
   };
-  const listChildren = children.map((child) => wrapChild(child));
+  const listChildren = when(children, () => children.map((child) => wrapChild(child)));
   const listProps = {
     ...rest,
     className: cx(

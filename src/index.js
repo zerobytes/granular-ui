@@ -3,7 +3,7 @@ import { ensureStyles } from './theme/styles.js';
 ensureStyles();
 
 export { setThemeVars, setThemeMode } from './theme/theme.js';
-export { cx } from './utils.js';
+export { cx, classVar, classFlag, classMap, splitPropsChildren } from './utils.js';
 export { Button } from './components/Button.js';
 export { Text } from './components/Text.js';
 export { Title } from './components/Title.js';

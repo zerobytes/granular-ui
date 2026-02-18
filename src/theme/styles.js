@@ -839,8 +839,8 @@ body {
 .g-ui-button-size-xs { font-size: 12px; height: 30px; padding: 0 var(--g-ui-space-8); }
 .g-ui-button-size-sm { font-size: 13px; height: 36px; padding: 0 var(--g-ui-space-10); }
 .g-ui-button-size-md { font-size: 14px; height: 42px; padding: 0 var(--g-ui-space-10); }
-.g-ui-button-size-lg { font-size: 15px; height: 50px; padding: 0 var(--g-ui-space-11); }
-.g-ui-button-size-xl { font-size: 16px; height: 60px; padding: 0 var(--g-ui-space-12); }
+.g-ui-button-size-lg { font-size: 15px; height: 50px; padding: 0 var(--g-ui-space-12); }
+.g-ui-button-size-xl { font-size: 16px; height: 60px; padding: 0 var(--g-ui-space-14); }
 
 .g-ui-input-wrapper {
   width: 100%;
@@ -1034,22 +1034,22 @@ body {
 .g-ui-checkbox-size-xs .g-ui-checkbox-indeterminate svg { width: 16px; height: 16px; }
 .g-ui-checkbox-size-sm .g-ui-checkbox-indeterminate { top:3px; left:4px;  }
 .g-ui-checkbox-size-sm .g-ui-checkbox-indeterminate svg { width: 20px; height:20px;  }
-.g-ui-checkbox-size-md .g-ui-checkbox-indeterminate { top:3px; left:4px; }
+.g-ui-checkbox-size-md .g-ui-checkbox-indeterminate { top:0px; left:0px; }
 .g-ui-checkbox-size-md .g-ui-checkbox-indeterminate svg { width: 24px; height: 24px; }
 .g-ui-checkbox-size-lg .g-ui-checkbox-indeterminate { top:4px; left:5px; }
 .g-ui-checkbox-size-lg .g-ui-checkbox-indeterminate svg { width: 28px; height: 28px; }
 .g-ui-checkbox-size-xl .g-ui-checkbox-indeterminate { top:5px; left:6px; }
 .g-ui-checkbox-size-xl .g-ui-checkbox-indeterminate svg { width: 32px; height: 32px; }
 
-.g-ui-checkbox-size-xs .g-ui-checkbox-checked { top: 2px;left:4px; }
+.g-ui-checkbox-size-xs .g-ui-checkbox-checked { top: 0px;left:0.5px; }
 .g-ui-checkbox-size-xs .g-ui-checkbox-checked svg { width: 16px; height: 16px; }
-.g-ui-checkbox-size-sm .g-ui-checkbox-checked { top:3px; left:4px;  }
+.g-ui-checkbox-size-sm .g-ui-checkbox-checked { top:0px; left:0.3px;  }
 .g-ui-checkbox-size-sm .g-ui-checkbox-checked svg { width: 20px; height:20px;  }
-.g-ui-checkbox-size-md .g-ui-checkbox-checked { top:3px; left:4px; }
+.g-ui-checkbox-size-md .g-ui-checkbox-checked { top:0px; left:0px; }
 .g-ui-checkbox-size-md .g-ui-checkbox-checked svg { width: 24px; height: 24px; }
-.g-ui-checkbox-size-lg .g-ui-checkbox-checked { top:4px; left:5px; }
+.g-ui-checkbox-size-lg .g-ui-checkbox-checked { top:1px; left:1px; }
 .g-ui-checkbox-size-lg .g-ui-checkbox-checked svg { width: 28px; height: 28px; }
-.g-ui-checkbox-size-xl .g-ui-checkbox-checked { top:5px; left:6px; }
+.g-ui-checkbox-size-xl .g-ui-checkbox-checked { top:2px; left:3px; }
 .g-ui-checkbox-size-xl .g-ui-checkbox-checked svg { width: 32px; height: 32px; }
 
 .g-ui-switch {

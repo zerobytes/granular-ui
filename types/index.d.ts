@@ -1,4 +1,3 @@
-export { cx } from "./utils.js";
 export { Button } from "./components/Button.js";
 export { Text } from "./components/Text.js";
 export { Title } from "./components/Title.js";
@@ -91,3 +90,4 @@ export { BottomBar } from "./components/BottomBar.js";
 export { EventCalendar } from "./components/EventCalendar.js";
 export { useDisclosure } from "./hooks/useDisclosure.js";
 export { setThemeVars, setThemeMode } from "./theme/theme.js";
+export { cx, classVar, classFlag, classMap, splitPropsChildren } from "./utils.js";
