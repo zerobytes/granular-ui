@@ -2,7 +2,7 @@ import { ensureStyles } from './theme/styles.js';
 
 ensureStyles();
 
-export { setThemeVars, setThemeMode } from './theme/theme.js';
+export { setThemeVars, setThemeMode, getThemeMode } from './theme/theme.js';
 export { cx, classVar, classFlag, classMap, splitPropsChildren } from './utils.js';
 export { Button } from './components/Button.js';
 export { Text } from './components/Text.js';

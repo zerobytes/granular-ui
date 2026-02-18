@@ -69,3 +69,7 @@ export function setThemeMode(mode = 'dark', target = document?.documentElement) 
   target.classList.remove('g-ui-theme-dark', 'g-ui-theme-light');
   target.classList.add(mode === 'light' ? 'g-ui-theme-light' : 'g-ui-theme-dark');
 }
+
+export function getThemeMode(target = document?.documentElement) {
+  return target.classList.contains('g-ui-theme-light') ? 'light' : 'dark';
+}

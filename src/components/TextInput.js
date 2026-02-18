@@ -16,7 +16,7 @@ export function TextInput(...args) {
     value: computed_value,
     ...rest
   } = props;
-  const { value: raw_value, onChange, onInput, onFocus, onBlur, onKeyDown, onKeyUp, onClick } = rawProps;
+  const { value: raw_value, node, onChange, onInput, onFocus, onBlur, onKeyDown, onKeyUp, onClick } = rawProps;
 
   const isValueTwoWay = isState(raw_value) && !onChange && !onInput
   const currentState = isValueTwoWay ? raw_value : state(resolveValue(computed_value) ?? '');
@@ -40,6 +40,7 @@ export function TextInput(...args) {
 
   const input = Control({
     ...rest,
+    node,
     value: currentState,
     onInput: handleInput,
     onChange: handleInput,

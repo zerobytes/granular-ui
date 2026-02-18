@@ -2,8 +2,8 @@ import { Button, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function Chip(...args) {
-  const { props, rawProps, children } = splitPropsChildren(args, { size: 'md', variant: 'filled' });
-  const { checked, size, variant, className, ...rest } = props;
+  const { props, rawProps, children } = splitPropsChildren(args, { size: 'md', variant: 'filled', color: 'primary' });
+  const { checked, size, variant, color, className, ...rest } = props;
   const { onChange } = rawProps;
   const currentState = state(!!checked);
   after(checked).change((next) => {
@@ -22,6 +22,7 @@ export function Chip(...args) {
         'g-ui-chip',
         classVar('g-ui-chip-size-', size, 'md'),
         classVar('g-ui-chip-variant-', variant, 'filled'),
+        classVar('g-ui-chip-color-', color, 'primary'),
         after(currentState).compute((current) => {
           if (current) return 'g-ui-chip-active';
           return '';
