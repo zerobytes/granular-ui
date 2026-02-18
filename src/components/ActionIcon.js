@@ -3,7 +3,7 @@ import { cx, splitPropsChildren, classVar } from '../utils.js';
 
 export function ActionIcon(...args) {
   const { props, children } = splitPropsChildren(args, { size: 'md', variant: 'filled' });
-  const { size, variant, className, ...rest } = props;
+  const { size, variant, color, className, ...rest } = props;
   return Button(
     {
       ...rest,
@@ -11,6 +11,7 @@ export function ActionIcon(...args) {
       className: cx(
         'g-ui-action-icon',
         classVar('g-ui-action-icon-size-', size, 'md'),
+        classVar('g-ui-action-icon-color-', color, 'primary'),
         classVar('g-ui-action-icon-', variant, 'filled'),
         className
       ),

@@ -370,9 +370,29 @@ const css = `
   
   /* Aliases for common usage */
   --g-ui-success: var(--g-ui-green-500);
+  --g-ui-success-hover: var(--g-ui-green-600);
+  --g-ui-success-active: var(--g-ui-green-700);
+  --g-ui-success-subtle: var(--g-ui-green-100);
+  --g-ui-success-muted: var(--g-ui-green-200);
+  --g-ui-success-fg: var(--g-ui-white);
   --g-ui-danger: var(--g-ui-red-500);
+  --g-ui-danger-hover: var(--g-ui-red-600);
+  --g-ui-danger-active: var(--g-ui-red-700);
+  --g-ui-danger-subtle: var(--g-ui-red-100);
+  --g-ui-danger-muted: var(--g-ui-red-200);
+  --g-ui-danger-fg: var(--g-ui-white);
   --g-ui-warning: var(--g-ui-yellow-500);
+  --g-ui-warning-hover: var(--g-ui-yellow-600);
+  --g-ui-warning-active: var(--g-ui-yellow-700);
+  --g-ui-warning-subtle: var(--g-ui-yellow-100);
+  --g-ui-warning-muted: var(--g-ui-yellow-200);
+  --g-ui-warning-fg: var(--g-ui-gray-900);
   --g-ui-info: var(--g-ui-cyan-500);
+  --g-ui-info-hover: var(--g-ui-cyan-600);
+  --g-ui-info-active: var(--g-ui-cyan-700);
+  --g-ui-info-subtle: var(--g-ui-cyan-100);
+  --g-ui-info-muted: var(--g-ui-cyan-200);
+  --g-ui-info-fg: var(--g-ui-white);
   
   /* Shadows - Dark theme (dual-layer, Linear/Vercel inspired) */
   --g-ui-shadow-xs: 0px 1px 2px rgba(0, 0, 0, 0.48);
@@ -836,6 +856,63 @@ body {
 .g-ui-button-variant-outline:hover { background: var(--g-ui-primary-subtle); }
 .g-ui-button-variant-subtle:hover { background: var(--g-ui-bg-muted); }
 .g-ui-button-variant-transparent:hover { background: var(--g-ui-bg-muted); }
+
+.g-ui-button-color-primary.g-ui-button-variant-filled { background: var(--g-ui-primary); color: var(--g-ui-primary-fg); border: 1px solid transparent; }
+.g-ui-button-color-primary.g-ui-button-variant-light { background: var(--g-ui-primary-subtle); color: var(--g-ui-primary); border: 1px solid var(--g-ui-primary-muted); }
+.g-ui-button-color-primary.g-ui-button-variant-outline { background: transparent; color: var(--g-ui-primary); border: 1px solid var(--g-ui-primary); }
+.g-ui-button-color-primary.g-ui-button-variant-subtle { background: transparent; color: var(--g-ui-text); border: 1px solid var(--g-ui-border); }
+.g-ui-button-color-primary.g-ui-button-variant-transparent { background: transparent; color: var(--g-ui-text); border: 1px solid transparent; }
+.g-ui-button-color-primary.g-ui-button-variant-filled:hover { background: var(--g-ui-primary-hover); }
+.g-ui-button-color-primary.g-ui-button-variant-light:hover { background: var(--g-ui-primary-muted); }
+.g-ui-button-color-primary.g-ui-button-variant-outline:hover { background: var(--g-ui-primary-subtle); }
+.g-ui-button-color-primary.g-ui-button-variant-subtle:hover { background: var(--g-ui-bg-muted); }
+.g-ui-button-color-primary.g-ui-button-variant-transparent:hover { background: var(--g-ui-bg-muted); }
+
+.g-ui-button-color-success.g-ui-button-variant-filled { background: var(--g-ui-success); color: var(--g-ui-success-fg); border: 1px solid transparent; }
+.g-ui-button-color-success.g-ui-button-variant-light { background: var(--g-ui-success-subtle); color: var(--g-ui-success); border: 1px solid var(--g-ui-success-muted); }
+.g-ui-button-color-success.g-ui-button-variant-outline { background: transparent; color: var(--g-ui-success); border: 1px solid var(--g-ui-success); }
+.g-ui-button-color-success.g-ui-button-variant-subtle { background: transparent; color: var(--g-ui-text); border: 1px solid var(--g-ui-border); }
+.g-ui-button-color-success.g-ui-button-variant-transparent { background: transparent; color: var(--g-ui-text); border: 1px solid transparent; }
+.g-ui-button-color-success.g-ui-button-variant-filled:hover { background: var(--g-ui-success-hover); }
+.g-ui-button-color-success.g-ui-button-variant-light:hover { background: var(--g-ui-success-muted); }
+.g-ui-button-color-success.g-ui-button-variant-outline:hover { background: var(--g-ui-success-subtle); }
+.g-ui-button-color-success.g-ui-button-variant-subtle:hover { background: var(--g-ui-bg-muted); }
+.g-ui-button-color-success.g-ui-button-variant-transparent:hover { background: var(--g-ui-bg-muted); }
+
+.g-ui-button-color-warning.g-ui-button-variant-filled { background: var(--g-ui-warning); color: var(--g-ui-warning-fg); border: 1px solid transparent; }
+.g-ui-button-color-warning.g-ui-button-variant-light { background: var(--g-ui-warning-subtle); color: var(--g-ui-warning); border: 1px solid var(--g-ui-warning-muted); }
+.g-ui-button-color-warning.g-ui-button-variant-outline { background: transparent; color: var(--g-ui-warning); border: 1px solid var(--g-ui-warning); }
+.g-ui-button-color-warning.g-ui-button-variant-subtle { background: transparent; color: var(--g-ui-text); border: 1px solid var(--g-ui-border); }
+.g-ui-button-color-warning.g-ui-button-variant-transparent { background: transparent; color: var(--g-ui-text); border: 1px solid transparent; }
+.g-ui-button-color-warning.g-ui-button-variant-filled:hover { background: var(--g-ui-warning-hover); }
+.g-ui-button-color-warning.g-ui-button-variant-light:hover { background: var(--g-ui-warning-muted); }
+.g-ui-button-color-warning.g-ui-button-variant-outline:hover { background: var(--g-ui-warning-subtle); }
+.g-ui-button-color-warning.g-ui-button-variant-subtle:hover { background: var(--g-ui-bg-muted); }
+.g-ui-button-color-warning.g-ui-button-variant-transparent:hover { background: var(--g-ui-bg-muted); }
+
+.g-ui-button-color-danger.g-ui-button-variant-filled { background: var(--g-ui-danger); color: var(--g-ui-danger-fg); border: 1px solid transparent; }
+.g-ui-button-color-danger.g-ui-button-variant-light { background: var(--g-ui-danger-subtle); color: var(--g-ui-danger); border: 1px solid var(--g-ui-danger-muted); }
+.g-ui-button-color-danger.g-ui-button-variant-outline { background: transparent; color: var(--g-ui-danger); border: 1px solid var(--g-ui-danger); }
+.g-ui-button-color-danger.g-ui-button-variant-subtle { background: transparent; color: var(--g-ui-text); border: 1px solid var(--g-ui-border); }
+.g-ui-button-color-danger.g-ui-button-variant-transparent { background: transparent; color: var(--g-ui-text); border: 1px solid transparent; }
+.g-ui-button-color-danger.g-ui-button-variant-filled:hover { background: var(--g-ui-danger-hover); }
+.g-ui-button-color-danger.g-ui-button-variant-light:hover { background: var(--g-ui-danger-muted); }
+.g-ui-button-color-danger.g-ui-button-variant-outline:hover { background: var(--g-ui-danger-subtle); }
+.g-ui-button-color-danger.g-ui-button-variant-subtle:hover { background: var(--g-ui-bg-muted); }
+.g-ui-button-color-danger.g-ui-button-variant-transparent:hover { background: var(--g-ui-bg-muted); }
+
+.g-ui-button-color-info.g-ui-button-variant-filled { background: var(--g-ui-info); color: var(--g-ui-info-fg); border: 1px solid transparent; }
+.g-ui-button-color-info.g-ui-button-variant-light { background: var(--g-ui-info-subtle); color: var(--g-ui-info); border: 1px solid var(--g-ui-info-muted); }
+.g-ui-button-color-info.g-ui-button-variant-outline { background: transparent; color: var(--g-ui-info); border: 1px solid var(--g-ui-info); }
+.g-ui-button-color-info.g-ui-button-variant-subtle { background: transparent; color: var(--g-ui-text); border: 1px solid var(--g-ui-border); }
+.g-ui-button-color-info.g-ui-button-variant-transparent { background: transparent; color: var(--g-ui-text); border: 1px solid transparent; }
+.g-ui-button-color-info.g-ui-button-variant-filled:hover { background: var(--g-ui-info-hover); }
+.g-ui-button-color-info.g-ui-button-variant-light:hover { background: var(--g-ui-info-muted); }
+.g-ui-button-color-info.g-ui-button-variant-outline:hover { background: var(--g-ui-info-subtle); }
+.g-ui-button-color-info.g-ui-button-variant-subtle:hover { background: var(--g-ui-bg-muted); }
+.g-ui-button-color-info.g-ui-button-variant-transparent:hover { background: var(--g-ui-bg-muted); }
+
+
 .g-ui-button-size-xs { font-size: 12px; height: 30px; padding: 0 var(--g-ui-space-8); }
 .g-ui-button-size-sm { font-size: 13px; height: 36px; padding: 0 var(--g-ui-space-10); }
 .g-ui-button-size-md { font-size: 14px; height: 42px; padding: 0 var(--g-ui-space-10); }
@@ -3260,6 +3337,130 @@ body {
 .g-ui-action-icon-light:hover { background: var(--g-ui-primary-muted); }
 .g-ui-action-icon-outline:hover { background: var(--g-ui-primary-subtle); }
 .g-ui-action-icon-subtle:hover { background: var(--g-ui-bg-muted); }
+
+
+
+.g-ui-action-icon-color-primary.g-ui-action-icon-filled {
+  background: var(--g-ui-primary);
+  border-color: transparent;
+  color: var(--g-ui-primary-fg);
+}
+.g-ui-action-icon-color-primary.g-ui-action-icon-subtle {
+  background: transparent;
+  border-color: var(--g-ui-border);
+}
+.g-ui-action-icon-color-primary.g-ui-action-icon-light {
+  background: var(--g-ui-primary-subtle);
+  border-color: var(--g-ui-primary-muted);
+  color: var(--g-ui-primary);
+}
+.g-ui-action-icon-color-primary.g-ui-action-icon-outline {
+  background: transparent;
+  border-color: var(--g-ui-primary);
+  color: var(--g-ui-primary);
+}
+.g-ui-action-icon-color-primary.g-ui-action-icon-filled:hover { background: var(--g-ui-primary-hover); }
+.g-ui-action-icon-color-primary.g-ui-action-icon-light:hover { background: var(--g-ui-primary-muted); }
+.g-ui-action-icon-color-primary.g-ui-action-icon-outline:hover { background: var(--g-ui-primary-subtle); }
+.g-ui-action-icon-color-primary.g-ui-action-icon-subtle:hover { background: var(--g-ui-bg-muted); }
+
+
+.g-ui-action-icon-color-success.g-ui-action-icon-filled {
+  background: var(--g-ui-success);
+  border-color: transparent;
+  color: var(--g-ui-success-fg);
+}
+.g-ui-action-icon-color-success.g-ui-action-icon-subtle {
+  background: transparent;
+  border-color: var(--g-ui-border);
+}
+.g-ui-action-icon-color-success.g-ui-action-icon-light {
+  background: var(--g-ui-success-subtle);
+  border-color: var(--g-ui-success-muted);
+  color: var(--g-ui-success);
+}
+.g-ui-action-icon-color-success.g-ui-action-icon-outline {
+  background: transparent;
+  border-color: var(--g-ui-success);
+  color: var(--g-ui-success);
+}
+.g-ui-action-icon-color-success.g-ui-action-icon-filled:hover { background: var(--g-ui-success-hover); }
+.g-ui-action-icon-color-success.g-ui-action-icon-light:hover { background: var(--g-ui-success-muted); }
+.g-ui-action-icon-color-success.g-ui-action-icon-outline:hover { background: var(--g-ui-success-subtle); }
+.g-ui-action-icon-color-success.g-ui-action-icon-subtle:hover { background: var(--g-ui-bg-muted); }
+
+.g-ui-action-icon-color-danger.g-ui-action-icon-filled {
+  background: var(--g-ui-danger);
+  border-color: transparent;
+  color: var(--g-ui-danger-fg);
+}
+.g-ui-action-icon-color-danger.g-ui-action-icon-subtle {
+  background: transparent;
+  border-color: var(--g-ui-border);
+}
+.g-ui-action-icon-color-danger.g-ui-action-icon-light {
+  background: var(--g-ui-danger-subtle);
+  border-color: var(--g-ui-danger-muted);
+  color: var(--g-ui-danger);
+}
+.g-ui-action-icon-color-danger.g-ui-action-icon-outline {
+  background: transparent;
+  border-color: var(--g-ui-danger);
+  color: var(--g-ui-danger);
+}
+.g-ui-action-icon-color-danger.g-ui-action-icon-filled:hover { background: var(--g-ui-danger-hover); }
+.g-ui-action-icon-color-danger.g-ui-action-icon-light:hover { background: var(--g-ui-danger-muted); }
+.g-ui-action-icon-color-danger.g-ui-action-icon-outline:hover { background: var(--g-ui-danger-subtle); }
+.g-ui-action-icon-color-danger.g-ui-action-icon-subtle:hover { background: var(--g-ui-bg-muted); }
+
+.g-ui-action-icon-color-warning.g-ui-action-icon-filled {
+  background: var(--g-ui-warning);
+  border-color: transparent;
+  color: var(--g-ui-warning-fg);
+}
+.g-ui-action-icon-color-warning.g-ui-action-icon-subtle {
+  background: transparent;
+  border-color: var(--g-ui-border);
+}
+.g-ui-action-icon-color-warning.g-ui-action-icon-light {
+  background: var(--g-ui-warning-subtle);
+  border-color: var(--g-ui-warning-muted);
+  color: var(--g-ui-warning);
+}
+.g-ui-action-icon-color-warning.g-ui-action-icon-outline {
+  background: transparent;
+  border-color: var(--g-ui-warning);
+  color: var(--g-ui-warning);
+}
+.g-ui-action-icon-color-warning.g-ui-action-icon-filled:hover { background: var(--g-ui-warning-hover); }
+.g-ui-action-icon-color-warning.g-ui-action-icon-light:hover { background: var(--g-ui-warning-muted); }
+.g-ui-action-icon-color-warning.g-ui-action-icon-outline:hover { background: var(--g-ui-warning-subtle); }
+.g-ui-action-icon-color-warning.g-ui-action-icon-subtle:hover { background: var(--g-ui-bg-muted); }
+
+.g-ui-action-icon-color-info.g-ui-action-icon-filled {
+  background: var(--g-ui-info);
+  border-color: transparent;
+  color: var(--g-ui-info-fg);
+}
+.g-ui-action-icon-color-info.g-ui-action-icon-subtle {
+  background: transparent;
+  border-color: var(--g-ui-border);
+}
+.g-ui-action-icon-color-info.g-ui-action-icon-light {
+  background: var(--g-ui-info-subtle);
+  border-color: var(--g-ui-info-muted);
+  color: var(--g-ui-info);
+}
+.g-ui-action-icon-color-info.g-ui-action-icon-outline {
+  background: transparent;
+  border-color: var(--g-ui-info);
+  color: var(--g-ui-info);
+}
+.g-ui-action-icon-color-info.g-ui-action-icon-filled:hover { background: var(--g-ui-info-hover); }
+.g-ui-action-icon-color-info.g-ui-action-icon-light:hover { background: var(--g-ui-info-muted); }
+.g-ui-action-icon-color-info.g-ui-action-icon-outline:hover { background: var(--g-ui-info-subtle); }
+.g-ui-action-icon-color-info.g-ui-action-icon-subtle:hover { background: var(--g-ui-bg-muted); }
+
 
 .g-ui-popover {
   position: relative;
