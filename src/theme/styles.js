@@ -1901,10 +1901,10 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 .g-ui-slider {
   width: 100%;
   --g-ui-slider-size: 8px;
-  height: calc(var(--g-ui-slider-size) * 2);
-  padding: 0 var(--g-ui-slider-size);
-  display: flex;
-  align-items: center;
+  /* height: calc(var(--g-ui-slider-size) * 2); */
+  padding: 0 var(--g-ui-space-10);
+  /* display: flex; */
+  /* align-items: center; */
   position: relative;
 }
 .g-ui-range-slider {
@@ -1944,12 +1944,15 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 }
 .g-ui-slider-marks {
   position: absolute;
-  top: calc(100% + var(--g-ui-space-10));
+  top: calc(100% - var(--g-ui-space-8));
   left:10px;
   right:15px;
-  height: 18px;
+  height: 12px;
   box-sizing: border-box;
   padding: 0 var(--g-ui-slider-size);
+}
+.g-ui-slider-marks-placeholder {
+  height: 18px;
 }
 .g-ui-slider-mark {
   position: absolute;
