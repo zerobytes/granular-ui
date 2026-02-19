@@ -1,4 +1,4 @@
-import { Div } from '@granularjs/core';
+import { Div, list } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Stepper(...args) {
@@ -6,10 +6,11 @@ export function Stepper(...args) {
   const { active, items, className, ...rest } = props;
   return Div(
     { ...rest, className: cx('g-ui-stepper', className) },
-    items.map((item, idx) =>
+    list(items, (item, idx) =>
       Div(
         { className: cx('g-ui-stepper-item', [active, (value) => {
-          if (idx === value) return 'g-ui-stepper-active';
+          console.log('value', value, 'idx', idx);
+          if (idx.get() === value) return 'g-ui-stepper-active';
           return '';
         }]) },
         Div({ className: 'g-ui-stepper-index' }, String(idx + 1)),
