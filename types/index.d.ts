@@ -89,5 +89,5 @@ export { GridTable } from "./components/GridTable.js";
 export { BottomBar } from "./components/BottomBar.js";
 export { EventCalendar } from "./components/EventCalendar.js";
 export { useDisclosure } from "./hooks/useDisclosure.js";
-export { setThemeVars, setThemeMode } from "./theme/theme.js";
+export { setThemeVars, setThemeMode, getThemeMode } from "./theme/theme.js";
 export { cx, classVar, classFlag, classMap, splitPropsChildren } from "./utils.js";
