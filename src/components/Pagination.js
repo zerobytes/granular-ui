@@ -5,7 +5,8 @@ export function Pagination(...args) {
   const { props, rawProps } = splitPropsChildren(args, { total: 1, size: 'md' });
   const { page, total, size, className, ...rest } = props;
   const { onChange } = rawProps;
-  const currentState = state(resolveValue(page ?? 1));
+  const currentState = state(resolveValue(page) ?? 1);
+
   after(page).change((next) => {
     const resolved = resolveValue(next);
     if (resolved == null) return;

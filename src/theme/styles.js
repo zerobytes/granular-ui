@@ -634,7 +634,7 @@ const css = `
   --g-ui-shadow-xl: 0px 20px 24px -4px rgba(16, 24, 40, 0.08), 0px 8px 8px -4px rgba(16, 24, 40, 0.03);
   --g-ui-shadow-2xl: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
 }
-  
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -740,34 +740,34 @@ body {
   box-shadow: none;
   border: 1px solid var(--g-ui-border);
 }
-.g-ui-card-border-default { border: 1px solid var(--g-ui-border); }
-.g-ui-card-border-none { border: none; }
-.g-ui-card-border-light { border: 1px solid var(--g-ui-border-light); }
-.g-ui-card-border-dark { border: 1px solid var(--g-ui-border-dark); }
-.g-ui-card-border-primary { border: 1px solid var(--g-ui-primary); }
-.g-ui-card-border-success { border: 1px solid var(--g-ui-success); }
-.g-ui-card-border-danger { border: 1px solid var(--g-ui-danger); }
-.g-ui-card-border-warning { border: 1px solid var(--g-ui-warning); }
-.g-ui-card-border-info { border: 1px solid var(--g-ui-info); }
-.g-ui-card-border-subtle { border: 1px solid var(--g-ui-border-subtle); }
-.g-ui-card-border-emphasized { border: 1px solid var(--g-ui-border-emphasized); }
-.g-ui-card-border-inverted { border: 1px solid var(--g-ui-border-inverted); }
-.g-ui-card-border-error { border: 1px solid var(--g-ui-border-error); }
-.g-ui-card-border-warning { border: 1px solid var(--g-ui-border-warning); }
-.g-ui-card-border-success { border: 1px solid var(--g-ui-border-success); }
-.g-ui-card-border-info { border: 1px solid var(--g-ui-border-info); }
+body .g-ui-card-border-default { border: 1px solid var(--g-ui-border); }
+body .g-ui-card-border-none { border: none; }
+body .g-ui-card-border-light { border: 1px solid var(--g-ui-border-light); }
+body .g-ui-card-border-dark { border: 1px solid var(--g-ui-border-dark); }
+body .g-ui-card-border-primary { border: 1px solid var(--g-ui-primary); }
+body .g-ui-card-border-success { border: 1px solid var(--g-ui-success); }
+body .g-ui-card-border-danger { border: 1px solid var(--g-ui-danger); }
+body .g-ui-card-border-warning { border: 1px solid var(--g-ui-warning); }
+body .g-ui-card-border-info { border: 1px solid var(--g-ui-info); }
+body .g-ui-card-border-subtle { border: 1px solid var(--g-ui-border-subtle); }
+body .g-ui-card-border-emphasized { border: 1px solid var(--g-ui-border-emphasized); }
+body .g-ui-card-border-inverted { border: 1px solid var(--g-ui-border-inverted); }
+body .g-ui-card-border-error { border: 1px solid var(--g-ui-border-error); }
+body .g-ui-card-border-warning { border: 1px solid var(--g-ui-border-warning); }
+body .g-ui-card-border-success { border: 1px solid var(--g-ui-border-success); }
+body .g-ui-card-border-info { border: 1px solid var(--g-ui-border-info); }
 
-.g-ui-card-padding-xs { padding: var(--g-ui-space-10); }
-.g-ui-card-padding-sm { padding: var(--g-ui-space-14); }
-.g-ui-card-padding-md { padding: var(--g-ui-space-18); }
-.g-ui-card-padding-lg { padding: var(--g-ui-space-24); }
-.g-ui-card-radius-sm { border-radius: 8px; }
-.g-ui-card-radius-md { border-radius: 10px; }
-.g-ui-card-radius-lg { border-radius: 14px; }
-.g-ui-card-shadow-none { box-shadow: none; }
-.g-ui-card-shadow-sm { box-shadow: var(--g-ui-shadow-sm); }
-.g-ui-card-shadow-md { box-shadow: var(--g-ui-shadow-md); }
-.g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
+body .g-ui-card-padding-xs { padding: var(--g-ui-space-10); }
+body .g-ui-card-padding-sm { padding: var(--g-ui-space-14); }
+body .g-ui-card-padding-md { padding: var(--g-ui-space-18); }
+body .g-ui-card-padding-lg { padding: var(--g-ui-space-24); }
+body .g-ui-card-radius-sm { border-radius: 8px; }
+body .g-ui-card-radius-md { border-radius: 10px; }
+body .g-ui-card-radius-lg { border-radius: 14px; }
+body .g-ui-card-shadow-none { box-shadow: none; }
+body .g-ui-card-shadow-sm { box-shadow: var(--g-ui-shadow-sm); }
+body .g-ui-card-shadow-md { box-shadow: var(--g-ui-shadow-md); }
+body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 .g-ui-card-title {
   margin-bottom: var(--g-ui-space-8);
   font-weight: 600;
@@ -1506,7 +1506,7 @@ body {
   margin-left: auto;
   border: 0;
   background: transparent;
-  color: var(--g-ui-muted);
+  color: var(--g-ui-fg-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1524,6 +1524,7 @@ body {
 .g-ui-notification-close svg{
   width: 24px;
   height: 24px;
+  fill: var(--g-ui-fg-muted);
 }
 
 .g-ui-notification-title { font-weight: 500; font-size: 13px; line-height: 1.35; }
@@ -1586,6 +1587,7 @@ body {
   border-radius: 10px;
 }
 
+
 .g-ui-textarea {
   min-height: 120px;
   resize: vertical;
@@ -1607,23 +1609,24 @@ body {
 .g-ui-number-field-controls {
   display: flex;
   flex-direction: column;
-  gap: var(--g-ui-space-2);
   margin-left: auto;
+  width: 30px;
 }
 .g-ui-number-field-control {
-  width: 18px;
-  height: 18px;
-  border-radius: 6px;
+  width: 100%;
+  height: 20px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--g-ui-border);
-  background: var(--g-ui-bg);
+  background: transparent;
   color: var(--g-ui-text);
   cursor: pointer;
   user-select: none;
   font-size: 12px;
   line-height: 1;
+}
+.g-ui-number-field-control:first-child {
+  border-bottom: 1px solid var(--g-ui-border);
 }
 .g-ui-number-field-control:hover {
   background: var(--g-ui-bg-subtle);
@@ -2950,16 +2953,43 @@ body {
 }
 
 .g-ui-progress-ring {
+  position: relative;
   width: 48px;
   height: 48px;
   border-radius: 50%;
+  flex-shrink: 0;
+}
+.g-ui-progress-ring-hole {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: var(--g-ui-bg);
+}
+.g-ui-progress-ring-primary { --g-ui-progress-ring-fill: var(--g-ui-primary); }
+.g-ui-progress-ring-success { --g-ui-progress-ring-fill: var(--g-ui-success); }
+.g-ui-progress-ring-danger { --g-ui-progress-ring-fill: var(--g-ui-danger); }
+.g-ui-progress-ring-warning { --g-ui-progress-ring-fill: var(--g-ui-warning); }
+.g-ui-progress-ring:not(.g-ui-progress-ring-indeterminate) {
+  background: conic-gradient(
+    var(--g-ui-progress-ring-fill, var(--g-ui-primary)) 0deg calc(var(--g-ui-progress-ring-value, 0) * 3.6deg),
+    var(--g-ui-border-muted) calc(var(--g-ui-progress-ring-value, 0) * 3.6deg) 360deg
+  );
+}
+.g-ui-progress-ring-indeterminate {
   border: 4px solid var(--g-ui-border-muted);
-  border-top-color: var(--g-ui-primary);
+  border-top-color: var(--g-ui-progress-ring-fill, var(--g-ui-primary));
   animation: g-ui-spin 1s linear infinite;
 }
+.g-ui-progress-ring-indeterminate .g-ui-progress-ring-hole {
+  inset: 4px;
+}
 .g-ui-progress-ring-size-sm { width: 32px; height: 32px; }
+.g-ui-progress-ring-size-sm .g-ui-progress-ring-hole { inset: 6px; }
+.g-ui-progress-ring-size-sm.g-ui-progress-ring-indeterminate .g-ui-progress-ring-hole { inset: 3px; }
 .g-ui-progress-ring-size-md { width: 48px; height: 48px; }
 .g-ui-progress-ring-size-lg { width: 64px; height: 64px; }
+.g-ui-progress-ring-size-lg .g-ui-progress-ring-hole { inset: 10px; }
+.g-ui-progress-ring-size-lg.g-ui-progress-ring-indeterminate .g-ui-progress-ring-hole { inset: 5px; }
 
 .g-ui-toast-close {
   margin-left: auto;
@@ -2992,6 +3022,7 @@ body {
   justify-content: center;
   color: var(--g-ui-muted);
   font-size: 16px;
+  fill: var(--g-ui-muted);
 }
 .g-ui-search-input-left-section svg {
   width: 100%;
