@@ -1,5 +1,7 @@
 import { Div, Span, when, state, after } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
+import { keyboardArrowDownSvg } from '../theme/icons.js';
+import { Icon } from './Icon.js';
 
 export function Select(...args) {
   const { props, rawProps } = splitPropsChildren(args, { data: [], size: 'md' });
@@ -44,7 +46,7 @@ export function Select(...args) {
         Span({ className: 'g-ui-select-value' }, displayLabel)
       ),
       when(rightSection, () => Div({ className: 'g-ui-input-section' }, rightSection), () =>
-        Span({ className: 'g-ui-select-caret' }, '▾')
+        Span({ className: 'g-ui-select-caret' }, Icon({ innerHTML: keyboardArrowDownSvg }))
       )
     ),
     when(open, () =>

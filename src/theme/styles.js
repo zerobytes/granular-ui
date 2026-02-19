@@ -1212,6 +1212,12 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 .g-ui-select-caret {
   color: var(--g-ui-muted);
   font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.g-ui-select-caret svg{
+  fill: var(--g-ui-muted);
 }
 .g-ui-select-dropdown {
   position: absolute;
@@ -3003,6 +3009,43 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   display: flex;
   align-items: center;
   gap: var(--g-ui-space-8);
+}
+
+.g-ui-autocomplete {
+  position: relative;
+  width: 100%;
+}
+.g-ui-autocomplete-dropdown {
+  position: absolute;
+  top: calc(100% + var(--g-ui-space-4));
+  left: 0;
+  right: 0;
+  z-index: 100;
+  border: 1px solid var(--g-ui-border-muted);
+  border-radius: var(--g-ui-radius);
+  background: var(--g-ui-bg-panel);
+  box-shadow: var(--g-ui-shadow-md);
+}
+.g-ui-autocomplete-list {
+  overflow: auto;
+  padding: var(--g-ui-space-4);
+}
+.g-ui-autocomplete-item {
+  padding: var(--g-ui-space-6) var(--g-ui-space-8);
+  border-radius: var(--g-ui-radius);
+  cursor: pointer;
+  font-size: var(--g-ui-font-size-sm);
+}
+.g-ui-autocomplete-item:hover {
+  background: var(--g-ui-bg-subtle);
+}
+.g-ui-autocomplete-item-active {
+  background: var(--g-ui-primary-subtle);
+  color: var(--g-ui-primary);
+}
+.g-ui-autocomplete-disabled {
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 .g-ui-select-search {

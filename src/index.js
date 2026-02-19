@@ -76,6 +76,7 @@ export { SearchInput } from './components/SearchInput.js';
 export { CopyButton } from './components/CopyButton.js';
 export { ProgressRing } from './components/ProgressRing.js';
 export { Toast } from './components/Toast.js';
+export { Autocomplete } from './components/Autocomplete.js';
 export { SelectSearch } from './components/SelectSearch.js';
 export { SwitchGroup } from './components/SwitchGroup.js';
 export { RangePicker } from './components/RangePicker.js';
