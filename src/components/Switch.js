@@ -10,25 +10,19 @@ export function Switch(...args) {
 
   const switchGroupInfo = after(switchGroupState).compute((value) => {
     return {
-      name: value.name?.get(),
-      type: value.name?.get() ? 'radio' : 'checkbox'
+      name: value.name,
+      type: value.name ? 'radio' : 'checkbox'
     }
   });
 
-  after(checked).change((next) => {
-
-    checkedState.set(next);
+  after(switchGroupState.selected).change((selected) => {
+    checkedState.set(selected===value.get());
   });
 
   after(checkedState).change((next) => {
+    if(!next) return;
     const selectedState = switchGroupState.get().selected
-    
-    selectedState.set(value.get())
-    
-
-
-    console.log('next', switchGroupState.onChange);
-    // switchGroupState.onChange?.(value.get(), next);
+    switchGroupState.set().selected = value.get();
   });
 
 
