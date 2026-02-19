@@ -23,7 +23,7 @@
     "build:debug": "mkdir -p ./dist/fonts && cp -R src/theme/fonts/* ./dist/fonts/ && npx -y esbuild src/index.js --bundle --sourcemap --format=esm --external:@granularjs/core --outfile=./dist/granular-ui.js && npx -y -p typescript@latest tsc -p tsconfig.json",
     "build:watch": "npx -y esbuild src/index.js --bundle --minify --sourcemap --format=esm --external:@granularjs/core --outfile=./dist/granular-ui.min.js --watch",
     "version": "npm run build:minify && git add -A",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push origin v$(node -p \"require('./package.json').version\")"
   },
   "peerDependencies": {
     "@granularjs/core": "^1.0.0"
