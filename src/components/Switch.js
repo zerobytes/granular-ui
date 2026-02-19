@@ -3,8 +3,9 @@ import { cx, splitPropsChildren, classVar } from '../utils.js';
 import { switchGroupContext } from './SwitchGroup.js';
 
 export function Switch(...args) {
-  const { props } = splitPropsChildren(args, { size: 'md' });
+  const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
   const { label, size, className, style, inputProps, checked, value, ...rest } = props;
+  const { onChange } = rawProps;
   const checkedState = state(checked);
   const switchGroupState = switchGroupContext.state();
 
@@ -16,11 +17,12 @@ export function Switch(...args) {
   });
 
   after(switchGroupState.selected).change((selected) => {
-    checkedState.set(selected===value.get());
+    checkedState.set(selected === value.get());
   });
 
   after(checkedState).change((next) => {
-    if(!next) return;
+    onChange?.(next);
+    if (!next) return;
     const selectedState = switchGroupState.get().selected
     switchGroupState.set().selected = value.get();
   });
