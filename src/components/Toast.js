@@ -1,16 +1,28 @@
-import { Div, Button, when } from '@granularjs/core';
+import { Div, Button, when, state} from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
+import { closeSvg } from '../theme/icons.js';
+import { Icon } from './Icon.js';
 
 export function Toast(...args) {
-  const { props, children } = splitPropsChildren(args);
-  const { title, onClose, className, ...rest } = props;
-  return Div(
+  const { props, rawProps, children } = splitPropsChildren(args);
+  const { title,  className, ...rest } = props;
+  const { onClose } = rawProps;
+  const visible = state(true);
+  const close = () => {
+    visible.set(false);
+    onClose?.();
+    console.log('close');
+  }
+
+  return when(visible, () => Div(
     { ...rest, className: cx('g-ui-toast', className) },
     Div(
       { className: 'g-ui-toast-row' },
       when(title, () => Div({ className: 'g-ui-toast-title' }, title)),
-      when(onClose, () => Button({ className: 'g-ui-toast-close', onClick: onClose }, '×'))
+      Button({ className: 'g-ui-toast-close', onClick: close },
+        Icon({ innerHTML: closeSvg })
+      )
     ),
     children
-  );
+  ))
 }

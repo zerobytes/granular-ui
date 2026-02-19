@@ -1,21 +1,15 @@
-import { Div, when } from '@granularjs/core';
+import { Div, when, list, portal } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
+import { Toast } from './Toast.js';
 
 export function ToastStack(...args) {
-  const { props } = splitPropsChildren(args, { items: [] });
-  const { items, className, onClose, timeout, ...rest } = props;
-  return Div(
+  const { props, rawProps } = splitPropsChildren(args, { items: [] });
+  const { items, className, timeout, ...rest } = props;
+  const { onClose } = rawProps;
+  return portal(Div(
     { ...rest, className: cx('g-ui-toast-stack', className) },
-    items.map((item) =>
-      Div(
-        { className: cx('g-ui-toast', [timeout, 'g-ui-toast-auto']) },
-        Div(
-          { className: 'g-ui-toast-row' },
-          when(item.title, () => Div({ className: 'g-ui-toast-title' }, item.title)),
-          when(onClose, () => Div({ className: 'g-ui-toast-close', onClick: () => onClose(item) }, '×'))
-        ),
-        item.message
-      )
+    list(items, (item) =>
+      Toast({ title: item.title, onClose: () => onClose?.(item) }, item.message)
     )
-  );
+  ));
 }

@@ -2132,6 +2132,32 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   display: flex;
   flex-direction: column;
   gap: 0;
+  position: relative;
+}
+.g-ui-timeline-track-segment {
+  position: absolute;
+  left: 8px;
+  width: 4px;
+  background: var(--g-ui-border-muted);
+  border-radius: 2px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.g-ui-timeline-track-segment .g-ui-timeline-track-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0%;
+  min-height: 0;
+  background: var(--g-ui-primary);
+  border-radius: 2px;
+  transition: height 0.25s ease;
+  z-index: 1;
+}
+.g-ui-timeline-has-track .g-ui-timeline-item::before {
+  display: none;
 }
 .g-ui-timeline-item {
   display: grid;
@@ -2140,6 +2166,7 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   align-items: start;
   position: relative;
   padding-bottom: var(--g-ui-space-24);
+  z-index: 1;
 }
 .g-ui-timeline-item:last-child {
   padding-bottom: 0;
@@ -2161,10 +2188,30 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   height: 20px;
   border-radius: 50%;
   background: var(--g-ui-bg);
-  border: 4px solid var(--g-ui-primary);
+  border: 4px solid var(--g-ui-border-muted);
   margin-top: 0;
   position: relative;
   z-index: 1;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.g-ui-timeline-item-completed .g-ui-timeline-dot {
+  border-color: var(--g-ui-primary);
+  background: var(--g-ui-primary);
+}
+.g-ui-timeline-item-active .g-ui-timeline-dot {
+  border-color: var(--g-ui-primary);
+  background: var(--g-ui-bg);
+  box-shadow: 0 0 0 2px var(--g-ui-bg), 0 0 0 4px var(--g-ui-primary);
+}
+.g-ui-timeline-item-future .g-ui-timeline-dot {
+  border-color: var(--g-ui-border-muted);
+  background: var(--g-ui-bg);
+}
+.g-ui-timeline-clickable .g-ui-timeline-item {
+  cursor: pointer;
+}
+.g-ui-timeline-clickable .g-ui-timeline-item:hover .g-ui-timeline-dot {
+  border-color: var(--g-ui-primary-muted, var(--g-ui-primary));
 }
 .g-ui-timeline-content {
   display: flex;
@@ -3014,6 +3061,11 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   background: transparent;
   color: var(--g-ui-muted);
   cursor: pointer;
+}
+.g-ui-toast-close svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--g-ui-muted);
 }
 
 .g-ui-toast-row {
