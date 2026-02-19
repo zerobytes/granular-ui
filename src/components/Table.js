@@ -1,4 +1,4 @@
-import { Table as HtmlTable, Thead, Tbody, Tr, Th, Td } from '@granularjs/core';
+import { Table as HtmlTable, Thead, Tbody, Tr, Th, Td, list, when, after } from '@granularjs/core';
 import { cx, splitPropsChildren, classFlag } from '../utils.js';
 
 export function Table(...args) {
@@ -10,10 +10,13 @@ export function Table(...args) {
     highlightOnHover,
     withBorder,
     withColumnBorders,
+    withRowBorders,
     className,
     style,
     ...rest
   } = props;
+
+  const hasHeaders = after(headers).compute((next) => next.length > 0);
   return HtmlTable(
     {
       ...rest,
@@ -23,20 +26,43 @@ export function Table(...args) {
         classFlag('g-ui-table-hover', highlightOnHover),
         classFlag('g-ui-table-with-border', withBorder),
         classFlag('g-ui-table-column-borders', withColumnBorders),
+        classFlag('g-ui-table-row-borders', withRowBorders),
         className
       ),
     },
-    headers.length
-      ? Thead(Tr(headers.map((header) => Th(header))))
-      : null,
-    Tbody(
-      rows.map((row) =>
-        Tr(
-          Array.isArray(row)
-            ? row.map((cell) => Td(cell))
-            : Object.values(row).map((cell) => Td(cell))
-        )
-      )
-    )
+    when(hasHeaders, () => Thead(
+      TableRow(headers, true)
+    )),
+    Tbody(list(rows, (row) => TableRow(row, false)))
   );
+}
+const TableRow = (row, header) => {
+  const isArray = after(row).compute((next) => Array.isArray(next));
+
+  const ObjectRow = (row) => {
+    const cells = after(row).compute((next) => Object.values(next));
+    return ArrayRow(cells)
+  }
+
+  const ArrayRow = (row) => {
+    return list(row, (next) => {
+      console.log('INFO ABOUT NEXT', header);
+      return header ? TableHeaderCell(next) : TableCell(next)
+    })
+  }
+
+  return Tr(
+    when(isArray,
+      () => ArrayRow(row),
+      () => ObjectRow(row)
+    )
+  )
+}
+
+const TableCell = (content) => {
+  return Td(content)
+}
+
+const TableHeaderCell = (content) => {
+  return Th(content)
 }

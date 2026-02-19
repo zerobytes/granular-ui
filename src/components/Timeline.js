@@ -1,4 +1,4 @@
-import { Div, when } from '@granularjs/core';
+import { Div, when, list } from '@granularjs/core';
 import { cx, splitPropsChildren } from '../utils.js';
 
 export function Timeline(...args) {
@@ -6,7 +6,7 @@ export function Timeline(...args) {
   const { items, className, ...rest } = props;
   return Div(
     { ...rest, className: cx('g-ui-timeline', className) },
-    items.map((item) =>
+    list(items, (item) =>
       Div(
         { className: 'g-ui-timeline-item' },
         Div({ className: 'g-ui-timeline-dot' }),
