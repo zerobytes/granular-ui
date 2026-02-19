@@ -3067,8 +3067,15 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 
 .g-ui-range-picker {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--g-ui-space-12);
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--g-ui-space-8);
+  align-items: center;
+}
+.g-ui-range-picker-separator {
+  color: var(--g-ui-fg-muted);
+  font-size: var(--g-ui-font-size-sm);
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 .g-ui-toast-auto {

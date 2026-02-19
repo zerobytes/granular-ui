@@ -70,8 +70,8 @@ export function DateInput(...args) {
   const opened = state(false);
 
   after(value).change((next) => {
-    if (value.get() == next) return;
     const resolved = resolveDate(next);
+    if (isSameDay(resolved, currentDate.get())) return;
     if (resolved == null) {
       currentDate.set(null);
       textValue.set('');
@@ -83,8 +83,6 @@ export function DateInput(...args) {
 
   after(textValue).change((next) => {
     const parsed = parseDate(next);
-    console.log('parsed', parsed);
-    console.log('currentDate', currentDate.get());
     if (!parsed) return;
     if (isSameDay(parsed, currentDate.get())) return;
     currentDate.set(parsed);
