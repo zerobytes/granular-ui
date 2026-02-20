@@ -17,11 +17,6 @@ export function List(...args) {
     value && typeof value === 'object' && typeof value.tagName === 'string' &&
     value.tagName.toLowerCase() === 'li';
   const wrapChild = (child) => {
-    console.log('INFO ABOUT ITEM', child,
-      typeof child,
-      typeof child?.tagName,
-      child?.tagName?.toLowerCase()
-    );
     const wrapValue = (value) => {
       if (value?.nodeType === 'granular-list-node') return value;
       if (value == null || value === false) return null;
@@ -55,12 +50,17 @@ export function List(...args) {
 
 export function ListItem(...args) {
   const { props, children } = splitPropsChildren(args, { withBorder: false });
-  const { leftSection, rightSection, title, body, withBorder, className, ...rest } = props;
+  const { leftSection, rightSection, title, body, withBorder, className, verticalPadding, horizontalPadding, ...rest } = props;
   const hasStructured = after(title, body).compute(([nextTitle, nextBody]) => !!nextTitle || !!nextBody);
   return Li(
     {
       ...rest,
-      className: cx('g-ui-list-item', classFlag('g-ui-list-item-border', withBorder), className),
+      className: cx('g-ui-list-item',
+        classFlag('g-ui-list-item-border', withBorder),
+        classVar('g-ui-list-item-vertical-padding-', verticalPadding, 'md'),
+        classVar('g-ui-list-item-horizontal-padding-', horizontalPadding, 'md'),
+        className
+      ),
     },
     Div(
       { className: 'g-ui-list-item-shell' },

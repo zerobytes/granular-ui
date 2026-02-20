@@ -46,7 +46,6 @@ const TableRow = (row, header) => {
 
   const ArrayRow = (row) => {
     return list(row, (next) => {
-      console.log('INFO ABOUT NEXT', header);
       return header ? TableHeaderCell(next) : TableCell(next)
     })
   }
