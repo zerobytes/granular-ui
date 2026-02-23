@@ -2246,6 +2246,11 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 .g-ui-timeline-pin-size-md .g-ui-timeline-dot { width: 20px; height: 20px; border-width: 4px; }
 .g-ui-timeline-pin-size-lg .g-ui-timeline-dot { width: 24px; height: 24px; border-width: 4px; }
 .g-ui-timeline-pin-size-xl .g-ui-timeline-dot { width: 28px; height: 28px; border-width: 4px; }
+.g-ui-timeline-line-width-xs .g-ui-timeline-track-segment { width: 2px; left: 13px; }
+.g-ui-timeline-line-width-sm .g-ui-timeline-track-segment { width: 3px; }
+.g-ui-timeline-line-width-md .g-ui-timeline-track-segment { width: 4px; }
+.g-ui-timeline-line-width-lg .g-ui-timeline-track-segment { width: 6px; left: 11px; }
+.g-ui-timeline-line-width-xl .g-ui-timeline-track-segment { width: 10px; left: 9px; }
 .g-ui-timeline-pin-radius-xs .g-ui-timeline-dot { border-radius: 2px; }
 .g-ui-timeline-pin-radius-sm .g-ui-timeline-dot { border-radius: 4px; }
 .g-ui-timeline-pin-radius-md .g-ui-timeline-dot { border-radius: 50%; }
