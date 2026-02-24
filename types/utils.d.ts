@@ -1,3 +1,4 @@
+export function isReactive(value: any): any;
 export function cx(...values: any[]): any;
 export function toPx(value: any): any;
 export function splitPropsChildren(args: any, defaults: any): {
