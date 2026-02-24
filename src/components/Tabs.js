@@ -7,8 +7,10 @@ export function Tabs(...args) {
     orientation: 'horizontal',
     variant: 'default',
     sticky: true,
+    align: 'left',
+    size: 'md'
   });
-  const { value, tabs, orientation, variant, sticky, className, style } = props;
+  const { value, tabs, orientation, variant, sticky, className, style, align, size } = props;
   const { onChange } = rawProps;
 
   const currentState = state(resolveValue(value) ?? resolveValue(tabs)?.[0]?.value ?? '');
@@ -161,13 +163,15 @@ export function Tabs(...args) {
 
   return Div(
     Div({
-        className: cx(
-          'g-ui-tabs',
-          classMap(orientation, { vertical: 'g-ui-tabs-vertical' }),
-          classVar('g-ui-tabs-variant-', variant, 'default'),
-          props.className ?? className
-        ),
-      },
+      className: cx(
+        'g-ui-tabs',
+        classMap(orientation, { vertical: 'g-ui-tabs-vertical' }),
+        classVar('g-ui-tabs-variant-', variant, 'default'),
+        classVar('g-ui-tabs-align-', align, 'left'),
+        classVar('g-ui-tabs-size-', size, 'md'),
+        props.className ?? className
+      ),
+    },
       Div({ node: sentinelNode }),
       Div({ style: spacerStyle }),
       Div({ node: listNode, className: 'g-ui-tabs-list', style: stickyStyle },

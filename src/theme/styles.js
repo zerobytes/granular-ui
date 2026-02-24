@@ -1323,6 +1323,45 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   color: var(--g-ui-primary-fg);
 }
 
+.g-ui-tabs-vertical {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--g-ui-space-16);
+}
+.g-ui-tabs-vertical .g-ui-tabs-list {
+  flex-direction: column;
+}
+.g-ui-tabs-align-left .g-ui-tabs-list {
+  justify-content: flex-start;
+}
+.g-ui-tabs-align-center .g-ui-tabs-list {
+  justify-content: center;
+}
+.g-ui-tabs-align-right .g-ui-tabs-list {
+  justify-content: flex-end;
+}
+.
+.g-ui-tabs-size-xs .g-ui-tabs-tab {
+  padding: var(--g-ui-space-6) var(--g-ui-space-10);
+  font-size: 12px;
+}
+.g-ui-tabs-size-sm .g-ui-tabs-tab {
+  padding: var(--g-ui-space-8) var(--g-ui-space-12);
+  font-size:
+}
+.g-ui-tabs-size-md .g-ui-tabs-tab {
+  padding: var(--g-ui-space-10) var(--g-ui-space-14);
+  font-size: 16px;
+}
+.g-ui-tabs-size-lg .g-ui-tabs-tab {
+  padding: var(--g-ui-space-12) var(--g-ui-space-16);
+  font-size: 18px;
+}
+.g-ui-tabs-size-xl .g-ui-tabs-tab {
+  padding: var(--g-ui-space-14) var(--g-ui-space-20);
+  font-size: 20px;
+}
+
 .g-ui-table {
   width: 100%;
   border-collapse: collapse;
@@ -3020,14 +3059,6 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 }
 .g-ui-toast-title { font-weight: 600; }
 
-.g-ui-tabs-vertical {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: var(--g-ui-space-16);
-}
-.g-ui-tabs-vertical .g-ui-tabs-list {
-  flex-direction: column;
-}
 
 .g-ui-drawer-shadowed {
   box-shadow: var(--g-ui-shadow);

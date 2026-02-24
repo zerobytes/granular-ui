@@ -1,17 +1,21 @@
 import { Div } from '@granularjs/core';
 import { state, when, after } from '@granularjs/core';
-import { cx, splitPropsChildren, resolveBool } from '../utils.js';
+import { cx, splitPropsChildren, resolveBool, isReactive } from '../utils.js';
 
 export function Accordion(...args) {
-  const { props, children } = splitPropsChildren(args, { opened: false });
+  const { props, rawProps, children } = splitPropsChildren(args, { opened: false });
   const { opened, className, ...rest } = props;
-  const openedState = state(resolveBool(opened));
+  const { opened: rawOpened } = rawProps;
+  const isControlledOutside = isReactive(rawOpened)
+  const openedState = isControlledOutside ? rawOpened : state(resolveBool(opened));
 
   after(opened).change((next) => {
+    if(isControlledOutside) return;
     openedState.set(resolveBool(next));
   });
 
   const toggle = () => {
+    if(isControlledOutside) return;
     openedState.set(!openedState.get());
   };
 

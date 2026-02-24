@@ -1,6 +1,6 @@
 import { Renderer, isSignal, isState, isStatePath, isComputed, resolve, computed, after, concat } from '@granularjs/core';
 
-function isReactive(value) {
+export function isReactive(value) {
   return isSignal(value) || isState(value) || isStatePath(value) || isComputed(value);
 }
 
@@ -12,6 +12,7 @@ export function toPx(value) {
   if (value == null || value === '') return undefined;
   return typeof value === 'number' ? `${value}px` : value;
 }
+
 
 export function splitPropsChildren(args, defaults) {
   const props = {};
