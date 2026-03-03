@@ -1,11 +1,23 @@
-import { Div, Span, when, state, after } from '@granularjs/core';
+import { Div, Span, when, state, after, Label } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 import { keyboardArrowDownSvg } from '../theme/icons.js';
 import { Icon } from './Icon.js';
 
 export function Select(...args) {
   const { props, rawProps } = splitPropsChildren(args, { data: [], size: 'md' });
-  const { data, value, size, leftSection, rightSection, placeholder, className, ...rest } = props;
+  const {
+    data,
+    value,
+    size,
+    leftSection,
+    rightSection,
+    placeholder,
+    className,
+    label,
+    description,
+    error,
+    ...rest
+  } = props;
   const { onChange } = rawProps;
   const open = state(false);
   const currentState = state(resolveValue(value) ?? '');
@@ -35,6 +47,8 @@ export function Select(...args) {
 
   return Div(
     { ...rest, className: cx('g-ui-select-root', className) },
+    when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
+    when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
     Div(
       { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md')) },
       when(leftSection, () => Div({ className: 'g-ui-input-section' }, leftSection)),
@@ -49,6 +63,7 @@ export function Select(...args) {
         Span({ className: 'g-ui-select-caret' }, Icon({ innerHTML: keyboardArrowDownSvg }))
       )
     ),
+    when(error, () => Div({ className: 'g-ui-text-input-error-text' }, error)),
     when(open, () =>
       Div(
         { className: 'g-ui-select-dropdown' },

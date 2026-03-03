@@ -1194,6 +1194,9 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 .g-ui-select-root {
   position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-ui-space-6);
 }
 .g-ui-select {
   flex: 1;
