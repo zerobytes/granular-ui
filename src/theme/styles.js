@@ -989,6 +989,16 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   flex-direction: column;
   gap: var(--g-ui-space-6);
 }
+.g-ui-text-input.g-ui-input-disabled .g-ui-input-wrapper,
+.g-ui-text-input.g-ui-input-read-only .g-ui-input-wrapper {
+  background: var(--g-ui-bg-subtle);
+  color: var(--g-ui-text-subtle);
+  cursor: not-allowed;
+  border-color: var(--g-ui-border-muted);
+}
+
+
+
 .g-ui-text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;

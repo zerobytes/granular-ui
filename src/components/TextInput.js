@@ -13,6 +13,8 @@ export function TextInput(...args) {
     className,
     inputClassName,
     multiline,
+    disabled,
+    readOnly,
     value: computed_value,
     ...rest
   } = props;
@@ -49,12 +51,20 @@ export function TextInput(...args) {
     onKeyDown,
     onKeyUp,
     onClick,
+    disabled,
+    readOnly,
     className: cx('g-ui-input', finalInputClassName),
   });
 
 
   return Div(
-    { className: cx('g-ui-text-input', className) },
+    {
+      className: cx('g-ui-text-input',
+        className,
+        classFlag('g-ui-input-disabled', disabled),
+        classFlag('g-ui-input-read-only', readOnly)
+      )
+    },
     when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
     when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
     Div(
