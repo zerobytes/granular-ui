@@ -241,10 +241,10 @@ export function NumberField(...args) {
     lastExternalValue = undefined;
     const parsed = parseNumber(next);
     if (parsed == null) {
-      onChange?.(next ?? '');
+      onChange?.({ target: { value: next ?? '' } });
       return;
     }
-    onChange?.(parsed);
+    onChange?.({ target: { value: parsed } });
   });
 
   const hasRightSection = after(rightSection).compute((next) => next != null && next !== false);
@@ -306,7 +306,8 @@ export function NumberField(...args) {
     const delta = Number(resolveValue(step) ?? 1);
     const base = current == null ? 0 : current;
     const next = clampValue(base + delta * direction);
-    currentState.set(formatNumber(next));
+    const formatted = formatNumber(next);
+    currentState.set(formatted);
   };
 
   const setCaretToEnd = (target) => {
