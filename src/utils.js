@@ -1,7 +1,7 @@
-import { Renderer, isSignal, isState, isStatePath, isComputed, resolve, computed, after, concat } from '@granularjs/core';
+import { Renderer, isSignal, isState, isStatePath, isComputed, resolve, computed, after, concat, isWhen } from '@granularjs/core';
 
 export function isReactive(value) {
-  return isSignal(value) || isState(value) || isStatePath(value) || isComputed(value);
+  return isSignal(value) || isState(value) || isStatePath(value) || isComputed(value) || isWhen(value);
 }
 
 export function cx(...values) {

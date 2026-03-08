@@ -1,11 +1,12 @@
 import { Div, list, when, after, Span } from '@granularjs/core';
-import { cx, splitPropsChildren, classVar } from '../utils.js';
+import { cx, splitPropsChildren, classVar, classFlag } from '../utils.js';
 import { Button } from './Button.js';
 
 export function Card(...args) {
-  const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'none', border: 'default' });
+  const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'none' });
   const { title, content, actions, border, padding, radius, shadow, className, style, ...rest } = props;
-
+  const a = classFlag('g-ui-card-bordered', border)
+  after(a).compute((v) => console.log(v))
   return Div(
     { style },
     when(title, () => Div({ className: 'g-ui-card-title' }, title)),
@@ -13,7 +14,8 @@ export function Card(...args) {
     {
       className: cx(
         'g-ui-card',
-        classVar('g-ui-card-border-', border, 'md'),
+        classFlag('g-ui-card-bordered', border),
+        classVar('g-ui-card-border-', border, 'none'),
         classVar('g-ui-card-padding-', padding, 'md'),
         classVar('g-ui-card-radius-', radius, 'md'),
         classVar('g-ui-card-shadow-', shadow, 'md'),

@@ -1,5 +1,5 @@
 import { A, Div, Span, when, after, state } from '@granularjs/core';
-import { cx, splitPropsChildren, classVar, classFlag, resolveValue, toPx } from '../utils.js';
+import { cx, splitPropsChildren, classVar, classFlag, resolveValue, toPx, isReactive } from '../utils.js';
 
 export function NavLink(...args) {
   const { props, rawProps, children } = splitPropsChildren(args, { variant: 'subtle', childrenOffset: 24 });
@@ -26,9 +26,13 @@ export function NavLink(...args) {
     if (resolved == null) return;
     openState.set(!!resolved);
   });
-  const childrenStyle = after(childrenOffset).compute((next) => ({
-    paddingLeft: toPx(resolveValue(next ?? 24)) ?? '24px',
-  }));
+
+  const hasSectionComputed = after(leftSection).compute((leftSection) => {
+    if(isReactive(leftSection)) {
+      return leftSection.get()
+    }
+    return leftSection
+  });
 
   const handleClick = (ev) => {
     if (resolveValue(disabled)) {
@@ -57,7 +61,7 @@ export function NavLink(...args) {
         ),
         onClick: handleClick,
       },
-      when(leftSection, () => Span({ className: 'g-ui-navlink-section g-ui-navlink-left' }, leftSection)),
+      when(hasSectionComputed, () => Span({ className: 'g-ui-navlink-section g-ui-navlink-left' }, leftSection)),
       Div(
         { className: 'g-ui-navlink-body' },
         when(label, () => Div({ className: 'g-ui-navlink-label' }, label)),
@@ -66,7 +70,6 @@ export function NavLink(...args) {
       when(rightSection, () => Span({ className: 'g-ui-navlink-section g-ui-navlink-right' }, rightSection))
     ),
     hasChildren
-      ? when(openState, () => Div({ className: 'g-ui-navlink-children', style: childrenStyle }, children))
-      : null
+      && when(openState, () => Div({ className: 'g-ui-navlink-children' }, children))
   );
 }
