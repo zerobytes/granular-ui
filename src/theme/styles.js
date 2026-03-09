@@ -510,7 +510,7 @@ const css = `
   --g-ui-text: var(--g-ui-fg);
   --g-ui-muted: var(--g-ui-fg-muted);
   
-  --g-ui-border: var(--g-ui-gray-350);
+  --g-ui-border: var(--g-ui-gray-200);
   --g-ui-border-subtle: var(--g-ui-gray-100);
   --g-ui-border-muted: var(--g-ui-gray-200);
   --g-ui-border-emphasized: var(--g-ui-gray-300);
@@ -2437,7 +2437,7 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   width: 100%;
   border: 1px solid var(--g-ui-border);
   border-radius: var(--g-ui-radius);
-  background: var(--g-ui-bg);
+  background: var(--g-ui-bg-panel);
   padding: var(--g-ui-space-12);
 }
 .g-ui-calendar-header {
