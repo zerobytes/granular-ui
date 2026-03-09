@@ -118,6 +118,8 @@ export function Slider(...args) {
 }
 
 export const SliderMark = ({ mark, getBounds }) => {
+  console.log('here', mark, getBounds);
+  
   const { minValue, maxValue } = getBounds();
   const range = maxValue - minValue;
 

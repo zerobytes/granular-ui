@@ -1,4 +1,4 @@
-import { Div, after, state, when } from '@granularjs/core';
+import { Div, after, state, when, list} from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, classFlag, resolveBool, resolveValue } from '../utils.js';
 import { SliderMark } from './Slider.js';
 
@@ -7,6 +7,8 @@ export function RangeSlider(...args) {
   const { value, marks, min, max, step, size, disabled, className, ...rest } = props;
   const { onChange } = rawProps;
   const currentState = state(resolveValue(value ?? [min, max]));
+  const hasMarks = after(marks).compute((m) => m && m.length > 0);
+
   const getBounds = () => {
     const minValue = Number(resolveValue(min));
     const maxValue = Number(resolveValue(max));
@@ -135,9 +137,10 @@ export function RangeSlider(...args) {
         },
       })
     ),
+    when(hasMarks, () => Div({ className: 'g-ui-slider-marks-placeholder' })),
     when(marks, () => Div(
       { className: 'g-ui-slider-marks' },
-      marks.map((mark) => SliderMark({ mark, getBounds }))
+      list(marks, (mark) => SliderMark({ mark, getBounds }))
     ))
   );
 }

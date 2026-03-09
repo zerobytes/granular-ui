@@ -50,13 +50,12 @@ export function Select(...args) {
     when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
     when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
     Div(
-      { className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md')) },
+      {
+        className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md')),
+        onClick: () => open.set(!open.get()),
+      },
       when(leftSection, () => Div({ className: 'g-ui-input-section' }, leftSection)),
-      Div(
-        {
-          className: cx('g-ui-select', valueClass),
-          onClick: () => open.set(!open.get()),
-        },
+      Div({ className: cx('g-ui-select', valueClass) },
         Span({ className: 'g-ui-select-value' }, displayLabel)
       ),
       when(rightSection, () => Div({ className: 'g-ui-input-section' }, rightSection), () =>
