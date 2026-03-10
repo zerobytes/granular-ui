@@ -5,7 +5,6 @@ import { switchGroupContext } from './SwitchGroup.js';
 export function Switch(...args) {
   const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
   const { label, size, className, style, inputProps, checked, value, name, type, onChange: _onChange, onInput: _onInput, ...rest } = props;
-  console.log('_onChange', _onChange)
   const { onChange } = rawProps;
   const checkedState = state(checked?.get() ?? false);
   const switchGroupState = switchGroupContext.state();

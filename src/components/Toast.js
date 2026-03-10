@@ -11,7 +11,6 @@ export function Toast(...args) {
   const close = () => {
     visible.set(false);
     onClose?.();
-    console.log('close');
   }
 
   return when(visible, () => Div(

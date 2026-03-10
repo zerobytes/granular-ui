@@ -9,7 +9,6 @@ export function RadioGroup(...args) {
   const { onChange } = rawProps;
 
   const scope = radioGroupContext.scope({ name: name?.get(), selected: selected?.get() });
-  console.log('selected?.get()', selected?.get())
 
   after(name).change((next) => {
     scope.set().name = next;

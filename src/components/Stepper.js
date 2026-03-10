@@ -9,7 +9,6 @@ export function Stepper(...args) {
     list(items, (item, idx) =>
       Div(
         { className: cx('g-ui-stepper-item', [active, (value) => {
-          console.log('value', value, 'idx', idx);
           if (idx.get() === value) return 'g-ui-stepper-active';
           return '';
         }]) },

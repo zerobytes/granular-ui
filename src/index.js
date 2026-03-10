@@ -95,5 +95,6 @@ export { BadgeGroup } from './components/BadgeGroup.js';
 export { GridTable } from './components/GridTable.js';
 export { BottomBar } from './components/BottomBar.js';
 export { EventCalendar } from './components/EventCalendar.js';
+export { Form } from './components/Form.js';
 export { useDisclosure } from './hooks/useDisclosure.js';
 

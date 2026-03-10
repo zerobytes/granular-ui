@@ -6,7 +6,6 @@ export function Card(...args) {
   const { props, children } = splitPropsChildren(args, { padding: 'md', radius: 'md', shadow: 'none' });
   const { title, content, actions, border, padding, radius, shadow, className, style, ...rest } = props;
   const a = classFlag('g-ui-card-bordered', border)
-  after(a).compute((v) => console.log(v))
   return Div(
     { style },
     when(title, () => Div({ className: 'g-ui-card-title' }, title)),
