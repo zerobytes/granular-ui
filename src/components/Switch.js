@@ -4,15 +4,16 @@ import { switchGroupContext } from './SwitchGroup.js';
 
 export function Switch(...args) {
   const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
-  const { label, size, className, style, inputProps, checked, value, onChange: _onChange, ...rest } = props;
+  const { label, size, className, style, inputProps, checked, value, name, type, onChange: _onChange, onInput: _onInput, ...rest } = props;
+  console.log('_onChange', _onChange)
   const { onChange } = rawProps;
-  const checkedState = state(checked);
+  const checkedState = state(checked?.get() ?? false);
   const switchGroupState = switchGroupContext.state();
 
-  const switchGroupInfo = after(switchGroupState).compute((value) => {
+  const switchGroupInfo = after(switchGroupState, name, type).compute(([value, name, type]) => {
     return {
-      name: value.name,
-      type: value.name ? 'radio' : 'checkbox'
+      name: name ?? value.name ?? '',
+      type: type ?? (value.name ? 'radio' : 'checkbox')
     }
   });
 
@@ -20,19 +21,23 @@ export function Switch(...args) {
     checkedState.set(selected === value.get());
   });
 
-  if (onChange) {
-    after(checked).change(next => {
-      if (next === checkedState.get()) return;
-      checkedState.set(next);
-    })
-  }
+
+  after(checked).change(next => {
+    checkedState.set(next);
+  })
 
   after(checkedState).change((next) => {
-    if ((next === checked.get())) return;
     onChange?.(next);
-    const selectedState = switchGroupState.get().selected
+    if (!next) {
+      const selectedState = switchGroupState.get().selected
+      if(selectedState === value.get()) {
+        switchGroupState.set().selected = null;
+      }
+      return
+    }
     switchGroupState.set().selected = value.get();
   });
+
 
 
 
