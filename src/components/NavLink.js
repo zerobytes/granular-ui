@@ -29,7 +29,7 @@ export function NavLink(...args) {
 
   const hasSectionComputed = after(leftSection).compute((leftSection) => {
     if(isReactive(leftSection)) {
-      return leftSection.get()
+      return leftSection?.get ? leftSection.get() : null
     }
     return leftSection
   });

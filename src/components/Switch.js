@@ -4,7 +4,7 @@ import { switchGroupContext } from './SwitchGroup.js';
 
 export function Switch(...args) {
   const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
-  const { label, size, className, style, inputProps, checked, value, ...rest } = props;
+  const { label, size, className, style, inputProps, checked, value, onChange: _onChange, ...rest } = props;
   const { onChange } = rawProps;
   const checkedState = state(checked);
   const switchGroupState = switchGroupContext.state();
@@ -20,12 +20,21 @@ export function Switch(...args) {
     checkedState.set(selected === value.get());
   });
 
+  if (onChange) {
+    after(checked).change(next => {
+      if (next === checkedState.get()) return;
+      checkedState.set(next);
+    })
+  }
+
   after(checkedState).change((next) => {
+    if ((next === checked.get())) return;
     onChange?.(next);
-    if (!next) return;
     const selectedState = switchGroupState.get().selected
     switchGroupState.set().selected = value.get();
   });
+
+
 
 
 

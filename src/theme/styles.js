@@ -4123,6 +4123,10 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 
 .g-ui-grid-table {
   display: grid;
+  background: var(--g-ui-bg-panel);
+  border-radius: var(--g-ui-radius);
+  padding: var(--g-ui-space-12);
+  padding-bottom: var(--g-ui-space-12);
 }
 .g-ui-grid-table-row {
   display: contents;
@@ -4134,21 +4138,31 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 .g-ui-grid-table-row-header .g-ui-grid-table-cell {
   font-weight: 200;
 }
-.g-ui-grid-table-cell-sortable {
-  cursor: pointer;
-  user-select: none;
-}
-.g-ui-grid-table-cell-sortable:hover {
-  background: var(--g-ui-bg-hover, rgba(0,0,0,0.04));
-}
+
 .g-ui-grid-table-sort-icon {
   opacity: 0.5;
 }
+
 .g-ui-grid-table-sticky .g-ui-grid-table-row-header .g-ui-grid-table-cell {
   position: sticky;
   top: 0;
   z-index: 1;
   background: var(--g-ui-bg-panel, #fff);
+}
+
+.g-ui-grid-table-sticky .g-ui-grid-table-row-header .g-ui-grid-table-cell:first-child {
+  border-radius: var(--g-ui-radius) 0 0 0;
+}
+.g-ui-grid-table-sticky .g-ui-grid-table-row-header .g-ui-grid-table-cell:last-child {
+  border-radius: 0 var(--g-ui-radius) 0 0;
+}
+
+.g-ui-grid-table-sticky .g-ui-grid-table-row-header .g-ui-grid-table-cell-sortable {
+  cursor: pointer;
+  user-select: none;
+}
+.g-ui-grid-table-sticky .g-ui-grid-table-row-header .g-ui-grid-table-cell-sortable:hover {
+  background: var(--g-ui-bg-hover, rgba(0,0,0,0.04));
 }
 
 .g-ui-bottombar {
