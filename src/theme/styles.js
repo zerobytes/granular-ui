@@ -2199,6 +2199,9 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   align-items: center;
 }
 .g-ui-pagination-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 32px;
   height: 32px;
   border-radius: 8px;
@@ -2207,6 +2210,10 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   color: var(--g-ui-text);
   cursor: pointer;
   font-size: 14px;
+}
+.g-ui-pagination-item .g-ui-icon,
+.g-ui-pagination-item .g-ui-icon svg {
+  fill: currentColor;
 }
 .g-ui-pagination-item-active {
   background: var(--g-ui-primary);
@@ -2221,11 +2228,26 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 .g-ui-pagination-item:hover {
   background: var(--g-ui-bg-subtle);
 }
-.g-ui-pagination-size-xs .g-ui-pagination-item { min-width: 22px; height: 22px; font-size: 12px; }
-.g-ui-pagination-size-sm .g-ui-pagination-item { min-width: 26px; height: 26px; font-size: 12px; }
-.g-ui-pagination-size-md .g-ui-pagination-item { min-width: 32px; height: 32px; font-size: 14px; }
-.g-ui-pagination-size-lg .g-ui-pagination-item { min-width: 38px; height: 38px; font-size: 15px; }
-.g-ui-pagination-size-xl .g-ui-pagination-item { min-width: 44px; height: 44px; font-size: 16px; }
+.g-ui-pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  color: var(--g-ui-text-muted);
+  font-size: 14px;
+  user-select: none;
+}
+.g-ui-pagination-size-xs .g-ui-pagination-item,
+.g-ui-pagination-size-xs .g-ui-pagination-ellipsis { min-width: 22px; height: 22px; font-size: 12px; }
+.g-ui-pagination-size-sm .g-ui-pagination-item,
+.g-ui-pagination-size-sm .g-ui-pagination-ellipsis { min-width: 26px; height: 26px; font-size: 12px; }
+.g-ui-pagination-size-md .g-ui-pagination-item,
+.g-ui-pagination-size-md .g-ui-pagination-ellipsis { min-width: 32px; height: 32px; font-size: 14px; }
+.g-ui-pagination-size-lg .g-ui-pagination-item,
+.g-ui-pagination-size-lg .g-ui-pagination-ellipsis { min-width: 38px; height: 38px; font-size: 15px; }
+.g-ui-pagination-size-xl .g-ui-pagination-item,
+.g-ui-pagination-size-xl .g-ui-pagination-ellipsis { min-width: 44px; height: 44px; font-size: 16px; }
 
 .g-ui-timeline {
   display: flex;
