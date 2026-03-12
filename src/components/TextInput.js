@@ -15,6 +15,14 @@ export function TextInput(...args) {
     multiline,
     disabled,
     readOnly,
+    style,
+    labelStyle,
+    descriptionStyle,
+    errorStyle,
+    inputWrapperStyle,
+    inputStyle,
+    leftSectionStyle,
+    rightSectionStyle,
     value: computed_value,
     ...rest
   } = props;
@@ -42,6 +50,7 @@ export function TextInput(...args) {
 
   const input = Control({
     ...rest,
+    style: inputStyle,
     node,
     value: currentState,
     onInput: handleInput,
@@ -63,10 +72,11 @@ export function TextInput(...args) {
         className,
         classFlag('g-ui-input-disabled', disabled),
         classFlag('g-ui-input-read-only', readOnly)
-      )
+      ),
+      style
     },
-    when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
-    when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
+    when(label, () => Label({ className: 'g-ui-text-input-label', style: labelStyle }, label)),
+    when(description, () => Span({ className: 'g-ui-text-input-description', style: descriptionStyle }, description)),
     Div(
       {
         className: cx(
@@ -75,11 +85,12 @@ export function TextInput(...args) {
           classVar('g-ui-input-size-', size, 'md'),
           classFlag('g-ui-input-error', error)
         ),
+        style: inputWrapperStyle
       },
-      when(leftSection, () => Div({ className: 'g-ui-input-section' }, leftSection)),
+      when(leftSection, () => Div({ className: 'g-ui-input-section', style: leftSectionStyle }, leftSection)),
       input,
-      when(rightSection, () => Div({ className: 'g-ui-input-section' }, rightSection))
+      when(rightSection, () => Div({ className: 'g-ui-input-section', style: rightSectionStyle }, rightSection))
     ),
-    when(error, () => Div({ className: 'g-ui-text-input-error-text' }, error))
+    when(error, () => Div({ className: 'g-ui-text-input-error-text', style: errorStyle }, error))
   );
 }
