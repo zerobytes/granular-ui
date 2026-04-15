@@ -10,4 +10,5 @@ export function resolveValue(value: any): any;
 export function resolveBool(value: any): boolean;
 export function classVar(prefix: any, value: any, fallback: any): any;
 export function classFlag(name: any, value: any): any;
+export function getDropdownPlacement(rootEl: any, dropdownMaxHeight?: number): "bottom" | "top";
 export function classMap(value: any, map: any, fallback: any): any;

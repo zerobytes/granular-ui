@@ -1,5 +1,5 @@
 import { Div, Span, Input, Label, when, after, state } from '@granularjs/core';
-import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
+import { cx, splitPropsChildren, classVar, resolveValue, getDropdownPlacement } from '../utils.js';
 import { checkedSvg, closeSvg } from '../theme/icons.js';
 
 export function MultiSelect(...args) {
@@ -9,6 +9,7 @@ export function MultiSelect(...args) {
   const currentState = state(resolveValue(value) ?? []);
   const searchState = state('');
   const openState = state(false);
+  const placement = state('bottom');
   const rootNode = state(null);
 
   const normalizeData = (items) => {
@@ -74,7 +75,10 @@ export function MultiSelect(...args) {
     Div(
       {
         className: cx('g-ui-select-multi', classVar('g-ui-select-multi-size-', size, 'md')),
-        onClick: () => openState.set(true),
+        onClick: () => {
+          placement.set(getDropdownPlacement(rootNode.get()));
+          openState.set(true);
+        },
       },
       after(normalizedData, currentState).compute(([items, current]) => {
         const list = resolveValue(current) ?? [];
@@ -111,13 +115,16 @@ export function MultiSelect(...args) {
           className: 'g-ui-select-multi-input',
           value: searchState,
           onInput: (ev) => searchState.set(ev.target?.value ?? ''),
-          onFocus: () => openState.set(true),
+          onFocus: () => {
+            placement.set(getDropdownPlacement(rootNode.get()));
+            openState.set(true);
+          },
         })
       )
     ),
     when(openState, () =>
       Div(
-        { className: 'g-ui-select-dropdown' },
+        { className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')) },
         after(filteredItems).compute((items) => {
           if (!items.length) {
             return Div({ className: 'g-ui-select-item' }, 'Nothing found');

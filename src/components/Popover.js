@@ -1,11 +1,13 @@
 import { Div, when, after, state } from '@granularjs/core';
-import { cx, splitPropsChildren, resolveValue } from '../utils.js';
+import { cx, splitPropsChildren, resolveValue, getDropdownPlacement } from '../utils.js';
 
 export function Popover(...args) {
   const { props, rawProps, children } = splitPropsChildren(args, { position: 'left' });
   const { opened, position, content, className, ...rest } = props;
   const { onChange } = rawProps;
   const currentState = state(resolveValue(opened) ?? false);
+  const placement = state('bottom');
+  const rootNode = state(null);
   after(opened).change((next) => {
     const resolved = resolveValue(next);
     if (resolved == null) return;
@@ -13,12 +15,13 @@ export function Popover(...args) {
   });
 
   const setOpen = (next) => {
+    if (next) placement.set(getDropdownPlacement(rootNode.get(), 320));
     currentState.set(next);
     onChange?.(next);
   };
 
   return Div(
-    { ...rest, className: cx('g-ui-popover', props.className ?? className) },
+    { ...rest, node: rootNode, className: cx('g-ui-popover', props.className ?? className) },
     Div({ onClick: () => setOpen(!currentState.get()) }, children),
     when(
       currentState,
@@ -27,6 +30,7 @@ export function Popover(...args) {
           {
             className: cx(
               'g-ui-popover-dropdown',
+              after(placement).compute((p) => p === 'top' ? 'g-ui-popover-dropdown-top' : ''),
               position === 'right' && 'g-ui-popover-right',
               position === 'center' && 'g-ui-popover-center'
             ),

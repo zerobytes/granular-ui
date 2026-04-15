@@ -1,5 +1,5 @@
 import { Div, state, after, list, when } from '@granularjs/core';
-import { cx, splitPropsChildren, resolveValue, classFlag } from '../utils.js';
+import { cx, splitPropsChildren, resolveValue, classFlag, getDropdownPlacement } from '../utils.js';
 import { TextInput } from './TextInput.js';
 import { ScrollArea } from './ScrollArea.js';
 
@@ -44,6 +44,8 @@ export function Autocomplete(...args) {
   const { onChange, renderItem } = rawProps;
 
   const opened = state(false);
+  const placement = state('bottom');
+  const rootNode = state(null);
   const query = state('');
   const currentValue = state(resolveValue(value));
 
@@ -86,6 +88,7 @@ export function Autocomplete(...args) {
 
   const open = () => {
     if (resolveValue(disabled)) return;
+    placement.set(getDropdownPlacement(rootNode.get()));
     opened.set(true);
     const sel = selectedItem.get();
     const lPath = resolveValue(labelPath);
@@ -157,7 +160,7 @@ export function Autocomplete(...args) {
   };
 
   return Div(
-    { className: cx('g-ui-autocomplete', className, classFlag('g-ui-autocomplete-disabled', disabled)) },
+    { node: rootNode, className: cx('g-ui-autocomplete', className, classFlag('g-ui-autocomplete-disabled', disabled)) },
     TextInput({
       ...inputProps,
       className: cx('g-ui-autocomplete-input-wrapper', inputProps.className),
@@ -166,7 +169,7 @@ export function Autocomplete(...args) {
     when(opened, () =>
       Div(
         {
-          className: 'g-ui-autocomplete-dropdown',
+          className: cx('g-ui-autocomplete-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-autocomplete-dropdown-top' : '')),
           role: 'listbox',
         },
         ScrollArea(

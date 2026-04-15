@@ -1,5 +1,5 @@
 import { Div, Span, when, state, after, Label } from '@granularjs/core';
-import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
+import { cx, splitPropsChildren, classVar, resolveValue, getDropdownPlacement } from '../utils.js';
 import { keyboardArrowDownSvg } from '../theme/icons.js';
 import { Icon } from './Icon.js';
 
@@ -20,6 +20,8 @@ export function Select(...args) {
   } = props;
   const { onChange } = rawProps;
   const open = state(false);
+  const rootNode = state(null);
+  const placement = state('bottom');
   const currentState = state(resolveValue(value) ?? '');
 
   after(value).change((next) => {
@@ -46,13 +48,17 @@ export function Select(...args) {
   });
 
   return Div(
-    { ...rest, className: cx('g-ui-select-root', className) },
+    { ...rest, node: rootNode, className: cx('g-ui-select-root', className) },
     when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
     when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
     Div(
       {
         className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md')),
-        onClick: () => open.set(!open.get()),
+        onClick: () => {
+          const next = !open.get();
+          if (next) placement.set(getDropdownPlacement(rootNode.get()));
+          open.set(next);
+        },
       },
       when(leftSection, () => Div({ className: 'g-ui-input-section' }, leftSection)),
       Div({ className: cx('g-ui-select', valueClass) },
@@ -65,7 +71,7 @@ export function Select(...args) {
     when(error, () => Div({ className: 'g-ui-text-input-error-text' }, error)),
     when(open, () =>
       Div(
-        { className: 'g-ui-select-dropdown' },
+        { className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')) },
         (resolveValue(data) ?? []).map((item) =>
           Div(
             {

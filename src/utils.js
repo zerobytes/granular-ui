@@ -67,6 +67,15 @@ export function classFlag(name, value) {
   return resolve(value) ? name : '';
 }
 
+export function getDropdownPlacement(rootEl, dropdownMaxHeight = 260) {
+  if (!rootEl || typeof window === 'undefined') return 'bottom';
+  const rect = rootEl.getBoundingClientRect();
+  const spaceBelow = window.innerHeight - rect.bottom;
+  const spaceAbove = rect.top;
+  if (spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow) return 'top';
+  return 'bottom';
+}
+
 export function classMap(value, map, fallback) {
   const getClass = (v) => map[v] || null;
   if (isReactive(value)) {
