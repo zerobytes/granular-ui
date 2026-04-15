@@ -912,23 +912,19 @@ export function EventCalendar(...args) {
     { ...rest, className: cx('g-ui-event-calendar', className) },
     header,
     when(
-      viewMode,
-      (v) => v === 'month',
+      () => viewMode.get() === 'month',
       () => monthView
     ),
     when(
-      viewMode,
-      (v) => v === 'week',
+      () => viewMode.get() === 'week',
       () => weekView
     ),
     when(
-      viewMode,
-      (v) => v === 'day',
+      () => viewMode.get() === 'day',
       () => dayView
     ),
     when(
-      modalState,
-      (m) => m === 'create',
+      () => modalState.get() === 'create',
       () =>
         Modal(
           {
@@ -941,8 +937,7 @@ export function EventCalendar(...args) {
         )
     ),
     when(
-      modalState,
-      (m) => m === 'view',
+      () => modalState.get() === 'view',
       () =>
         Modal(
           {
@@ -955,8 +950,7 @@ export function EventCalendar(...args) {
         )
     ),
     when(
-      modalState,
-      (m) => m === 'edit',
+      () => modalState.get() === 'edit',
       () =>
         Modal(
           {

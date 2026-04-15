@@ -1,10 +1,10 @@
-import { Div, Span, Input, when, after, state } from '@granularjs/core';
+import { Div, Span, Input, Label, when, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
 import { checkedSvg, closeSvg } from '../theme/icons.js';
 
 export function MultiSelect(...args) {
   const { props, rawProps } = splitPropsChildren(args, { data: [], size: 'md', searchable: true });
-  const { value, data, size, className, placeholder, searchable, ...rest } = props;
+  const { value, data, size, className, placeholder, searchable, label, description, error, ...rest } = props;
   const { onChange, onSearchChange } = rawProps;
   const currentState = state(resolveValue(value) ?? []);
   const searchState = state('');
@@ -69,6 +69,8 @@ export function MultiSelect(...args) {
 
   return Div(
     { ...rest, node: rootNode, className: cx('g-ui-select-multi-root', className) },
+    when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
+    when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
     Div(
       {
         className: cx('g-ui-select-multi', classVar('g-ui-select-multi-size-', size, 'md')),
@@ -148,6 +150,7 @@ export function MultiSelect(...args) {
           );
         })
       )
-    )
+    ),
+    when(error, () => Div({ className: 'g-ui-text-input-error-text' }, error))
   );
 }
