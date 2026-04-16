@@ -1,5 +1,5 @@
 import { Div, Span, Input, when, after, state, list } from '@granularjs/core';
-import { cx, splitPropsChildren, classVar, resolveValue, getDropdownPlacement } from '../utils.js';
+import { cx, splitPropsChildren, resolveValue, getDropdownPlacement } from '../utils.js';
 import { checkedSvg, closeSvg } from '../theme/icons.js';
 import { TextInput } from './TextInput.js';
 
@@ -42,28 +42,50 @@ export function MultiSelect(...args) {
     if (resolved == null) return;
     currentState.set(asArray(resolved));
   });
+
+  const normalizedItems = state(normalizeData(resolveValue(data)));
+  const filteredItemsState = state(normalizedItems.get());
+
+  after(data).change((nextData) => {
+    normalizedItems.set(normalizeData(nextData));
+    applyFilter();
+  });
+
+  const applyFilter = () => {
+    const items = normalizedItems.get();
+    const q = String(searchState.get() ?? '').toLowerCase().trim();
+    if (!q) { filteredItemsState.set(items); return; }
+    filteredItemsState.set(items.filter((item) => String(item.label ?? '').toLowerCase().includes(q)));
+  };
+
+  after(searchState).change((next) => {
+    onSearchChange?.(next);
+    applyFilter();
+  });
+
   let outsideCleanup = null;
   after(openState).change((next) => {
-    if (outsideCleanup) {
-      outsideCleanup();
-      outsideCleanup = null;
+    if (outsideCleanup) { outsideCleanup(); outsideCleanup = null; }
+    if (!next) {
+      searchState.set('');
+      return;
     }
-    if (!next) return;
-    const handler = (ev) => {
+    const mouseHandler = (ev) => {
       const root = rootNode.get();
-      if (!root) return;
-      if (root.contains(ev.target)) return;
+      if (!root || root.contains(ev.target)) return;
       openState.set(false);
     };
-    document.addEventListener('mousedown', handler);
-    outsideCleanup = () => document.removeEventListener('mousedown', handler);
-  });
-  after(searchState).change((next, prev) => {
-    onSearchChange?.(next);
-    if (String(next ?? '') === String(prev ?? '')) return;
-    if (!asArray(currentState.get()).length) return;
-    currentState.set([]);
-    onChange?.([]);
+    const focusHandler = (ev) => {
+      const root = rootNode.get();
+      if (!root || root.contains(ev.target)) return;
+      openState.set(false);
+    };
+    document.addEventListener('mousedown', mouseHandler);
+    document.addEventListener('focusin', focusHandler);
+    outsideCleanup = () => {
+      document.removeEventListener('mousedown', mouseHandler);
+      document.removeEventListener('focusin', focusHandler);
+    };
   });
 
   const toggle = (val) => {
@@ -86,38 +108,37 @@ export function MultiSelect(...args) {
       placement.set(getDropdownPlacement(rootNode.get()));
       openState.set(true);
       openedAt = Date.now();
+      setTimeout(() => {
+        const root = rootNode.get();
+        if (!root) return;
+        const input = root.querySelector('.g-ui-select-multi-input');
+        if (input) input.focus();
+      }, 0);
     }
   };
 
-  let fromMouse = false;
-
-  const normalizedData = after(data).compute((nextData) => normalizeData(nextData));
-  const filteredItems = after(normalizedData, searchState).compute(([items, query]) => {
-    const list = Array.isArray(items) ? items : [];
-    const q = String(resolveValue(query) ?? '').toLowerCase().trim();
-    if (!q) return list;
-    return list.filter((item) => String(item.label ?? '').toLowerCase().includes(q));
-  });
   const isEmpty = after(currentState, searchState).compute(([nextSelected, query]) => {
-    const list = asArray(nextSelected);
+    const arr = asArray(nextSelected);
     const q = String(resolveValue(query) ?? '');
-    return (!list.length) && !q;
+    return (!arr.length) && !q;
   });
   const isSearchable = after(searchable).compute((next) => !!next);
+  const hasItems = after(filteredItemsState).compute((items) => !!(items && items.length));
+  const notSearchableClass = after(searchable).compute((s) => s ? '' : 'g-ui-select-multi-not-searchable');
 
   return Div(
-    { ...rest, node: rootNode, style, className: cx('g-ui-select-multi-root', className), onClick: toggleOpen },
+    { ...rest, node: rootNode, style, className: cx('g-ui-select-multi-root', notSearchableClass, className), onClick: toggleOpen },
     TextInput(
       {
         label, description, error, size, disabled,
         labelStyle, descriptionStyle, errorStyle, inputWrapperStyle,
       },
-      after(normalizedData, currentState).compute(([items, current]) => {
-        const list = asArray(current);
+      after(normalizedItems, currentState).compute(([items, current]) => {
+        const selected = asArray(current);
         const sourceItems = Array.isArray(items) ? items : [];
-        return list.map((val) => {
+        return selected.map((val) => {
           const match = sourceItems.find((entry) => entry.value === val);
-          const label = match?.label ?? val;
+          const tagLabel = match?.label ?? val;
           return Span(
             { className: 'g-ui-select-tag' },
             Span(
@@ -125,7 +146,7 @@ export function MultiSelect(...args) {
                 className: 'g-ui-select-tag-label',
                 onClick: (ev) => { ev?.stopPropagation?.(); },
               },
-              label
+              tagLabel
             ),
             Span({
               className: 'g-ui-select-tag-remove',
@@ -144,25 +165,10 @@ export function MultiSelect(...args) {
           className: 'g-ui-select-multi-input',
           value: searchState,
           onInput: (ev) => searchState.set(ev.target?.value ?? ''),
-          onMouseDown: (ev) => {
-            fromMouse = true;
-            ev?.stopPropagation?.();
-          },
+          onClick: (ev) => ev?.stopPropagation?.(),
+          onMouseDown: (ev) => ev?.stopPropagation?.(),
           onFocus: () => {
-            if (fromMouse) { fromMouse = false; return; }
             if (!openState.get()) {
-              placement.set(getDropdownPlacement(rootNode.get()));
-              openState.set(true);
-              openedAt = Date.now();
-            }
-          },
-          onClick: (ev) => {
-            ev?.stopPropagation?.();
-            fromMouse = false;
-            if (openState.get()) {
-              if (Date.now() - openedAt < 200) return;
-              openState.set(false);
-            } else {
               placement.set(getDropdownPlacement(rootNode.get()));
               openState.set(true);
               openedAt = Date.now();
@@ -171,15 +177,15 @@ export function MultiSelect(...args) {
         })
       )
     ),
-    when(openState, () => {
-      const hasItems = after(filteredItems).compute((items) => !!(items && items.length));
-      return Div(
+    when(openState, () =>
+      Div(
         {
           className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')),
           onClick: (ev) => ev.stopPropagation(),
+          onMouseDown: (ev) => { ev.stopPropagation(); ev.preventDefault(); },
         },
         when(hasItems,
-          () => list(filteredItems, (item) =>
+          () => list(filteredItemsState, (item) =>
             Div(
               {
                 className: cx(
@@ -207,7 +213,7 @@ export function MultiSelect(...args) {
           ),
           () => Div({ className: 'g-ui-select-empty', role: 'status' }, emptySearchMessage)
         )
-      );
-    })
+      )
+    )
   );
 }

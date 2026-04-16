@@ -18,13 +18,22 @@ export function Popper(...args) {
   after(currentState).change((next) => {
     if (outsideCleanup) { outsideCleanup(); outsideCleanup = null; }
     if (!next) return;
-    const handler = (ev) => {
+    const mouseHandler = (ev) => {
       const root = rootNode.get();
       if (!root || root.contains(ev.target)) return;
       setOpen(false);
     };
-    document.addEventListener('mousedown', handler);
-    outsideCleanup = () => document.removeEventListener('mousedown', handler);
+    const focusHandler = (ev) => {
+      const root = rootNode.get();
+      if (!root || root.contains(ev.target)) return;
+      setOpen(false);
+    };
+    document.addEventListener('mousedown', mouseHandler);
+    document.addEventListener('focusin', focusHandler);
+    outsideCleanup = () => {
+      document.removeEventListener('mousedown', mouseHandler);
+      document.removeEventListener('focusin', focusHandler);
+    };
   });
 
   const setOpen = (next) => {

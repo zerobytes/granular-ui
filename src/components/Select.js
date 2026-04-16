@@ -41,13 +41,22 @@ export function Select(...args) {
   after(open).change((next) => {
     if (outsideCleanup) { outsideCleanup(); outsideCleanup = null; }
     if (!next) return;
-    const handler = (ev) => {
+    const mouseHandler = (ev) => {
       const root = rootNode.get();
       if (!root || root.contains(ev.target)) return;
       open.set(false);
     };
-    document.addEventListener('mousedown', handler);
-    outsideCleanup = () => document.removeEventListener('mousedown', handler);
+    const focusHandler = (ev) => {
+      const root = rootNode.get();
+      if (!root || root.contains(ev.target)) return;
+      open.set(false);
+    };
+    document.addEventListener('mousedown', mouseHandler);
+    document.addEventListener('focusin', focusHandler);
+    outsideCleanup = () => {
+      document.removeEventListener('mousedown', mouseHandler);
+      document.removeEventListener('focusin', focusHandler);
+    };
   });
 
   let lastSelectedAt = 0;
@@ -100,6 +109,7 @@ export function Select(...args) {
         {
           className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')),
           onClick: (ev) => ev.stopPropagation(),
+          onMouseDown: (ev) => { ev.stopPropagation(); ev.preventDefault(); },
         },
         list(data, (item) =>
           Div(

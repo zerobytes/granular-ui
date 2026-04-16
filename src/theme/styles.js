@@ -984,6 +984,7 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   gap: var(--g-ui-space-8);
   padding: 0 var(--g-ui-space-12);
   box-sizing: border-box;
+  cursor: text;
 }
 .g-ui-input-wrapper:focus-within {
   border-color: var(--g-ui-primary);
@@ -3058,10 +3059,12 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   width: 100%;
 }
 .g-ui-select-multi-root .g-ui-input-wrapper {
-  cursor: pointer;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--g-ui-space-6);
+}
+.g-ui-select-multi-not-searchable .g-ui-input-wrapper {
+  cursor: pointer;
 }
 .g-ui-select-multi-root .g-ui-input-size-xs { height: auto; min-height: 30px; padding: var(--g-ui-space-5) var(--g-ui-space-10); }
 .g-ui-select-multi-root .g-ui-input-size-sm { height: auto; min-height: 36px; padding: var(--g-ui-space-6) var(--g-ui-space-12); }
@@ -3077,6 +3080,7 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
   color: var(--g-ui-text);
   min-width: 120px;
   flex: 1;
+  position: absolute;
 }
 .g-ui-select-multi-input:focus {
   outline: none;

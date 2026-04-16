@@ -59,13 +59,22 @@ export function Autocomplete(...args) {
   after(opened).change((next) => {
     if (outsideCleanup) { outsideCleanup(); outsideCleanup = null; }
     if (!next) return;
-    const handler = (ev) => {
+    const mouseHandler = (ev) => {
       const root = rootNode.get();
       if (!root || root.contains(ev.target)) return;
       close();
     };
-    document.addEventListener('mousedown', handler);
-    outsideCleanup = () => document.removeEventListener('mousedown', handler);
+    const focusHandler = (ev) => {
+      const root = rootNode.get();
+      if (!root || root.contains(ev.target)) return;
+      close();
+    };
+    document.addEventListener('mousedown', mouseHandler);
+    document.addEventListener('focusin', focusHandler);
+    outsideCleanup = () => {
+      document.removeEventListener('mousedown', mouseHandler);
+      document.removeEventListener('focusin', focusHandler);
+    };
   });
 
   const dataResolved = after(data).compute((d) => (Array.isArray(d) ? d : []));
@@ -187,6 +196,7 @@ export function Autocomplete(...args) {
         {
           className: cx('g-ui-autocomplete-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-autocomplete-dropdown-top' : '')),
           role: 'listbox',
+          onMouseDown: (ev) => ev.preventDefault(),
         },
         ScrollArea(
           { className: 'g-ui-autocomplete-list', style: { maxHeight: '240px' } },
