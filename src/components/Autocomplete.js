@@ -1,4 +1,4 @@
-import { Div, state, after, list, when } from '@granularjs/core';
+import { Div, state, after, list, when, resolve } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveValue, classFlag, getDropdownPlacement } from '../utils.js';
 import { TextInput } from './TextInput.js';
 import { ScrollArea } from './ScrollArea.js';
@@ -150,39 +150,28 @@ export function Autocomplete(...args) {
     },
   };
 
-  const getValueForItem = (item) => {
-    const vPath = resolveValue(valuePath);
-    return vPath == null || vPath === '' ? item : getByPath(item, vPath);
-  };
-
-  const itemActiveClass = (item) =>
-    after(currentValue, valuePath).compute(([v, vPath]) => {
-      const getVal = (it) => (vPath == null || vPath === '' ? it : getByPath(it, vPath));
-      return getVal(item) === v ? 'g-ui-autocomplete-item-active' : '';
-    });
-
   const renderOption = (item) => {
-    if (renderItem && typeof renderItem === 'function') {
-      const node = renderItem(item);
-      if (node != null)
-        return Div(
-          {
-            className: cx('g-ui-autocomplete-item', itemActiveClass(item)),
-            onClick: () => selectItem(item),
-            role: 'option',
-          },
-          node
-        );
-    }
+    const plain = resolve(item);
+    const vPath = resolveValue(valuePath);
+    const lPath = resolveValue(labelPath);
+    const itemVal = vPath == null || vPath === '' ? plain : getByPath(plain, vPath);
+    const itemLabel = lPath == null || lPath === '' ? String(plain ?? '') : String(getByPath(plain, lPath) ?? '');
+
+    const activeClass = after(currentValue).compute((v) =>
+      itemVal === v ? 'g-ui-autocomplete-item-active' : ''
+    );
+
+    const content = (renderItem && typeof renderItem === 'function')
+      ? renderItem(plain)
+      : null;
+
     return Div(
       {
-        className: cx('g-ui-autocomplete-item', itemActiveClass(item)),
-        onClick: () => selectItem(item),
+        className: cx('g-ui-autocomplete-item', activeClass),
+        onClick: () => selectItem(plain),
         role: 'option',
       },
-      after(labelPath).compute((lPath) =>
-        lPath == null || lPath === '' ? String(item ?? '') : String(getByPath(item, lPath) ?? '')
-      )
+      content != null ? content : itemLabel
     );
   };
 

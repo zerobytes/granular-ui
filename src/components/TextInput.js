@@ -72,6 +72,14 @@ export function TextInput(...args) {
     });
   }
 
+  const wrapperNode = state(null);
+  const focusInput = () => {
+    const el = wrapperNode.get();
+    if (!el) return;
+    const input = el.querySelector('input, textarea');
+    if (input && document.activeElement !== input) input.focus();
+  };
+
   return Div(
     {
       className: cx('g-ui-text-input',
@@ -85,13 +93,15 @@ export function TextInput(...args) {
     when(description, () => Span({ className: 'g-ui-text-input-description', style: descriptionStyle }, description)),
     Div(
       {
+        node: wrapperNode,
         className: cx(
           'g-ui-input-wrapper',
           classFlag('g-ui-input-multiline', multiline),
           classVar('g-ui-input-size-', size, 'md'),
           classFlag('g-ui-input-error', error)
         ),
-        style: inputWrapperStyle
+        style: inputWrapperStyle,
+        onClick: focusInput,
       },
       when(leftSection, () => Div({ className: 'g-ui-input-section', style: leftSectionStyle }, leftSection)),
       inputContent,

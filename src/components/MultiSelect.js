@@ -1,4 +1,4 @@
-import { Div, Span, Input, when, after, state } from '@granularjs/core';
+import { Div, Span, Input, when, after, state, list } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue, getDropdownPlacement } from '../utils.js';
 import { checkedSvg, closeSvg } from '../theme/icons.js';
 import { TextInput } from './TextInput.js';
@@ -78,6 +78,7 @@ export function MultiSelect(...args) {
   let openedAt = 0;
   const toggleOpen = () => {
     if (resolveValue(disabled)) return;
+    if (Date.now() - openedAt < 200) return;
     const isOpen = openState.get();
     if (isOpen) {
       openState.set(false);
@@ -170,46 +171,43 @@ export function MultiSelect(...args) {
         })
       )
     ),
-    when(openState, () =>
-      Div(
+    when(openState, () => {
+      const hasItems = after(filteredItems).compute((items) => !!(items && items.length));
+      return Div(
         {
           className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')),
           onClick: (ev) => ev.stopPropagation(),
         },
-        after(filteredItems, emptySearchMessage).compute(([items, emptyLabel]) => {
-          const rows = Array.isArray(items) ? items : [];
-          const message = String(resolveValue(emptyLabel) ?? 'Nothing found');
-          if (!rows.length) {
-            return Div({ className: 'g-ui-select-empty', role: 'status' }, message);
-          }
-          return rows.map((item) =>
+        when(hasItems,
+          () => list(filteredItems, (item) =>
             Div(
               {
                 className: cx(
                   'g-ui-select-item',
-                  item.disabled && 'g-ui-select-item-disabled',
+                  after(item.disabled).compute((d) => d ? 'g-ui-select-item-disabled' : ''),
                   after(currentState).compute((current) => {
-                    const list = asArray(current);
-                    return list.includes(item.value) ? 'g-ui-select-item-active' : '';
+                    const selected = asArray(current);
+                    return selected.includes(item.value.get()) ? 'g-ui-select-item-active' : '';
                   })
                 ),
                 onClick: () => {
-                  if (item.disabled) return;
-                  toggle(item.value);
+                  if (item.disabled.get()) return;
+                  toggle(item.value.get());
                 },
               },
               Span({
                 className: 'g-ui-select-item-check',
                 innerHTML: after(currentState).compute((current) => {
-                  const list = asArray(current);
-                  return list.includes(item.value) ? checkedSvg : '';
+                  const selected = asArray(current);
+                  return selected.includes(item.value.get()) ? checkedSvg : '';
                 }),
               }),
               Span({ className: 'g-ui-select-item-label' }, item.label)
             )
-          );
-        })
-      )
-    )
+          ),
+          () => Div({ className: 'g-ui-select-empty', role: 'status' }, emptySearchMessage)
+        )
+      );
+    })
   );
 }
