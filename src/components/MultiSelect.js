@@ -58,8 +58,12 @@ export function MultiSelect(...args) {
     document.addEventListener('mousedown', handler);
     outsideCleanup = () => document.removeEventListener('mousedown', handler);
   });
-  after(searchState).change((next) => {
+  after(searchState).change((next, prev) => {
     onSearchChange?.(next);
+    if (String(next ?? '') === String(prev ?? '')) return;
+    if (!asArray(currentState.get()).length) return;
+    currentState.set([]);
+    onChange?.([]);
   });
 
   const toggle = (val) => {
