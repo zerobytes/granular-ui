@@ -1,4 +1,4 @@
-import { Div, Span, when, state, after } from '@granularjs/core';
+import { Div, Span, when, state, after, list } from '@granularjs/core';
 import { cx, splitPropsChildren, resolveValue, getDropdownPlacement } from '../utils.js';
 import { keyboardArrowDownSvg } from '../theme/icons.js';
 import { Icon } from './Icon.js';
@@ -101,17 +101,16 @@ export function Select(...args) {
           className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')),
           onClick: (ev) => ev.stopPropagation(),
         },
-        (resolveValue(data) ?? []).map((item) =>
+        list(data, (item) =>
           Div(
             {
               className: cx(
                 'g-ui-select-item',
-                after(currentState).compute((current) => {
-                  if (current === item.value) return 'g-ui-select-item-active';
-                  return '';
-                })
+                after(currentState, item.value).compute(([current, val]) =>
+                  current === val ? 'g-ui-select-item-active' : ''
+                )
               ),
-              onClick: () => selectValue(item.value),
+              onClick: () => selectValue(item.value.get()),
             },
             item.label
           )

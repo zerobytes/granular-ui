@@ -188,7 +188,9 @@ export function Tabs(...args) {
         )
       ),
       Div({ className: 'g-ui-tabs-panel' },
-        when(currentState, () => tabs.get()?.find((tab) => tab.value === currentState.get())?.content ?? null)
+        after(currentState, tabs).compute(([current, allTabs]) =>
+          allTabs?.find((tab) => tab.value === current)?.content ?? null
+        )
       )
     )
   );

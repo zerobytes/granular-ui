@@ -4,6 +4,7 @@ import {
   state,
   after,
   when,
+  list,
   portal,
   Input,
   Label,
@@ -761,18 +762,17 @@ export function EventCalendar(...args) {
           when(after(locationOptions).compute((o) => o && o.length > 0), () =>
             Div(
               { className: 'g-ui-event-calendar-form-suggestions' },
-              locationOptions.get().map((loc) =>
+              list(locationOptions, (loc) =>
                 Div(
                   {
-                    key: loc.id ?? loc.label,
                     className: 'g-ui-event-calendar-form-suggestion-item',
                     onClick: () => {
-                      locationState.set(loc.label ?? loc.id);
+                      locationState.set(loc.label.get() ?? loc.id.get());
                       locationQuery.set('');
                       locationOptions.set([]);
                     },
                   },
-                  loc.label ?? loc.id
+                  after(loc.label, loc.id).compute(([label, id]) => label ?? id)
                 )
               )
             )
@@ -808,14 +808,13 @@ export function EventCalendar(...args) {
           when(after(emailLookupResults).compute((r) => r && r.length > 0), () =>
             Div(
               { className: 'g-ui-event-calendar-form-suggestions' },
-              emailLookupResults.get().map((item) =>
+              list(emailLookupResults, (item) =>
                 Div(
                   {
-                    key: item.id ?? item.email,
                     className: 'g-ui-event-calendar-form-suggestion-item',
-                    onClick: () => addAttendee(item),
+                    onClick: () => addAttendee(item.get()),
                   },
-                  item.label ?? item.email ?? item.id
+                  after(item.label, item.email, item.id).compute(([label, email, id]) => label ?? email ?? id)
                 )
               )
             )
