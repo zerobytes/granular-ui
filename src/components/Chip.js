@@ -1,11 +1,11 @@
 import { Button, after, state } from '@granularjs/core';
-import { cx, splitPropsChildren, classVar } from '../utils.js';
+import { cx, splitPropsChildren, classVar, resolveBool } from '../utils.js';
 
 export function Chip(...args) {
   const { props, rawProps, children } = splitPropsChildren(args, { size: 'md', variant: 'filled', color: 'primary' });
   const { checked, size, variant, color, className, ...rest } = props;
   const { onChange } = rawProps;
-  const currentState = state(!!checked);
+  const currentState = state(resolveBool(checked));
   after(checked).change((next) => {
     if (next == null) return;
     currentState.set(!!next);

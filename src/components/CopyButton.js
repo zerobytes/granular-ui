@@ -1,5 +1,5 @@
 import { Button, after, when } from '@granularjs/core';
-import { cx, splitPropsChildren } from '../utils.js';
+import { cx, splitPropsChildren, resolveValue } from '../utils.js';
 import { state } from '@granularjs/core';
 
 export function CopyButton(...args) {
@@ -12,9 +12,9 @@ export function CopyButton(...args) {
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(String(value));
+      await navigator.clipboard.writeText(String(resolveValue(value) ?? ''));
       copied.set(true);
-      setTimeout(() => copied.set(false), timeout);
+      setTimeout(() => copied.set(false), resolveValue(timeout) ?? 1500);
     } catch {}
   };
 

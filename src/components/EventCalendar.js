@@ -640,7 +640,8 @@ export function EventCalendar(...args) {
     const emailLookupResults = state([]);
     const locationOptions = state([]);
     const locationQuery = state('');
-    const colorOptions = Array.isArray(eventCreationColorOptions) ? eventCreationColorOptions : [];
+    const resolvedColorOptions = resolveValue(eventCreationColorOptions);
+    const colorOptions = Array.isArray(resolvedColorOptions) ? resolvedColorOptions : [];
     const colorState = state(draft.color);
 
     const applyDraft = () => {

@@ -1,5 +1,5 @@
 import { Div, when, after, state } from '@granularjs/core';
-import { cx, splitPropsChildren, resolveValue, getDropdownPlacement } from '../utils.js';
+import { cx, splitPropsChildren, resolveValue, getDropdownPlacement, classMap } from '../utils.js';
 
 export function Popover(...args) {
   const { props, rawProps, children } = splitPropsChildren(args, { position: 'left' });
@@ -53,8 +53,7 @@ export function Popover(...args) {
             className: cx(
               'g-ui-popover-dropdown',
               after(placement).compute((p) => p === 'top' ? 'g-ui-popover-dropdown-top' : ''),
-              position === 'right' && 'g-ui-popover-right',
-              position === 'center' && 'g-ui-popover-center'
+              classMap(position, { right: 'g-ui-popover-right', center: 'g-ui-popover-center' })
             ),
             onClick: (ev) => ev.stopPropagation(),
           },

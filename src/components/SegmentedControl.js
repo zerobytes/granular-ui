@@ -1,5 +1,5 @@
 import { Div, after, state, list } from '@granularjs/core';
-import { cx, splitPropsChildren, classVar, resolveValue } from '../utils.js';
+import { cx, splitPropsChildren, classVar, classFlag, resolveValue } from '../utils.js';
 
 export function SegmentedControl(...args) {
   const { props, rawProps } = splitPropsChildren(args, { data: [], size: 'sm' });
@@ -16,7 +16,7 @@ export function SegmentedControl(...args) {
     onChange?.(next);
   };
   return Div(
-    { ...rest, className: cx(scroll && 'g-ui-segmented-scroll') },
+    { ...rest, className: cx(classFlag('g-ui-segmented-scroll', scroll)) },
     Div(
       { className: cx('g-ui-segmented', classVar('g-ui-segmented-size-', size, 'sm'), className) },
       list(data, ((item) =>
