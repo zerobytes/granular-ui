@@ -2,7 +2,7 @@ import { Div, Input, Textarea as HtmlTextarea, Label, Span, when, state, after, 
 import { cx, splitPropsChildren, classFlag, classVar, resolveValue, resolveBool } from '../utils.js';
 
 export function TextInput(...args) {
-  const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
+  const { props, rawProps, children } = splitPropsChildren(args, { size: 'md' });
   const {
     label,
     description,
@@ -28,43 +28,49 @@ export function TextInput(...args) {
   } = props;
   const { value: raw_value, node, onChange, onInput, onFocus, onBlur, onKeyDown, onKeyUp, onClick } = rawProps;
 
-  const isValueTwoWay = isState(raw_value) && !onChange && !onInput
-  const currentState = isValueTwoWay ? raw_value : state(resolveValue(computed_value) ?? '');
+  const hasCustomContent = children.length > 0;
+  let inputContent;
 
-  after(computed_value).change((next) => {
-    if (isValueTwoWay) return;
-    currentState.set(resolveValue(next) ?? '');
-  });
+  if (hasCustomContent) {
+    inputContent = children;
+  } else {
+    const isValueTwoWay = isState(raw_value) && !onChange && !onInput
+    const currentState = isValueTwoWay ? raw_value : state(resolveValue(computed_value) ?? '');
 
-  const handleInput = (ev) => {
-    const next = ev?.target?.value ?? '';
-    if (next === computed_value.get()) return;
-    currentState.set(next);
-    onChange?.(ev);
-    onInput?.(ev);
-  };
+    after(computed_value).change((next) => {
+      if (isValueTwoWay) return;
+      currentState.set(resolveValue(next) ?? '');
+    });
 
-  const isMultiline = resolveBool(multiline);
-  const Control = isMultiline ? HtmlTextarea : Input;
-  const finalInputClassName = cx(inputClassName, isMultiline && 'g-ui-textarea');
+    const handleInput = (ev) => {
+      const next = ev?.target?.value ?? '';
+      if (next === computed_value.get()) return;
+      currentState.set(next);
+      onChange?.(ev);
+      onInput?.(ev);
+    };
 
-  const input = Control({
-    ...rest,
-    style: inputStyle,
-    node,
-    value: currentState,
-    onInput: handleInput,
-    onChange: handleInput,
-    onFocus,
-    onBlur,
-    onKeyDown,
-    onKeyUp,
-    onClick,
-    disabled,
-    readOnly,
-    className: cx('g-ui-input', finalInputClassName),
-  });
+    const isMultiline = resolveBool(multiline);
+    const Control = isMultiline ? HtmlTextarea : Input;
+    const finalInputClassName = cx(inputClassName, isMultiline && 'g-ui-textarea');
 
+    inputContent = Control({
+      ...rest,
+      style: inputStyle,
+      node,
+      value: currentState,
+      onInput: handleInput,
+      onChange: handleInput,
+      onFocus,
+      onBlur,
+      onKeyDown,
+      onKeyUp,
+      onClick,
+      disabled,
+      readOnly,
+      className: cx('g-ui-input', finalInputClassName),
+    });
+  }
 
   return Div(
     {
@@ -88,7 +94,7 @@ export function TextInput(...args) {
         style: inputWrapperStyle
       },
       when(leftSection, () => Div({ className: 'g-ui-input-section', style: leftSectionStyle }, leftSection)),
-      input,
+      inputContent,
       when(rightSection, () => Div({ className: 'g-ui-input-section', style: rightSectionStyle }, rightSection))
     ),
     when(error, () => Div({ className: 'g-ui-text-input-error-text', style: errorStyle }, error))

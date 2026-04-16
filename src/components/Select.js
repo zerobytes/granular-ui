@@ -1,7 +1,8 @@
-import { Div, Span, when, state, after, Label } from '@granularjs/core';
-import { cx, splitPropsChildren, classVar, resolveValue, getDropdownPlacement } from '../utils.js';
+import { Div, Span, when, state, after } from '@granularjs/core';
+import { cx, splitPropsChildren, resolveValue, getDropdownPlacement } from '../utils.js';
 import { keyboardArrowDownSvg } from '../theme/icons.js';
 import { Icon } from './Icon.js';
+import { TextInput } from './TextInput.js';
 
 export function Select(...args) {
   const { props, rawProps } = splitPropsChildren(args, { data: [], size: 'md' });
@@ -16,6 +17,12 @@ export function Select(...args) {
     label,
     description,
     error,
+    disabled,
+    style,
+    labelStyle,
+    descriptionStyle,
+    errorStyle,
+    inputWrapperStyle,
     ...rest
   } = props;
   const { onChange } = rawProps;
@@ -43,7 +50,11 @@ export function Select(...args) {
     outsideCleanup = () => document.removeEventListener('mousedown', handler);
   });
 
+  let lastSelectedAt = 0;
+
   const toggleOpen = () => {
+    if (resolveValue(disabled)) return;
+    if (Date.now() - lastSelectedAt < 200) return;
     const next = !open.get();
     if (next) placement.set(getDropdownPlacement(rootNode.get()));
     open.set(next);
@@ -53,6 +64,7 @@ export function Select(...args) {
     currentState.set(next);
     onChange?.(next);
     open.set(false);
+    lastSelectedAt = Date.now();
   };
 
   const valueClass = after(currentState).compute((current) => {
@@ -66,23 +78,23 @@ export function Select(...args) {
     return placeholder ?? '';
   });
 
+  const hasCustomRight = rawProps.rightSection !== undefined;
+  const finalRightSection = hasCustomRight
+    ? rightSection
+    : Span({ className: 'g-ui-select-caret' }, Icon({ innerHTML: keyboardArrowDownSvg }));
+
   return Div(
-    { ...rest, node: rootNode, className: cx('g-ui-select-root', className), onClick: toggleOpen },
-    when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
-    when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
-    Div(
+    { ...rest, node: rootNode, style, className: cx('g-ui-select-root', className), onClick: toggleOpen },
+    TextInput(
       {
-        className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md')),
+        label, description, error, size, leftSection, disabled,
+        labelStyle, descriptionStyle, errorStyle, inputWrapperStyle,
+        rightSection: finalRightSection,
       },
-      when(leftSection, () => Div({ className: 'g-ui-input-section' }, leftSection)),
       Div({ className: cx('g-ui-select', valueClass) },
         Span({ className: 'g-ui-select-value' }, displayLabel)
-      ),
-      when(rightSection, () => Div({ className: 'g-ui-input-section' }, rightSection), () =>
-        Span({ className: 'g-ui-select-caret' }, Icon({ innerHTML: keyboardArrowDownSvg }))
       )
     ),
-    when(error, () => Div({ className: 'g-ui-text-input-error-text', onClick: (ev) => ev.stopPropagation() }, error)),
     when(open, () =>
       Div(
         {

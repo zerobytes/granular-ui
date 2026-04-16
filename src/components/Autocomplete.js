@@ -90,6 +90,8 @@ export function Autocomplete(...args) {
     return items.filter((item) => fn(q, item, getLabelCur));
   });
 
+  let lastSelectedAt = 0;
+
   const selectItem = (item) => {
     const vPath = resolveValue(valuePath);
     const val = vPath == null || vPath === '' ? item : getByPath(item, vPath);
@@ -97,6 +99,7 @@ export function Autocomplete(...args) {
     query.set('');
     opened.set(false);
     onChange?.(val);
+    lastSelectedAt = Date.now();
   };
 
   let openedAt = 0;
@@ -104,6 +107,7 @@ export function Autocomplete(...args) {
   const open = () => {
     if (resolveValue(disabled)) return;
     if (opened.get()) return;
+    if (Date.now() - lastSelectedAt < 200) return;
     placement.set(getDropdownPlacement(rootNode.get()));
     opened.set(true);
     openedAt = Date.now();

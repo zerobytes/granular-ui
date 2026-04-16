@@ -1,10 +1,16 @@
-import { Div, Span, Input, Label, when, after, state } from '@granularjs/core';
+import { Div, Span, Input, when, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveValue, getDropdownPlacement } from '../utils.js';
 import { checkedSvg, closeSvg } from '../theme/icons.js';
+import { TextInput } from './TextInput.js';
 
 export function MultiSelect(...args) {
   const { props, rawProps } = splitPropsChildren(args, { data: [], size: 'md', searchable: true });
-  const { value, data, size, className, placeholder, searchable, label, description, error, ...rest } = props;
+  const {
+    value, data, size, className, placeholder, searchable,
+    label, description, error, disabled,
+    style, labelStyle, descriptionStyle, errorStyle, inputWrapperStyle,
+    ...rest
+  } = props;
   const { onChange, onSearchChange } = rawProps;
   const currentState = state(resolveValue(value) ?? []);
   const searchState = state('');
@@ -57,6 +63,7 @@ export function MultiSelect(...args) {
 
   let openedAt = 0;
   const toggleOpen = () => {
+    if (resolveValue(disabled)) return;
     const isOpen = openState.get();
     if (isOpen) {
       openState.set(false);
@@ -83,12 +90,11 @@ export function MultiSelect(...args) {
   const isSearchable = after(searchable).compute((next) => !!next);
 
   return Div(
-    { ...rest, node: rootNode, className: cx('g-ui-select-multi-root', className), onClick: toggleOpen },
-    when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
-    when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
-    Div(
+    { ...rest, node: rootNode, style, className: cx('g-ui-select-multi-root', className), onClick: toggleOpen },
+    TextInput(
       {
-        className: cx('g-ui-select-multi', classVar('g-ui-select-multi-size-', size, 'md')),
+        label, description, error, size, disabled,
+        labelStyle, descriptionStyle, errorStyle, inputWrapperStyle,
       },
       after(normalizedData, currentState).compute(([items, current]) => {
         const list = resolveValue(current) ?? [];
@@ -96,15 +102,11 @@ export function MultiSelect(...args) {
           const match = (items ?? []).find((entry) => entry.value === val);
           const label = match?.label ?? val;
           return Span(
-            {
-              className: 'g-ui-select-tag',
-            },
+            { className: 'g-ui-select-tag' },
             Span(
               {
                 className: 'g-ui-select-tag-label',
-                onClick: (ev) => {
-                  ev?.stopPropagation?.();
-                },
+                onClick: (ev) => { ev?.stopPropagation?.(); },
               },
               label
             ),
@@ -190,7 +192,6 @@ export function MultiSelect(...args) {
           );
         })
       )
-    ),
-    when(error, () => Div({ className: 'g-ui-text-input-error-text', onClick: (ev) => ev.stopPropagation() }, error))
+    )
   );
 }
