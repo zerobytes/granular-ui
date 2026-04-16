@@ -55,6 +55,19 @@ export function Autocomplete(...args) {
     currentValue.set(resolved);
   });
 
+  let outsideCleanup = null;
+  after(opened).change((next) => {
+    if (outsideCleanup) { outsideCleanup(); outsideCleanup = null; }
+    if (!next) return;
+    const handler = (ev) => {
+      const root = rootNode.get();
+      if (!root || root.contains(ev.target)) return;
+      close();
+    };
+    document.addEventListener('mousedown', handler);
+    outsideCleanup = () => document.removeEventListener('mousedown', handler);
+  });
+
   const dataResolved = after(data).compute((d) => (Array.isArray(d) ? d : []));
 
   const selectedItem = after(dataResolved, currentValue, valuePath).compute(([items, val, vPath]) => {
@@ -86,10 +99,14 @@ export function Autocomplete(...args) {
     onChange?.(val);
   };
 
+  let openedAt = 0;
+
   const open = () => {
     if (resolveValue(disabled)) return;
+    if (opened.get()) return;
     placement.set(getDropdownPlacement(rootNode.get()));
     opened.set(true);
+    openedAt = Date.now();
     const sel = selectedItem.get();
     const lPath = resolveValue(labelPath);
     const getLabelCur = (item) =>
@@ -118,9 +135,15 @@ export function Autocomplete(...args) {
     disabled,
     value: displayText,
     onInput: (ev) => query.set(ev?.target?.value ?? ''),
-    onFocus: open,
-    onClick: open,
-    onBlur: () => setTimeout(() => close(), 150),
+    onFocus: () => open(),
+    onClick: () => {
+      if (opened.get()) {
+        if (Date.now() - openedAt < 200) return;
+        close();
+      } else {
+        open();
+      }
+    },
   };
 
   const getValueForItem = (item) => {

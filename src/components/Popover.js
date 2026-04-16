@@ -14,6 +14,19 @@ export function Popover(...args) {
     currentState.set(!!resolved);
   });
 
+  let outsideCleanup = null;
+  after(currentState).change((next) => {
+    if (outsideCleanup) { outsideCleanup(); outsideCleanup = null; }
+    if (!next) return;
+    const handler = (ev) => {
+      const root = rootNode.get();
+      if (!root || root.contains(ev.target)) return;
+      setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    outsideCleanup = () => document.removeEventListener('mousedown', handler);
+  });
+
   const setOpen = (next) => {
     if (next) placement.set(getDropdownPlacement(rootNode.get(), 320));
     currentState.set(next);
@@ -34,6 +47,7 @@ export function Popover(...args) {
               position === 'right' && 'g-ui-popover-right',
               position === 'center' && 'g-ui-popover-center'
             ),
+            onClick: (ev) => ev.stopPropagation(),
           },
           content
         )

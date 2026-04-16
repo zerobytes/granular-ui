@@ -30,6 +30,25 @@ export function Select(...args) {
     currentState.set(resolved ?? '');
   });
 
+  let outsideCleanup = null;
+  after(open).change((next) => {
+    if (outsideCleanup) { outsideCleanup(); outsideCleanup = null; }
+    if (!next) return;
+    const handler = (ev) => {
+      const root = rootNode.get();
+      if (!root || root.contains(ev.target)) return;
+      open.set(false);
+    };
+    document.addEventListener('mousedown', handler);
+    outsideCleanup = () => document.removeEventListener('mousedown', handler);
+  });
+
+  const toggleOpen = () => {
+    const next = !open.get();
+    if (next) placement.set(getDropdownPlacement(rootNode.get()));
+    open.set(next);
+  };
+
   const selectValue = (next) => {
     currentState.set(next);
     onChange?.(next);
@@ -48,17 +67,12 @@ export function Select(...args) {
   });
 
   return Div(
-    { ...rest, node: rootNode, className: cx('g-ui-select-root', className) },
+    { ...rest, node: rootNode, className: cx('g-ui-select-root', className), onClick: toggleOpen },
     when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
     when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
     Div(
       {
         className: cx('g-ui-input-wrapper', classVar('g-ui-input-size-', size, 'md')),
-        onClick: () => {
-          const next = !open.get();
-          if (next) placement.set(getDropdownPlacement(rootNode.get()));
-          open.set(next);
-        },
       },
       when(leftSection, () => Div({ className: 'g-ui-input-section' }, leftSection)),
       Div({ className: cx('g-ui-select', valueClass) },
@@ -68,10 +82,13 @@ export function Select(...args) {
         Span({ className: 'g-ui-select-caret' }, Icon({ innerHTML: keyboardArrowDownSvg }))
       )
     ),
-    when(error, () => Div({ className: 'g-ui-text-input-error-text' }, error)),
+    when(error, () => Div({ className: 'g-ui-text-input-error-text', onClick: (ev) => ev.stopPropagation() }, error)),
     when(open, () =>
       Div(
-        { className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')) },
+        {
+          className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')),
+          onClick: (ev) => ev.stopPropagation(),
+        },
         (resolveValue(data) ?? []).map((item) =>
           Div(
             {

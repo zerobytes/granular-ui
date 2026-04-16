@@ -14,6 +14,19 @@ export function Popper(...args) {
     currentState.set(!!resolved);
   });
 
+  let outsideCleanup = null;
+  after(currentState).change((next) => {
+    if (outsideCleanup) { outsideCleanup(); outsideCleanup = null; }
+    if (!next) return;
+    const handler = (ev) => {
+      const root = rootNode.get();
+      if (!root || root.contains(ev.target)) return;
+      setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    outsideCleanup = () => document.removeEventListener('mousedown', handler);
+  });
+
   const setOpen = (next) => {
     if (next) placement.set(getDropdownPlacement(rootNode.get()));
     currentState.set(next);
@@ -23,6 +36,14 @@ export function Popper(...args) {
   return Div(
     { ...rest, node: rootNode, className: cx('g-ui-popper', className) },
     Div({ onClick: () => setOpen(!currentState.get()) }, children),
-    when(currentState, () => Div({ className: cx('g-ui-popper-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-popper-dropdown-top' : '')) }, content))
+    when(currentState, () =>
+      Div(
+        {
+          className: cx('g-ui-popper-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-popper-dropdown-top' : '')),
+          onClick: (ev) => ev.stopPropagation(),
+        },
+        content
+      )
+    )
   );
 }

@@ -55,6 +55,20 @@ export function MultiSelect(...args) {
     onChange?.(next);
   };
 
+  let openedAt = 0;
+  const toggleOpen = () => {
+    const isOpen = openState.get();
+    if (isOpen) {
+      openState.set(false);
+    } else {
+      placement.set(getDropdownPlacement(rootNode.get()));
+      openState.set(true);
+      openedAt = Date.now();
+    }
+  };
+
+  let fromMouse = false;
+
   const normalizedData = after(data).compute((nextData) => normalizeData(nextData));
   const filteredItems = after(normalizedData, searchState).compute(([items, query]) => {
     const q = String(resolveValue(query) ?? '').toLowerCase().trim();
@@ -69,16 +83,12 @@ export function MultiSelect(...args) {
   const isSearchable = after(searchable).compute((next) => !!next);
 
   return Div(
-    { ...rest, node: rootNode, className: cx('g-ui-select-multi-root', className) },
+    { ...rest, node: rootNode, className: cx('g-ui-select-multi-root', className), onClick: toggleOpen },
     when(label, () => Label({ className: 'g-ui-text-input-label' }, label)),
     when(description, () => Span({ className: 'g-ui-text-input-description' }, description)),
     Div(
       {
         className: cx('g-ui-select-multi', classVar('g-ui-select-multi-size-', size, 'md')),
-        onClick: () => {
-          placement.set(getDropdownPlacement(rootNode.get()));
-          openState.set(true);
-        },
       },
       after(normalizedData, currentState).compute(([items, current]) => {
         const list = resolveValue(current) ?? [];
@@ -115,16 +125,39 @@ export function MultiSelect(...args) {
           className: 'g-ui-select-multi-input',
           value: searchState,
           onInput: (ev) => searchState.set(ev.target?.value ?? ''),
+          onMouseDown: (ev) => {
+            fromMouse = true;
+            ev?.stopPropagation?.();
+          },
           onFocus: () => {
-            placement.set(getDropdownPlacement(rootNode.get()));
-            openState.set(true);
+            if (fromMouse) { fromMouse = false; return; }
+            if (!openState.get()) {
+              placement.set(getDropdownPlacement(rootNode.get()));
+              openState.set(true);
+              openedAt = Date.now();
+            }
+          },
+          onClick: (ev) => {
+            ev?.stopPropagation?.();
+            fromMouse = false;
+            if (openState.get()) {
+              if (Date.now() - openedAt < 200) return;
+              openState.set(false);
+            } else {
+              placement.set(getDropdownPlacement(rootNode.get()));
+              openState.set(true);
+              openedAt = Date.now();
+            }
           },
         })
       )
     ),
     when(openState, () =>
       Div(
-        { className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')) },
+        {
+          className: cx('g-ui-select-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-select-dropdown-top' : '')),
+          onClick: (ev) => ev.stopPropagation(),
+        },
         after(filteredItems).compute((items) => {
           if (!items.length) {
             return Div({ className: 'g-ui-select-item' }, 'Nothing found');
@@ -158,6 +191,6 @@ export function MultiSelect(...args) {
         })
       )
     ),
-    when(error, () => Div({ className: 'g-ui-text-input-error-text' }, error))
+    when(error, () => Div({ className: 'g-ui-text-input-error-text', onClick: (ev) => ev.stopPropagation() }, error))
   );
 }
