@@ -42,15 +42,15 @@ export function Modal(...args) {
           Div(
             { className: 'g-ui-modal-header' },
             when(title, () => Div({ className: 'g-ui-modal-title' }, title)),
-            when(onClose, () =>
-              HtmlButton(
-                {
+            when(
+              () => onClose != null,
+              () =>
+                HtmlButton({
                   type: 'button',
                   className: 'g-ui-button g-ui-button-variant-subtle g-ui-button-size-xs g-ui-modal-close',
                   onClick: onClose,
                   innerHTML: closeSvg,
-                }
-              )
+                })
             )
           ),
           children
