@@ -1313,6 +1313,18 @@ body .g-ui-card-shadow-lg { box-shadow: var(--g-ui-shadow-lg); }
 .g-ui-select-item-disabled:hover {
   background: transparent;
 }
+.g-ui-select-empty {
+  padding: var(--g-ui-space-8) var(--g-ui-space-10);
+  margin: var(--g-ui-space-4);
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: center;
+  color: var(--g-ui-muted);
+  background: var(--g-ui-bg-muted);
+  cursor: default;
+  user-select: none;
+}
 .g-ui-select-size-xs { font-size: 12px; height: 30px; padding: 0 var(--g-ui-space-10); }
 .g-ui-select-size-sm { font-size: 13px; height: 36px; padding: 0 var(--g-ui-space-12); }
 .g-ui-select-size-md { font-size: 14px; height: 42px; padding: 0 var(--g-ui-space-14); }
