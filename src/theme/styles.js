@@ -739,18 +739,18 @@ body {
   gap: var(--g-ui-stack-gap, 0);
 }
 .g-ui-gap-none { gap: 0; }
-.g-ui-gap-xs { gap: var(--g-ui-space-4); }
-.g-ui-gap-sm { gap: var(--g-ui-space-8); }
-.g-ui-gap-md { gap: var(--g-ui-space-12); }
-.g-ui-gap-lg { gap: var(--g-ui-space-16); }
-.g-ui-gap-xl { gap: var(--g-ui-space-20); }
-.g-ui-align-start { align-items: flex-start; }
-.g-ui-align-center { align-items: center; }
-.g-ui-align-end { align-items: flex-end; }
-.g-ui-justify-start { justify-content: flex-start; }
-.g-ui-justify-center { justify-content: center; }
-.g-ui-justify-end { justify-content: flex-end; }
-.g-ui-justify-between { justify-content: space-between; }
+body .g-ui-gap-xs { gap: var(--g-ui-space-4); }
+body .g-ui-gap-sm { gap: var(--g-ui-space-8); }
+body .g-ui-gap-md { gap: var(--g-ui-space-12); }
+body .g-ui-gap-lg { gap: var(--g-ui-space-16); }
+body .g-ui-gap-xl { gap: var(--g-ui-space-20); }
+body .g-ui-align-start { align-items: flex-start; }
+body .g-ui-align-center { align-items: center; }
+body .g-ui-align-end { align-items: flex-end; }
+body .g-ui-justify-start { justify-content: flex-start; }
+body .g-ui-justify-center { justify-content: center; }
+body .g-ui-justify-end { justify-content: flex-end; }
+body .g-ui-justify-between { justify-content: space-between; }
 
 .g-ui-group {
   display: flex;
