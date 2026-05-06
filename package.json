@@ -1,6 +1,6 @@
 {
   "name": "@granularjs/ui",
-  "version": "0.3.27",
+  "version": "0.3.28",
   "description": "90+ production-ready UI components for Granular. Dark/light themes, CSS variables, accessible, zero dependencies beyond @granularjs/core.",
   "type": "module",
   "main": "./dist/granular-ui.min.js",
