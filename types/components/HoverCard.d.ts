@@ -1,1 +1,1 @@
-export function HoverCard(...args: any[]): any;
+export function HoverCard(...args: any[]): import("@granularjs/core").ElementNode;

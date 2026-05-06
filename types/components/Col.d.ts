@@ -1,1 +1,1 @@
-export function Col(...args: any[]): any;
+export function Col(...args: any[]): import("@granularjs/core").ElementNode;

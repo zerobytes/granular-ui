@@ -1,1 +1,1 @@
-export function Rating(...args: any[]): any;
+export function Rating(...args: any[]): import("@granularjs/core").ElementNode;

@@ -1,4 +1,4 @@
-export function BottomBar(...args: any[]): any;
+export function BottomBar(...args: any[]): import("@granularjs/core").ElementNode;
 export namespace BottomBar {
-    function Action(...args: any[]): any;
+    function Action(...args: any[]): import("@granularjs/core").ElementNode;
 }

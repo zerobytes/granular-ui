@@ -1,1 +1,1 @@
-export function Card(...args: any[]): any;
+export function Card(...args: any[]): import("@granularjs/core").ElementNode;

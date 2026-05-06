@@ -1,1 +1,1 @@
-export function Stack(...args: any[]): any;
+export function Stack(...args: any[]): import("@granularjs/core").ElementNode;

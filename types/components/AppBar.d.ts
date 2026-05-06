@@ -1,1 +1,1 @@
-export function AppBar(...args: any[]): any;
+export function AppBar(...args: any[]): import("@granularjs/core").ElementNode;

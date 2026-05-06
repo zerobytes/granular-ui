@@ -1,1 +1,1 @@
-export function Popper(...args: any[]): any;
+export function Popper(...args: any[]): import("@granularjs/core").ElementNode;

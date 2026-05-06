@@ -1,1 +1,1 @@
-export function Loading(...args: any[]): any;
+export function Loading(...args: any[]): import("@granularjs/core").WhenNode;

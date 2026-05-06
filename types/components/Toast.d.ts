@@ -1,1 +1,1 @@
-export function Toast(...args: any[]): any;
+export function Toast(...args: any[]): import("@granularjs/core").WhenNode;

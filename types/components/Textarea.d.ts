@@ -1,1 +1,1 @@
-export function Textarea(...args: any[]): any;
+export function Textarea(...args: any[]): import("@granularjs/core").ElementNode;

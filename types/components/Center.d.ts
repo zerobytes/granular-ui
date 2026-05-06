@@ -1,1 +1,1 @@
-export function Center(...args: any[]): any;
+export function Center(...args: any[]): import("@granularjs/core").ElementNode;

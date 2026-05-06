@@ -25,14 +25,23 @@ export function Popper(...args) {
     };
     const focusHandler = (ev) => {
       const root = rootNode.get();
-      if (!root || root.contains(ev.target)) return;
+      const target = ev.target;
+      if (
+        !root ||
+        !target ||
+        target === document.body ||
+        target === document.documentElement
+      ) {
+        return;
+      }
+      if (root.contains(target)) return;
       setOpen(false);
     };
-    document.addEventListener('mousedown', mouseHandler);
-    document.addEventListener('focusin', focusHandler);
+    document.addEventListener('mousedown', mouseHandler, true);
+    document.addEventListener('focusin', focusHandler, true);
     outsideCleanup = () => {
-      document.removeEventListener('mousedown', mouseHandler);
-      document.removeEventListener('focusin', focusHandler);
+      document.removeEventListener('mousedown', mouseHandler, true);
+      document.removeEventListener('focusin', focusHandler, true);
     };
   });
 
@@ -49,7 +58,6 @@ export function Popper(...args) {
       Div(
         {
           className: cx('g-ui-popper-dropdown', after(placement).compute((p) => p === 'top' ? 'g-ui-popper-dropdown-top' : '')),
-          onClick: (ev) => ev.stopPropagation(),
         },
         content
       )

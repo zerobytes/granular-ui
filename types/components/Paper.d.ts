@@ -1,1 +1,1 @@
-export function Paper(...args: any[]): any;
+export function Paper(...args: any[]): import("@granularjs/core").ElementNode;

@@ -1,1 +1,1 @@
-export function Pagination(...args: any[]): any;
+export function Pagination(...args: any[]): import("@granularjs/core").ElementNode;

@@ -2,6 +2,15 @@ import { Div, Input, Label, Span, when, state, after } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar, resolveBool } from '../utils.js';
 import { checkedSvg, indeterminateSvg } from '../theme/icons.js';
 
+/**
+ * @typedef {import('../types').ToggleProps & {
+ *   indeterminate?: import('../types').Reactive<boolean>,
+ *   description?: import('../types').Reactive<string>,
+ *   inputProps?: Record<string, unknown>,
+ * }} CheckboxProps
+ *
+ * @param {CheckboxProps} args
+ */
 export function Checkbox(...args) {
   const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
   const { checked, label, description, size, indeterminate, className, style, inputProps, ...rest } = props;

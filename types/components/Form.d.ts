@@ -1,2 +1,4 @@
-export function Form(...args: any[]): any;
-export const formContext: any;
+export function Form(...args: any[]): import("@granularjs/core").Renderable;
+export const formContext: import("@granularjs/core").Context<{
+    loading: boolean;
+}>;

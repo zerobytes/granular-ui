@@ -22,11 +22,21 @@
     "build:minify": "mkdir -p ./dist/fonts && cp -R src/theme/fonts/* ./dist/fonts/ && npx -y esbuild src/index.js --bundle --minify --sourcemap --format=esm --external:@granularjs/core --outfile=./dist/granular-ui.min.js && npx -y -p typescript@latest tsc -p tsconfig.json",
     "build:debug": "mkdir -p ./dist/fonts && cp -R src/theme/fonts/* ./dist/fonts/ && npx -y esbuild src/index.js --bundle --sourcemap --format=esm --external:@granularjs/core --outfile=./dist/granular-ui.js && npx -y -p typescript@latest tsc -p tsconfig.json",
     "build:watch": "npx -y esbuild src/index.js --bundle --minify --sourcemap --format=esm --external:@granularjs/core --outfile=./dist/granular-ui.min.js --watch",
+    "test": "node ./scripts/run-tests.mjs",
+    "test:coverage": "c8 --reporter=text --reporter=html --include='src/**/*.js' --exclude='src/theme/fonts/**' node ./scripts/run-tests.mjs",
+    "test:visual": "npx -y playwright test --config=visual/playwright.config.mjs",
+    "test:visual:update": "npx -y playwright test --config=visual/playwright.config.mjs --update-snapshots",
     "version": "npm run build:minify && git add -A",
     "postversion": "git push && git push origin v$(node -p \"require('./package.json').version\")"
   },
   "peerDependencies": {
     "@granularjs/core": "latest"
+  },
+  "devDependencies": {
+    "@granularjs/core": "file:../granular",
+    "axe-core": "^4.11.3",
+    "c8": "^10.1.3",
+    "jsdom": "^26.1.0"
   },
   "author": "Guilherme Ferreira",
   "license": "Apache-2.0",

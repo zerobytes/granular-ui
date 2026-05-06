@@ -1,1 +1,1 @@
-export function Container(...args: any[]): any;
+export function Container(...args: any[]): import("@granularjs/core").ElementNode;

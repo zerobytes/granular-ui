@@ -1,1 +1,1 @@
-export function Autocomplete(...args: any[]): any;
+export function Autocomplete(...args: any[]): import("@granularjs/core").ElementNode;

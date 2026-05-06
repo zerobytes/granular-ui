@@ -20,7 +20,7 @@ export function Slider(...args) {
     className,
     ...rest
   } = props;
-  const currentState = state(resolveValue(value ?? min));
+  const currentState = state(resolveValue(value) ?? resolveValue(min));
 
   const hasMarks = after(marks).compute((m) => m && m.length > 0);
   
@@ -123,9 +123,9 @@ export const SliderMark = ({ mark, getBounds }) => {
   const range = maxValue - minValue;
 
   const value = after(mark).compute((m) => m.value ?? m);
-  const label = after(mark).compute((m) => m.label ?? String(m.value) ?? value);
+  const label = after(mark).compute((m) => m.label ?? String(m.value) ?? value.get());
 
-  const markValue = Number(value);
+  const markValue = Number(value.get());
   let pct = 0;
   if (range > 0) pct = ((markValue - minValue) / range) * 100;
   return Div(

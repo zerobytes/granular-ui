@@ -1,1 +1,1 @@
-export function Badge(...args: any[]): any;
+export function Badge(...args: any[]): import("@granularjs/core").ElementNode;

@@ -1,5 +1,5 @@
-export function List(...args: any[]): any;
+export function List(...args: any[]): import("@granularjs/core").WhenNode;
 export namespace List {
     export { ListItem as Item };
 }
-export function ListItem(...args: any[]): any;
+export function ListItem(...args: any[]): import("@granularjs/core").ElementNode;

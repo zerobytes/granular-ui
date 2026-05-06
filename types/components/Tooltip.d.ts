@@ -1,1 +1,1 @@
-export function Tooltip(...args: any[]): any;
+export function Tooltip(...args: any[]): import("@granularjs/core").ElementNode;

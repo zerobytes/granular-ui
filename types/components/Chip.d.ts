@@ -1,1 +1,1 @@
-export function Chip(...args: any[]): any;
+export function Chip(...args: any[]): import("@granularjs/core").ElementNode;

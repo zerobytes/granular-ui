@@ -1,1 +1,1 @@
-export function Stepper(...args: any[]): any;
+export function Stepper(...args: any[]): import("@granularjs/core").ElementNode;

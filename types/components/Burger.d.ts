@@ -1,1 +1,1 @@
-export function Burger(...args: any[]): any;
+export function Burger(...args: any[]): import("@granularjs/core").ElementNode;

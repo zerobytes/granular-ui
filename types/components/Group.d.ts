@@ -1,1 +1,1 @@
-export function Group(...args: any[]): any;
+export function Group(...args: any[]): import("@granularjs/core").ElementNode;

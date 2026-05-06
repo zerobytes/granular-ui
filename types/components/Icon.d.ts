@@ -1,1 +1,1 @@
-export function Icon(...args: any[]): any;
+export function Icon(...args: any[]): import("@granularjs/core").ElementNode;

@@ -1,1 +1,1 @@
-export function LoadingOverlay(...args: any[]): any;
+export function LoadingOverlay(...args: any[]): import("@granularjs/core").WhenNode;

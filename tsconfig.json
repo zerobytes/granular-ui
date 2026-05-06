@@ -11,5 +11,5 @@
     "moduleResolution": "Bundler",
     "strict": false
   },
-  "include": ["src/index.js"]
+  "include": ["src/index.js", "src/types.d.ts"]
 }

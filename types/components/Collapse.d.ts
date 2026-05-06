@@ -1,1 +1,1 @@
-export function Collapse(...args: any[]): any;
+export function Collapse(...args: any[]): import("@granularjs/core").WhenNode;

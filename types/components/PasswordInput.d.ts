@@ -1,1 +1,1 @@
-export function PasswordInput(...args: any[]): any;
+export function PasswordInput(...args: any[]): import("@granularjs/core").ElementNode;

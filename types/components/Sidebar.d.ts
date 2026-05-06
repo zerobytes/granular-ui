@@ -1,1 +1,1 @@
-export function Sidebar(...args: any[]): any;
+export function Sidebar(...args: any[]): import("@granularjs/core").WhenNode;

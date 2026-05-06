@@ -1,1 +1,1 @@
-export function CheckboxGroup(...args: any[]): any;
+export function CheckboxGroup(...args: any[]): import("@granularjs/core").ElementNode;

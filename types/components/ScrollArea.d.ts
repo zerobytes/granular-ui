@@ -1,1 +1,1 @@
-export function ScrollArea(...args: any[]): any;
+export function ScrollArea(...args: any[]): import("@granularjs/core").ElementNode;

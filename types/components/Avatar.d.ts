@@ -1,1 +1,1 @@
-export function Avatar(...args: any[]): any;
+export function Avatar(...args: any[]): import("@granularjs/core").ElementNode;

@@ -1,1 +1,1 @@
-export function NavLink(...args: any[]): any;
+export function NavLink(...args: any[]): import("@granularjs/core").ElementNode;

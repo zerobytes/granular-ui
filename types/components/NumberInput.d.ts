@@ -1,1 +1,1 @@
-export function NumberInput(...args: any[]): any;
+export function NumberInput(...args: any[]): import("@granularjs/core").ElementNode;

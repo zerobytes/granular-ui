@@ -2,6 +2,15 @@ import { Input, Label, Span, when, after, state } from '@granularjs/core';
 import { cx, splitPropsChildren, classVar } from '../utils.js';
 import { switchGroupContext } from './SwitchGroup.js';
 
+/**
+ * @typedef {import('../types').ToggleProps & {
+ *   value?: import('../types').Reactive<string>,
+ *   name?: import('../types').Reactive<string>,
+ *   inputProps?: Record<string, unknown>,
+ * }} SwitchProps
+ *
+ * @param {SwitchProps} args
+ */
 export function Switch(...args) {
   const { props, rawProps } = splitPropsChildren(args, { size: 'md' });
   const { label, size, className, style, inputProps, checked, value, name, type, onChange: _onChange, onInput: _onInput, ...rest } = props;

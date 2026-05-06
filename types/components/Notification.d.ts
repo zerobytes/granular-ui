@@ -1,1 +1,1 @@
-export function Notification(...args: any[]): any;
+export function Notification(...args: any[]): import("@granularjs/core").ElementNode;

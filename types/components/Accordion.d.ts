@@ -1,1 +1,1 @@
-export function Accordion(...args: any[]): any;
+export function Accordion(...args: any[]): import("@granularjs/core").ElementNode;

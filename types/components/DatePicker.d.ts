@@ -1,1 +1,1 @@
-export function DatePicker(...args: any[]): any;
+export function DatePicker(...args: any[]): import("@granularjs/core").ElementNode;

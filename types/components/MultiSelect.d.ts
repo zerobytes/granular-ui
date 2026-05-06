@@ -1,1 +1,1 @@
-export function MultiSelect(...args: any[]): any;
+export function MultiSelect(...args: any[]): import("@granularjs/core").ElementNode;

@@ -1,1 +1,1 @@
-export function SelectSearch(...args: any[]): any;
+export function SelectSearch(...args: any[]): import("@granularjs/core").ElementNode;

@@ -1,1 +1,1 @@
-export function Affix(...args: any[]): any;
+export function Affix(...args: any[]): import("@granularjs/core").ElementNode;

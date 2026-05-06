@@ -1,1 +1,1 @@
-export function Calendar(...args: any[]): any;
+export function Calendar(...args: any[]): import("@granularjs/core").ElementNode;

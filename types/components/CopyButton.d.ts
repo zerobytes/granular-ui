@@ -1,1 +1,1 @@
-export function CopyButton(...args: any[]): any;
+export function CopyButton(...args: any[]): import("@granularjs/core").ElementNode;

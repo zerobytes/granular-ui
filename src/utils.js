@@ -1,5 +1,7 @@
 import { Renderer, isSignal, isState, isStatePath, isComputed, resolve, computed, after, concat, isWhen } from '@granularjs/core';
 
+export { eq, neq, gt, gte, lt, lte, not, and, or, derive } from '@granularjs/core';
+
 export function isReactive(value) {
   return isSignal(value) || isState(value) || isStatePath(value) || isComputed(value) || isWhen(value);
 }
@@ -48,14 +50,14 @@ export function resolveBool(value) {
   return !!resolve(value);
 }
 
-export function classVar(prefix, value, fallback) {
+export function classVar(prefix, value, fallback, options) {
   const normalize = (v) => {
     const resolved = resolve(v);
     const finalValue = resolved == null || resolved === '' ? fallback : resolved;
     return finalValue == null || finalValue === '' ? '' : `${prefix}${finalValue}`;
   };
   if (isReactive(value)) {
-    return after(value).compute((v) => normalize(v));
+    return after(value).compute((v) => normalize(v), options ?? {});
   }
   return normalize(value);
 }

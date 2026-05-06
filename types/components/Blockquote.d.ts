@@ -1,1 +1,1 @@
-export function Blockquote(...args: any[]): any;
+export function Blockquote(...args: any[]): import("@granularjs/core").ElementNode;

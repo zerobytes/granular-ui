@@ -43,7 +43,7 @@ GridTable.GridRow = (...args) => {
             ),
             ...rest,
         },
-        ...children
+        children
     );
 };
 

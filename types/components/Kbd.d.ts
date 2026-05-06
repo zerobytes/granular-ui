@@ -1,1 +1,1 @@
-export function Kbd(...args: any[]): any;
+export function Kbd(...args: any[]): import("@granularjs/core").ElementNode;

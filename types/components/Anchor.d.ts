@@ -1,1 +1,1 @@
-export function Anchor(...args: any[]): any;
+export function Anchor(...args: any[]): import("@granularjs/core").ElementNode;

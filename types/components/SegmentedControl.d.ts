@@ -1,1 +1,1 @@
-export function SegmentedControl(...args: any[]): any;
+export function SegmentedControl(...args: any[]): import("@granularjs/core").ElementNode;

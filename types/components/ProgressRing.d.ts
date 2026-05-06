@@ -1,1 +1,1 @@
-export function ProgressRing(...args: any[]): any;
+export function ProgressRing(...args: any[]): import("@granularjs/core").ElementNode;

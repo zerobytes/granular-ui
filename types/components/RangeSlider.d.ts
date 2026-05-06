@@ -1,1 +1,1 @@
-export function RangeSlider(...args: any[]): any;
+export function RangeSlider(...args: any[]): import("@granularjs/core").ElementNode;

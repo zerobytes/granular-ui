@@ -1,6 +1,19 @@
 import { Div, Input, Textarea as HtmlTextarea, Label, Span, when, state, after, isState } from '@granularjs/core';
 import { cx, splitPropsChildren, classFlag, classVar, resolveValue, resolveBool } from '../utils.js';
 
+/**
+ * @typedef {import('../types').InputProps<string> & {
+ *   leftSection?: import('../types').Child,
+ *   rightSection?: import('../types').Child,
+ *   type?: 'text' | 'email' | 'url' | 'tel' | 'number' | 'search',
+ *   autoFocus?: boolean,
+ *   maxLength?: import('../types').Reactive<number>,
+ * }} TextInputProps
+ *
+ * @param {TextInputProps | import('../types').Child} args
+ */
+let textInputIdCounter = 0;
+
 export function TextInput(...args) {
   const { props, rawProps, children } = splitPropsChildren(args, { size: 'md' });
   const {
@@ -24,8 +37,10 @@ export function TextInput(...args) {
     leftSectionStyle,
     rightSectionStyle,
     value: computed_value,
+    id: explicitId,
     ...rest
   } = props;
+  const inputId = explicitId ?? `g-ui-input-${++textInputIdCounter}`;
   const { value: raw_value, node, onChange, onInput, onFocus, onBlur, onKeyDown, onKeyUp, onClick } = rawProps;
 
   const hasCustomContent = children.length > 0;
@@ -56,6 +71,7 @@ export function TextInput(...args) {
 
     inputContent = Control({
       ...rest,
+      id: inputId,
       style: inputStyle,
       node,
       value: currentState,
@@ -89,7 +105,7 @@ export function TextInput(...args) {
       ),
       style
     },
-    when(label, () => Label({ className: 'g-ui-text-input-label', style: labelStyle }, label)),
+    when(label, () => Label({ className: 'g-ui-text-input-label', style: labelStyle, htmlFor: inputId }, label)),
     when(description, () => Span({ className: 'g-ui-text-input-description', style: descriptionStyle }, description)),
     Div(
       {

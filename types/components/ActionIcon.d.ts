@@ -1,1 +1,1 @@
-export function ActionIcon(...args: any[]): any;
+export function ActionIcon(...args: any[]): import("@granularjs/core").ElementNode;

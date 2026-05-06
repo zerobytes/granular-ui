@@ -14,6 +14,6 @@ export function Icon(...args) {
         props.className
       ),
     },
-    ...children
+    children
   );
 }

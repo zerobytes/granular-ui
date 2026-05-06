@@ -6,7 +6,7 @@ export function RangeSlider(...args) {
   const { props, rawProps } = splitPropsChildren(args, { min: 0, max: 100, step: 1, size: 'md' });
   const { value, marks, min, max, step, size, disabled, className, ...rest } = props;
   const { onChange } = rawProps;
-  const currentState = state(resolveValue(value ?? [min, max]));
+  const currentState = state(resolveValue(value) ?? [resolveValue(min), resolveValue(max)]);
   const hasMarks = after(marks).compute((m) => m && m.length > 0);
 
   const getBounds = () => {
